@@ -7,6 +7,14 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors:{
+        'amber': {
+          600:'#d97706',
+          500:'#f59e0b',
+          400:'#fbbf24',
+        },
+        'orange':'#f97316',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
