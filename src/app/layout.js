@@ -1,6 +1,7 @@
+
 import "./globals.css";
 import { Inter } from "next/font/google";
-
+import CssBaseline from '@mui/material/CssBaseline';
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {

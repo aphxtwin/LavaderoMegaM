@@ -1,9 +1,11 @@
-import LoginForm from "./components/loginForm/loginForm"
+'use client'
+import LoginForm from "./components/layout/loginForm/loginForm"
+import { Grid } from "@mui/material"
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-slate-900">
+    <Grid container justifyContent={'center'}>
       <LoginForm/>
-    </main>
+    </Grid>
   )
 }
