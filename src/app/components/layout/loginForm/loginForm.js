@@ -3,11 +3,12 @@ import { TextField, Button, Grid, Paper, Typography } from '@mui/material';
 
 function LoginForm() {
   const formStyle = {
-    height:'100vh',
-    width:'300',
+    height:'80vh',
+    marginTop:'50px',
   }
   const paperStyle={
     margin: 'auto',
+    padding:'0 1rem 0 1rem'
   }
   const btnLogin = {
     padding:'0.3rem 3rem 0.3rem 3rem',
@@ -40,7 +41,7 @@ function LoginForm() {
         <Grid container 
           direction={'column'} 
           justifyContent={'center'} 
-          alignItems={'center'}  
+          alignItems={'stretch'}
           spacing={3}
           sx={formStyle} 
         >
