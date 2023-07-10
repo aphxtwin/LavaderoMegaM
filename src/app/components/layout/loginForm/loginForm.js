@@ -58,6 +58,7 @@ function loginForm() {
                   label="Usuario"
                   variant="outlined"
                   value={username}
+                  name='username'
                   onChange={handleUsernameChange}
                   fullWidth required
                 />
@@ -67,6 +68,7 @@ function loginForm() {
                   color='primary'
                   id="outlined-password-input"
                   label="Contraseña"
+                  name='password'
                   type="password"
                   autoComplete="current-password"
                   variant="outlined"
