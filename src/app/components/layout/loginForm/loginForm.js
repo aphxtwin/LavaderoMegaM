@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { TextField, Button, Grid, Paper, Typography } from '@mui/material';
+import { TextField, Button, Grid, Paper, Typography, Box } from '@mui/material';
 
-function LoginForm() {
+function loginForm() {
   const formStyle = {
-    height:'80vh',
+    height:'75vh',
   }
   const paperStyle={
-    marginLeft: '1.2rem',
     padding:'0 1.5rem 0 1.5rem'
   }
   const btnLogin = {
@@ -15,8 +14,6 @@ function LoginForm() {
     "&:hover":{
       backgroundColor:'#09090b'
     },
-    width:'100%',
-    marginTop:'0.5rem'
   }
 
   const [username, setUsername] = useState('');
@@ -36,57 +33,60 @@ function LoginForm() {
   };
 
   return (    
-    <form onSubmit={handleSubmit}>
+    
       <Paper elevation={10} sx={paperStyle}>
         <Grid container 
           direction={'column'} 
           justifyContent={'center'} 
           alignItems={'stretch'}
-          spacing={3}
           sx={formStyle} 
         >
-          <Grid item>              
-            <Typography variant="h4" align='center' sx={{ fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' } }}>
-              MEGA MultiServicios
-            </Typography>
-            <Typography variant="subtitle1" mt={2} align='center' sx={{ fontSize: { xs: '1rem', sm: '1.2rem', md: '1.5rem' }}}>
-              Ingrese sus datos para continuar
-            </Typography>
-          </Grid>     
-          <Grid item> 
-            <TextField
-              color='primary'
-              id="outlined-basic"
-              label="Usuario"
-              variant="outlined"
-              value={username}
-              onChange={handleUsernameChange}
-              fullWidth required
-            />
-          </Grid>
-          <Grid item  >
-            <TextField
-              color='primary'
-              id="outlined-password-input"
-              label="Contraseña"
-              type="password"
-              autoComplete="current-password"
-              variant="outlined"
-              value={password}
-              onChange={handlePasswordChange}
-              fullWidth required
-            />
-          </Grid>
-          <Grid item >
-            <Button type="submit" size='large' fullwidth sx={btnLogin} variant="contained">
-              Ingresar
-            </Button>
-          </Grid>
+          <form onSubmit={handleSubmit}>
+            <Box sx={{display:'flex', flexDirection:"column",gap:'1.5rem'}}>
+              <Grid item>      
+                <Typography variant="h4" align='center' sx={{ fontSize: { xs: '1.5rem', sm: '1.8rem', md: '2rem' } }}>
+                  MEGA MultiServicios
+                </Typography>
+                <Typography variant="subtitle1" mt={2} align='center' sx={{ fontSize: { xs: '1rem', sm: '1.2rem', md: '1.5rem' }}}>
+                  Ingrese sus datos para continuar
+                </Typography>
+              </Grid>     
+              <Grid item> 
+                <TextField
+                  color='primary'
+                  id="outlined-basic"
+                  label="Usuario"
+                  variant="outlined"
+                  value={username}
+                  onChange={handleUsernameChange}
+                  fullWidth required
+                />
+              </Grid>
+              <Grid item  >
+                <TextField
+                  color='primary'
+                  id="outlined-password-input"
+                  label="Contraseña"
+                  type="password"
+                  autoComplete="current-password"
+                  variant="outlined"
+                  value={password}
+                  onChange={handlePasswordChange}
+                  fullWidth required
+                />
+              </Grid>
+              <Grid item >
+                <Button type="submit" size='large' fullWidth sx={btnLogin} variant="contained">
+                  Ingresar
+                </Button>
+              </Grid>
+            </Box>
+
+          </form>  
         </Grid>
       </Paper>
-    </form>
   );
 }
 
-export default LoginForm;
+export default loginForm;
 
