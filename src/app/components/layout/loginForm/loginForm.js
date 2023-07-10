@@ -4,11 +4,10 @@ import { TextField, Button, Grid, Paper, Typography } from '@mui/material';
 function LoginForm() {
   const formStyle = {
     height:'80vh',
-    marginTop:'50px',
   }
   const paperStyle={
-    margin: 'auto',
-    padding:'0 1rem 0 1rem'
+    marginLeft: '1.2rem',
+    padding:'0 1.5rem 0 1.5rem'
   }
   const btnLogin = {
     padding:'0.3rem 3rem 0.3rem 3rem',
@@ -16,7 +15,8 @@ function LoginForm() {
     "&:hover":{
       backgroundColor:'#09090b'
     },
-    width:'100%'
+    width:'100%',
+    marginTop:'0.5rem'
   }
 
   const [username, setUsername] = useState('');
