@@ -1,12 +1,18 @@
 "use client";
-import React, { useState } from "react";
-import Dashboard from "./components";
+import React, { useState, useEffect } from "react";
+
 import LoginForm from "./components/layout/loginForm/loginForm";
 import { Grid } from "@mui/material";
-import Router from "next/router";
+import { useRouter } from "next/navigation";
 export default function Home() {
   const [user, setUser] = useState(null);
-  // verificar jwt y la sesion
+  const router = useRouter();
+  // verificar jwt y la sesion -  crear el context provideer
+  useEffect(() => {
+    if (user) {
+      router.push("/dashboard");
+    }
+  }, [router, user]);
   return (
     <Grid
       container
@@ -17,7 +23,7 @@ export default function Home() {
       disableequaloverflow={"true"}
       spacing={3}
     >
-      {user ? <LoginForm setUser={setUser} /> : <Dashboard />}
+      <LoginForm setUser={setUser} />
     </Grid>
   );
 }
