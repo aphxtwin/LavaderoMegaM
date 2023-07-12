@@ -1,7 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
 import { TextField, Button, Grid, Paper, Typography, Box } from "@mui/material";
 
-function LoginForm(props) {
+const validationSchema = Yup.object().shape({
+  username: Yup.string()
+    .required('Usuario requerido'),
+  password: Yup.string()
+    .required('Contraseña requerida')
+    .min(8, 'Contraseña incorrecta'),
+});
+
+
+function LoginForm({setUser}) {
+
   const formStyle = {
     height:'75vh',
   }
@@ -17,48 +29,35 @@ function LoginForm(props) {
     },
   };
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
-  // const router = useRouter();
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    let res = await fetch("/api/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username: username, password: password }),
-    });
-    switch (res.status) {
-      case 401: {
-        console.log("CONTRASEÑA INCORRECTA");
-        break;
-      }
-      case 404: {
-        console.log("Usuario no encontrado");
-        break;
-      }
-      case 500: {
-        console.log("ERROR DE SERVIDOR");
-        break;
-      }
-      case 201: {
-        props.setUser(username);
-
-        break;
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values, { setErrors }) => {
+      const res = await fetch("/api/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username: values.username, password: values.password }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setUser(data);
+      } else {
+        if (data === "Usuario no encontrado") {
+          setErrors({ username: data });
+        } else if (data === "Contraseña incorrecta") {
+          setErrors({ password: data });
+        }
       }
     }
-  };
+  });
+  
 
+ 
   return (
     <Paper elevation={10} sx={paperStyle}>
       <Grid
@@ -68,7 +67,7 @@ function LoginForm(props) {
         alignItems={"stretch"}
         sx={formStyle}
       >
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={formik.handleSubmit}>
           <Box sx={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
             <Grid item>
               <Typography
@@ -76,7 +75,7 @@ function LoginForm(props) {
                 align="center"
                 sx={{ fontSize: { xs: "1.5rem", sm: "1.8rem", md: "2rem" } }}
               >
-                MEGA MultiServicios
+                <img src="./images/logo-dodle.svg" height={'100px'}></img>
               </Typography>
               <Typography
                 variant="subtitle1"
@@ -93,9 +92,11 @@ function LoginForm(props) {
                 id="outlined-basic"
                 label="Usuario"
                 variant="outlined"
-                value={username}
+                value={formik.values.username}
                 name="username"
-                onChange={handleUsernameChange}
+                onChange={formik.handleChange}
+                error={formik.touched.username && Boolean(formik.errors.username)}
+                helperText={formik.touched.username && formik.errors.username}
                 fullWidth
                 required
               />
@@ -109,11 +110,14 @@ function LoginForm(props) {
                 type="password"
                 autoComplete="current-password"
                 variant="outlined"
-                value={password}
-                onChange={handlePasswordChange}
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                error={formik.touched.password && Boolean(formik.errors.password)}
+                helperText={formik.touched.password && formik.errors.password}
                 fullWidth
                 required
               />
+
             </Grid>
             <Grid item>
               <Button
