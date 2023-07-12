@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { TextField, Button, Grid, Paper, Typography, Box } from "@mui/material";
+import { TextField, Button, Grid, Paper, Typography, Box, CircularProgress } from "@mui/material";
 
 const validationSchema = Yup.object().shape({
   username: Yup.string()
@@ -13,6 +13,7 @@ const validationSchema = Yup.object().shape({
 
 
 function LoginForm({setUser}) {
+  const [loading, setLoading] = useState(false);
 
   const formStyle = {
     height:'75vh',
@@ -36,6 +37,7 @@ function LoginForm({setUser}) {
     },
     validationSchema: validationSchema,
     onSubmit: async (values, { setErrors }) => {
+      setLoading(true);
       const res = await fetch("/api/users", {
         method: "POST",
         headers: {
@@ -44,8 +46,11 @@ function LoginForm({setUser}) {
         body: JSON.stringify({ username: values.username, password: values.password }),
       });
       const data = await res.json();
+      setLoading(false)
+
       if (res.ok) {
-        setUser(data);
+        localStorage.setItem('token',data.token)
+        setUser(data.user);
       } else {
         if (data === "Usuario no encontrado") {
           setErrors({ username: data });
@@ -127,7 +132,7 @@ function LoginForm({setUser}) {
                 sx={btnLogin}
                 variant="contained"
               >
-                Ingresar
+                {loading ? <CircularProgress size={24}/> : "ingresar"}
               </Button>
             </Grid>
           </Box>

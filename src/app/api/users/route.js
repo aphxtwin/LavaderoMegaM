@@ -1,10 +1,13 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
 
 BigInt.prototype.toJSON = function () {
   return this.toString();
 };
+const secretKey = process.env.SECRET_KEY
 
 export async function POST(req) {
   try {
@@ -26,9 +29,10 @@ export async function POST(req) {
     if (isValidPassword) {
       //usuario existe y contraseña es correcta
       const {hash, ...userWithoutHash} = user
-      return new NextResponse(JSON.stringify(userWithoutHash), {
+      const token = jwt.sign(userWithoutHash, secretKey ,{expiresIn:'5d'})
+      return new NextResponse(JSON.stringify({user:userWithoutHash, token:token}), {
         status: 200,
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" }, 
       });
       
     } else {
