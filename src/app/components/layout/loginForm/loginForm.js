@@ -49,7 +49,6 @@ function LoginForm({setUser}) {
       setLoading(false)
 
       if (res.ok) {
-        localStorage.setItem('token',data.token)
         setUser(data.user);
       } else {
         if (data === "Usuario no encontrado") {
@@ -61,8 +60,6 @@ function LoginForm({setUser}) {
     }
   });
   
-
- 
   return (
     <Paper elevation={10} sx={paperStyle}>
       <Grid

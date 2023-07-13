@@ -7,7 +7,7 @@ import jwt from "jsonwebtoken";
 BigInt.prototype.toJSON = function () {
   return this.toString();
 };
-const secretKey = process.env.SECRET_KEY
+const secretKey = process.env.JWT_SECRET_KEY
 
 export async function POST(req) {
   try {
@@ -32,12 +32,15 @@ export async function POST(req) {
       const token = jwt.sign(userWithoutHash, secretKey ,{expiresIn:'5d'})
       return new NextResponse(JSON.stringify({user:userWithoutHash, token:token}), {
         status: 200,
-        headers: { "Content-Type": "application/json" }, 
+        headers: { 
+          "Content-Type": "application/json",
+          "Set-Cookie": `user-token=${token}; Path=/; HttpOnly; SameSite=Lax;` 
+        }, 
       });
       
     } else {
       return new NextResponse(JSON.stringify("Contraseña incorrecta"), {
-        status: 400,
+        status: 401,
         headers: { "Content-Type": "application/json" },
       });
     }
