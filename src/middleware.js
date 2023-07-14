@@ -9,7 +9,7 @@ export default async function middleware(req) {
         console.log(err)
     })
 
-    if(req.nextUrl.pathname === '/dashboard' && !verifiedToken){
+    if(req.nextUrl.pathname.startsWith('/dashboard') && !verifiedToken){
         return NextResponse.redirect('http://localhost:3000/');
     }
 
@@ -21,5 +21,5 @@ export default async function middleware(req) {
 }
 
 export const config = {
-    matcher: ['/dashboard','/'],
+    matcher: ['/dashboard/:path*','/'],
 };
