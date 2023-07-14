@@ -29,7 +29,7 @@ export async function POST(req) {
     if (isValidPassword) {
       //usuario existe y contraseña es correcta
       const {hash, ...userWithoutHash} = user
-      const token = jwt.sign(userWithoutHash, secretKey ,{expiresIn:'5d'})
+      const token = jwt.sign(userWithoutHash, secretKey ,{expiresIn:'10h'})
       return new NextResponse(JSON.stringify({user:userWithoutHash, token:token}), {
         status: 200,
         headers: { 

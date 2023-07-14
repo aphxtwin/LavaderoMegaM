@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 export default function Home() {
   const [user, setUser] = useState(null);
   const router = useRouter();
-  // verificar jwt y la sesion -  crear el context provider
+  //verificar jwt y la sesion -  crear el context provider
   useEffect(() => {
     if (user) {
       router.push("/dashboard");

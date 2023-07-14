@@ -1,31 +1,25 @@
-
-import { NextResponse } from 'next/server';
+import {  NextResponse } from 'next/server';
 import {verifyAuth} from './lib/auth'
 
+export default async function middleware(req) {
 
-export async function middleware(req) {
-
-    const token = req.cookies.get('user-token');
-
+    const token = req.cookies.get('user-token')?.value;
 
     const verifiedToken = token && await verifyAuth(token).catch(err=>{
         console.log(err)
     })
 
-
-    if(req.nextUrl.pathname.startsWith('') && !verifiedToken){
-        return
+    if(req.nextUrl.pathname === '/dashboard' && !verifiedToken){
+        return NextResponse.redirect('http://localhost:3000/');
     }
 
-    if(!verifiedToken){
-        return NextResponse.redirect(new URL('/'), req.url)
+    if(req.nextUrl.pathname === '/' && verifiedToken){
+        return NextResponse.redirect('http://localhost:3000/dashboard');
     }
 
-    if(req.url.includes('/') && verifiedToken){
-        return NextResponse.redirect(new URL('/dashboard'))
-    }
+    return NextResponse.next();
 }
 
 export const config = {
-    matcher: ['/dashboard', '/'],
+    matcher: ['/dashboard','/'],
 };

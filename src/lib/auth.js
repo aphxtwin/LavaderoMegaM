@@ -13,6 +13,8 @@ export async function verifyAuth(token) {
         const verified = await jwtVerify(token, new TextEncoder().encode(getJwtSecretKey()))
         return verified.payload
     } catch(error){
+        
         throw new Error('El token ha expirado.')
+        
     }
 }
