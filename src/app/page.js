@@ -1,5 +1,6 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import { context } from "./userContext";
+import React, { useState, useEffect, useContext } from "react";
 import LoginForm from "./components/layout/loginForm/loginForm";
 import { Grid } from "@mui/material";
 import { useRouter } from "next/navigation";
@@ -7,12 +8,17 @@ import { useRouter } from "next/navigation";
 export default function Home() {
   const [user, setUser] = useState(null);
   const router = useRouter();
-  //verificar jwt y la sesion -  crear el context provider
+  const { userContext, setUserContext } = useContext(context);
+
   useEffect(() => {
-    if (user) {
+    if (Object.keys(userContext).length != 0) {
       router.push("/dashboard");
     }
-  }, [user]);
+    if (user) {
+      setUserContext(user.nombre);
+      router.push("/dashboard");
+    }
+  }, [router, setUserContext, user, userContext]);
 
   return (
     <Grid

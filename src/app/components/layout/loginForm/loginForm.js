@@ -1,27 +1,38 @@
-import React, { useState } from "react";
-import * as Yup from 'yup';
-import { useFormik } from 'formik';
-import { TextField, Button, Grid, Paper, Typography, Box, CircularProgress } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import * as Yup from "yup";
+import { useRouter } from "next/navigation";
+
+import { useFormik } from "formik";
+import {
+  TextField,
+  Button,
+  Grid,
+  Paper,
+  Typography,
+  Box,
+  CircularProgress,
+} from "@mui/material";
+import Image from "next/image";
 
 const validationSchema = Yup.object().shape({
-  username: Yup.string()
-    .required('Usuario requerido'),
+  username: Yup.string().required("Usuario requerido"),
   password: Yup.string()
-    .required('Contraseña requerida')
-    .min(8, 'Contraseña incorrecta'),
+    .required("Contraseña requerida")
+    .min(8, "Contraseña incorrecta"),
 });
 
-
-function LoginForm({setUser}) {
+function LoginForm({ setUser }) {
   const [loading, setLoading] = useState(false);
 
+  const router = useRouter();
+
   const formStyle = {
-    height:'75vh',
-  }
-  const paperStyle={
-    marginLeft:'7%',
-    padding:'0 1.5rem 0 1.5rem'
-  }
+    height: "75vh",
+  };
+  const paperStyle = {
+    marginLeft: "7%",
+    padding: "0 1.5rem 0 1.5rem",
+  };
   const btnLogin = {
     padding: "0.3rem 3rem 0.3rem 3rem",
     backgroundColor: "#27272a",
@@ -32,8 +43,8 @@ function LoginForm({setUser}) {
 
   const formik = useFormik({
     initialValues: {
-      username: '',
-      password: '',
+      username: "",
+      password: "",
     },
     validationSchema: validationSchema,
     onSubmit: async (values, { setErrors }) => {
@@ -43,10 +54,13 @@ function LoginForm({setUser}) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username: values.username, password: values.password }),
+        body: JSON.stringify({
+          username: values.username,
+          password: values.password,
+        }),
       });
       const data = await res.json();
-      setLoading(false)
+      setLoading(false);
 
       if (res.ok) {
         setUser(data.user);
@@ -57,9 +71,8 @@ function LoginForm({setUser}) {
           setErrors({ password: data });
         }
       }
-    }
+    },
   });
-  
   return (
     <Paper elevation={10} sx={paperStyle}>
       <Grid
@@ -70,20 +83,35 @@ function LoginForm({setUser}) {
         sx={formStyle}
       >
         <form onSubmit={formik.handleSubmit}>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "1.5rem",
+            }}
+          >
             <Grid item>
               <Typography
                 variant="h4"
                 align="center"
-                sx={{ fontSize: { xs: "1.5rem", sm: "1.8rem", md: "2rem" } }}
+                sx={{
+                  fontSize: { xs: "1.5rem", sm: "1.8rem", md: "2rem" },
+                }}
               >
-                <img src="./images/logo-dodle.svg" height={'100px'}></img>
+                <Image
+                  src="./images/logo-dodle.svg"
+                  width={300}
+                  height={300}
+                  alt="Logo"
+                />
               </Typography>
               <Typography
                 variant="subtitle1"
                 mt={2}
                 align="center"
-                sx={{ fontSize: { xs: "1rem", sm: "1.2rem", md: "1.5rem" } }}
+                sx={{
+                  fontSize: { xs: "1rem", sm: "1.2rem", md: "1.5rem" },
+                }}
               >
                 Ingrese sus datos para continuar
               </Typography>
@@ -97,7 +125,9 @@ function LoginForm({setUser}) {
                 value={formik.values.username}
                 name="username"
                 onChange={formik.handleChange}
-                error={formik.touched.username && Boolean(formik.errors.username)}
+                error={
+                  formik.touched.username && Boolean(formik.errors.username)
+                }
                 helperText={formik.touched.username && formik.errors.username}
                 fullWidth
                 required
@@ -114,12 +144,13 @@ function LoginForm({setUser}) {
                 variant="outlined"
                 value={formik.values.password}
                 onChange={formik.handleChange}
-                error={formik.touched.password && Boolean(formik.errors.password)}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
                 helperText={formik.touched.password && formik.errors.password}
                 fullWidth
                 required
               />
-
             </Grid>
             <Grid item>
               <Button
@@ -129,7 +160,7 @@ function LoginForm({setUser}) {
                 sx={btnLogin}
                 variant="contained"
               >
-                {loading ? <CircularProgress size={24}/> : "ingresar"}
+                {loading ? <CircularProgress size={24} /> : "ingresar"}
               </Button>
             </Grid>
           </Box>
