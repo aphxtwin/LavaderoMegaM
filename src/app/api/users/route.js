@@ -1,9 +1,10 @@
-import { prisma } from "@/lib/prisma";
-import { NextResponse } from "next/server";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import { NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
 
-BigInt.prototype.toJSON = function () {
+
+BigInt.prototype.toJSON = function() {
   return this.toString();
 };
 const secretKey = process.env.JWT_SECRET_KEY;
@@ -27,7 +28,7 @@ export async function POST(req) {
     const isValidPassword = await bcrypt.compare(password, user.hash);
 
     if (isValidPassword) {
-      //usuario existe y contraseña es correcta
+      // usuario existe y contraseña es correcta
       const { hash, ...userWithoutHash } = user;
       const token = jwt.sign(userWithoutHash, secretKey, { expiresIn: "10h" });
       return new NextResponse(
