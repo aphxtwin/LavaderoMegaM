@@ -3,7 +3,8 @@ import { verifyAuth } from "./lib/auth";
 
 export default async function middleware(req) {
   const token = req.cookies.get("user-token")?.value;
-  const { pathname, origin } = req.nextUrl;
+  const { origin } = req.nextUrl;
+  
   const verifiedToken =
     token &&
     (await verifyAuth(token).catch((err) => {

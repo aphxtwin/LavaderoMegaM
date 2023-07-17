@@ -1,12 +1,15 @@
-"use client";
+'use client'
 import { context } from "../userContext";
+
 export default function Dashboard() {
   return (
-    <div>
-      Dashboard
-      <context.Consumer>
-        {({ userContext }) => <div>usuario - {userContext}</div>}
-      </context.Consumer>
-    </div>
+    <context.Consumer>
+      {({ userContext }) => (
+        <div>
+          Dashboard
+          <div>usuario - {userContext.name}</div>
+        </div>
+      )}
+    </context.Consumer>
   );
 }
