@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as Yup from "yup";
+import { useRouter } from "next/navigation";
 
 import { useFormik } from "formik";
 import {
@@ -23,6 +24,7 @@ const validationSchema = Yup.object().shape({
 function LoginForm({ setUser }) {
   const [loading, setLoading] = useState(false);
 
+  const router = useRouter();
 
   const formStyle = {
     height: "75vh",
@@ -98,8 +100,8 @@ function LoginForm({ setUser }) {
               >
                 <Image
                   src="./images/logo-dodle.svg"
-                  width={280}
-                  height={100}
+                  width={300}
+                  height={300}
                   alt="Logo"
                 />
               </Typography>

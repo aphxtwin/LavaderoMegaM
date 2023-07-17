@@ -1,11 +1,13 @@
-import "./globals.css";
-import { Inter } from "next/font/google";
-import AuthContext from "./components/layout/loginForm/authContext";
-const inter = Inter({ subsets: ["latin"] });
+import './globals.css';
+import React from 'react';
+import { Inter } from 'next/font/google';
+import AuthContext from './components/layout/loginForm/authContext';
+
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: "Mega MultiServicios",
-  description: "",
+  title: 'Mega MultiServicios',
+  description: '',
   robots: {
     index: false,
     follow: false,
