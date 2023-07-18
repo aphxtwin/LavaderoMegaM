@@ -5,7 +5,7 @@ import { Button, Typography, Box } from '@mui/material';
 
 export default function Error({ error, reset }) {
   useEffect(() => {
-    console.error();
+    console.log(error);
   }, [error]);
   return (
     <Box sx={{

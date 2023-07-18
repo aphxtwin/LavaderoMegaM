@@ -1,9 +1,11 @@
-"use client";
-import React from "react";
+'use client';
+
+import React from 'react';
 
 const context = React.createContext({
   userContext: {},
-  setUserContext: (value) => {},
+  setUserContext: () => {},
 });
 
+// eslint-disable-next-line import/prefer-default-export
 export { context };

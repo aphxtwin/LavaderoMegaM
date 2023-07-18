@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
-import * as Yup from "yup";
-import { useRouter } from "next/navigation";
-
-import { useFormik } from "formik";
+import React, { useState } from 'react';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
 import {
   TextField,
   Button,
@@ -11,48 +9,46 @@ import {
   Typography,
   Box,
   CircularProgress,
-} from "@mui/material";
-import Image from "next/image";
+} from '@mui/material';
+import Image from 'next/image';
 
 const validationSchema = Yup.object().shape({
-  username: Yup.string().required("Usuario requerido"),
+  username: Yup.string().required('Usuario requerido'),
   password: Yup.string()
-    .required("Contraseña requerida")
-    .min(8, "Contraseña incorrecta"),
+    .required('Contraseña requerida')
+    .min(8, 'Contraseña incorrecta'),
 });
 
 function LoginForm({ setUser }) {
   const [loading, setLoading] = useState(false);
 
-  const router = useRouter();
-
   const formStyle = {
-    height: "75vh",
+    height: '75vh',
   };
   const paperStyle = {
-    marginLeft: "7%",
-    padding: "0 1.5rem 0 1.5rem",
+    marginLeft: '7%',
+    padding: '0 1.5rem 0 1.5rem',
   };
   const btnLogin = {
-    padding: "0.3rem 3rem 0.3rem 3rem",
-    backgroundColor: "#27272a",
-    "&:hover": {
-      backgroundColor: "#09090b",
+    padding: '0.3rem 3rem 0.3rem 3rem',
+    backgroundColor: '#27272a',
+    '&:hover': {
+      backgroundColor: '#09090b',
     },
   };
 
   const formik = useFormik({
     initialValues: {
-      username: "",
-      password: "",
+      username: '',
+      password: '',
     },
-    validationSchema: validationSchema,
+    validationSchema,
     onSubmit: async (values, { setErrors }) => {
       setLoading(true);
-      const res = await fetch("/api/users", {
-        method: "POST",
+      const res = await fetch('/api/users', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           username: values.username,
@@ -64,12 +60,10 @@ function LoginForm({ setUser }) {
 
       if (res.ok) {
         setUser(data.user);
-      } else {
-        if (data === "Usuario no encontrado") {
-          setErrors({ username: data });
-        } else if (data === "Contraseña incorrecta") {
-          setErrors({ password: data });
-        }
+      } else if (data === 'Usuario no encontrado') {
+        setErrors({ username: data });
+      } else if (data === 'Contraseña incorrecta') {
+        setErrors({ password: data });
       }
     },
   });
@@ -77,17 +71,17 @@ function LoginForm({ setUser }) {
     <Paper elevation={10} sx={paperStyle}>
       <Grid
         container
-        direction={"column"}
-        justifyContent={"center"}
-        alignItems={"stretch"}
+        direction="column"
+        justifyContent="center"
+        alignItems="stretch"
         sx={formStyle}
       >
         <form onSubmit={formik.handleSubmit}>
           <Box
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "1.5rem",
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1.5rem',
             }}
           >
             <Grid item>
@@ -95,7 +89,7 @@ function LoginForm({ setUser }) {
                 variant="h4"
                 align="center"
                 sx={{
-                  fontSize: { xs: "1.5rem", sm: "1.8rem", md: "2rem" },
+                  fontSize: { xs: '1.5rem', sm: '1.8rem', md: '2rem' },
                 }}
               >
                 <Image
@@ -110,7 +104,7 @@ function LoginForm({ setUser }) {
                 mt={2}
                 align="center"
                 sx={{
-                  fontSize: { xs: "1rem", sm: "1.2rem", md: "1.5rem" },
+                  fontSize: { xs: '1rem', sm: '1.2rem', md: '1.5rem' },
                 }}
               >
                 Ingrese sus datos para continuar
@@ -160,7 +154,7 @@ function LoginForm({ setUser }) {
                 sx={btnLogin}
                 variant="contained"
               >
-                {loading ? <CircularProgress size={24} /> : "ingresar"}
+                {loading ? <CircularProgress size={24} /> : 'ingresar'}
               </Button>
             </Grid>
           </Box>

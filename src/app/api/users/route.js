@@ -1,9 +1,10 @@
-import { prisma } from "@/lib/prisma";
-import { NextResponse } from "next/server";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+/* eslint-disable import/prefer-default-export */
+import { NextResponse } from 'next/server';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { prisma } from '@/lib/prisma';
 
-BigInt.prototype.toJSON = function() {
+BigInt.prototype.toJSON = function () {
   return this.toString();
 };
 const secretKey = process.env.JWT_SECRET_KEY;
@@ -18,38 +19,37 @@ export async function POST(req) {
       },
     });
     if (!user) {
-      return new NextResponse(JSON.stringify("Usuario no encontrado"), {
+      return new NextResponse(JSON.stringify('Usuario no encontrado'), {
         status: 404,
-        headers: { "Content-Type": "application/json" },
+        headers: { 'Content-Type': 'application/json' },
       });
     }
 
     const isValidPassword = await bcrypt.compare(password, user.hash);
 
     if (isValidPassword) {
-      //usuario existe y contraseña es correcta
+      // usuario existe y contraseña es correcta
       const { hash, ...userWithoutHash } = user;
-      const token = jwt.sign(userWithoutHash, secretKey, { expiresIn: "10h" });
+      const token = jwt.sign(userWithoutHash, secretKey, { expiresIn: '10h' });
       return new NextResponse(
-        JSON.stringify({ user: userWithoutHash, token: token }),
+        JSON.stringify({ user: userWithoutHash, token }),
         {
           status: 200,
           headers: {
-            "Content-Type": "application/json",
-            "Set-Cookie": `user-token=${token}; Path=/; HttpOnly; SameSite=Lax;`,
+            'Content-Type': 'application/json',
+            'Set-Cookie': `user-token=${token}; Path=/; HttpOnly; SameSite=Lax;`,
           },
-        }
+        },
       );
-    } else {
-      return new NextResponse(JSON.stringify("Contraseña incorrecta"), {
-        status: 401,
-        headers: { "Content-Type": "application/json" },
-      });
     }
+    return new NextResponse(JSON.stringify('Contraseña incorrecta'), {
+      status: 401,
+      headers: { 'Content-Type': 'application/json' },
+    });
   } catch (error) {
     return new NextResponse(JSON.stringify(error.message), {
       status: 500,
-      headers: { "Content-Type": "application/json" },
+      headers: { 'Content-Type': 'application/json' },
     });
   }
 }
