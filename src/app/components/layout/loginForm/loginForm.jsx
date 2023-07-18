@@ -95,8 +95,8 @@ function LoginForm({ setUser }) {
               >
                 <Image
                   src="./images/logo-dodle.svg"
-                  width={300}
-                  height={300}
+                  width={200}
+                  height={100}
                   alt="Logo"
                 />
               </Typography>
