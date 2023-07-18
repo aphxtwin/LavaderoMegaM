@@ -2,5 +2,6 @@
   "extends": ["next/core-web-vitals","airbnb"],
   "rules":{
     "linebreak-style": 0
-  }
+  },
+  "env": {"es2020":true}
 }

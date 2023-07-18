@@ -11,6 +11,7 @@ import {
   CircularProgress,
 } from '@mui/material';
 import Image from 'next/image';
+import PropTypes from 'prop-types';
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required('Usuario requerido'),
@@ -163,5 +164,9 @@ function LoginForm({ setUser }) {
     </Paper>
   );
 }
+
+LoginForm.propTypes = {
+  setUser: PropTypes.func.isRequired,
+};
 
 export default LoginForm;

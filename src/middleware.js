@@ -7,6 +7,7 @@ export default async function middleware(req) {
 
   const verifiedToken = token
     && (await verifyAuth(token).catch((err) => {
+      // eslint-disable-next-line no-console
       console.log(err);
     }));
 

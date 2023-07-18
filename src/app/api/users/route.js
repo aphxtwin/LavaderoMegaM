@@ -2,11 +2,10 @@
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+
+// eslint-disable-next-line import/extensions, import/no-unresolved
 import { prisma } from '@/lib/prisma';
 
-BigInt.prototype.toJSON = function () {
-  return this.toString();
-};
 const secretKey = process.env.JWT_SECRET_KEY;
 
 export async function POST(req) {
