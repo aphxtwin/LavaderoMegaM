@@ -9,6 +9,7 @@ datasource db {
   shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
 }
 
+
 model caja {
   caja_id       BigInt       @id(map: "caja_key") @default(autoincrement())
   fecha         DateTime     @db.Timestamp(6)
