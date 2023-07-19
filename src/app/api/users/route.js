@@ -6,6 +6,11 @@ import jwt from 'jsonwebtoken';
 // eslint-disable-next-line import/extensions, import/no-unresolved
 import { prisma } from '@/lib/prisma';
 
+// eslint-disable-next-line no-extend-native, func-names
+BigInt.prototype.toJSON = function () {
+  return this.toString();
+};
+
 const secretKey = process.env.JWT_SECRET_KEY;
 
 export async function POST(req) {
@@ -31,7 +36,7 @@ export async function POST(req) {
       const { hash, ...userWithoutHash } = user;
       const token = jwt.sign(userWithoutHash, secretKey, { expiresIn: '10h' });
       return new NextResponse(
-        JSON.stringify({ user: userWithoutHash, token }),
+        JSON.stringify({ user: userWithoutHash.toString(), token }),
         {
           status: 200,
           headers: {
