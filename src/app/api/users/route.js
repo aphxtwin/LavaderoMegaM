@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable import/prefer-default-export */
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
@@ -22,6 +23,7 @@ export async function POST(req) {
         nombre: username,
       },
     });
+    console.log('user', user);
     if (!user) {
       return new NextResponse(JSON.stringify('Usuario no encontrado'), {
         status: 404,
@@ -30,11 +32,13 @@ export async function POST(req) {
     }
 
     const isValidPassword = await bcrypt.compare(password, user.hash);
-
+    console.log('valid', isValidPassword);
     if (isValidPassword) {
       // usuario existe y contraseña es correcta
       const { hash, ...userWithoutHash } = user;
+      console.log('userWithoutH', userWithoutHash);
       const token = jwt.sign(userWithoutHash, secretKey, { expiresIn: '10h' });
+      console.log(token);
       return new NextResponse(
         JSON.stringify({ user: userWithoutHash.toString(), token }),
         {
@@ -51,6 +55,7 @@ export async function POST(req) {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {
+    console.log('error', error);
     return new NextResponse(JSON.stringify(error.message), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
