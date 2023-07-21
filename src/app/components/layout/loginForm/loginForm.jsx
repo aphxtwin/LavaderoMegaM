@@ -59,7 +59,7 @@ function LoginForm({ setUser }) {
       const data = await res.json();
       setLoading(false);
 
-      if (res.status === 200) {
+      if (res.ok) {
         setUser(data.user);
       } else if (data === 'Usuario no encontrado') {
         setErrors({ username: data });
