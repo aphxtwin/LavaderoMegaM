@@ -11,7 +11,8 @@ import {
   CircularProgress,
 } from '@mui/material';
 import Image from 'next/image';
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { logIn } from '../../../redux/slices/authSlice';
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required('Usuario requerido'),
@@ -20,9 +21,9 @@ const validationSchema = Yup.object().shape({
     .min(8, 'Contraseña incorrecta'),
 });
 
-function LoginForm({ setUser }) {
+function LoginForm() {
   const [loading, setLoading] = useState(false);
-
+  const dispatch = useDispatch();
   const formStyle = {
     height: '75vh',
   };
@@ -60,11 +61,11 @@ function LoginForm({ setUser }) {
       setLoading(false);
 
       if (res.ok) {
-        setUser(data.user);
-      } else if (data === 'Usuario no encontrado') {
-        setErrors({ username: data });
-      } else if (data === 'Contraseña incorrecta') {
-        setErrors({ password: data });
+        console.log(data.user);
+        dispatch(logIn(data.user));
+
+      } else {
+        setErrors('Contrasena o usuario invalido.');
       }
     },
   });
@@ -164,9 +165,5 @@ function LoginForm({ setUser }) {
     </Paper>
   );
 }
-
-LoginForm.propTypes = {
-  setUser: PropTypes.func.isRequired,
-};
 
 export default LoginForm;

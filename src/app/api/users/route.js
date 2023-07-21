@@ -16,14 +16,14 @@ const secretKey = process.env.JWT_SECRET_KEY;
 export async function POST(req) {
   try {
     const { username, password } = await req.json();
-
+    const genericError = 'Contrasena o usuario invalido.';
     const user = await prisma.usuario.findFirst({
       where: {
         nombre: username,
       },
     });
     if (!user) {
-      return new NextResponse(JSON.stringify('Usuario no encontrado'), {
+      return new NextResponse(JSON.stringify(genericError), {
         status: 404,
         headers: { 'Content-Type': 'application/json' },
       });
@@ -35,17 +35,17 @@ export async function POST(req) {
       const { hash, ...userWithoutHash } = user;
       const token = jwt.sign(userWithoutHash, secretKey, { expiresIn: '10h' });
       return new NextResponse(
-        JSON.stringify({ user: userWithoutHash.toString(), token }),
+        JSON.stringify({ user: userWithoutHash, token }),
         {
           status: 200,
           headers: {
             'Content-Type': 'application/json',
-            'Set-Cookie': `user-token=${token}; Path=/; HttpOnly; SameSite=Lax;`,
+            'Set-Cookie': `user-token=${token}; Path=/; HttpOnly; SameSite=Lax; Secure;`,
           },
         },
       );
     }
-    return new NextResponse(JSON.stringify('Contraseña incorrecta'), {
+    return new NextResponse(JSON.stringify(genericError), {
       status: 401,
       headers: { 'Content-Type': 'application/json' },
     });
