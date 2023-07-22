@@ -61,9 +61,7 @@ function LoginForm() {
       setLoading(false);
 
       if (res.ok) {
-        console.log(data.user);
         dispatch(logIn(data.user));
-
       } else {
         setErrors('Contrasena o usuario invalido.');
       }
