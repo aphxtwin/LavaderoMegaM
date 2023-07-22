@@ -40,7 +40,7 @@ export async function POST(req) {
           status: 200,
           headers: {
             'Content-Type': 'application/json',
-            'Set-Cookie': `user-token=${token}; Path=/; HttpOnly; SameSite=Lax; Secure;`,
+            'Set-Cookie': `user-token=${token}; Path=/; HttpOnly; SameSite=Lax; Secure`,
           },
         },
       );

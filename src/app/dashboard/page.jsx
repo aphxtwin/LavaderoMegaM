@@ -6,9 +6,8 @@ import { logIn } from '../redux/slices/authSlice';
 
 // eslint-disable-next-line react/prop-types
 export default function Dashboard() {
-  const userAuth = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch();
-
+  const userAuth = useSelector((state) => state.user.currentUser);
   useEffect(() => {
     const loadUser = async () => {
       const res = await fetch('/api/currentUser');
@@ -20,12 +19,11 @@ export default function Dashboard() {
     };
     loadUser();
   }, [dispatch]);
-
   return (
     <div>
       Dashboard -
       {' '}
-      {userAuth ? userAuth.nombre : 'nullo'}
+      {userAuth && userAuth.nombre}
     </div>
   );
 }
