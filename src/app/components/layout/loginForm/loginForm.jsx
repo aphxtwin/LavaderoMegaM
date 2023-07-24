@@ -63,7 +63,7 @@ function LoginForm() {
       if (res.ok) {
         dispatch(logIn(data.user));
       } else {
-        setErrors('Contrasena o usuario invalido.');
+        setErrors({ username: data, password: data });
       }
     },
   });
