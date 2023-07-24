@@ -58,10 +58,9 @@ function LoginForm() {
         }),
       });
       const data = await res.json();
-      setLoading(false);
-
       if (res.ok) {
         dispatch(logIn(data.user));
+        setLoading(false);
       } else {
         setErrors({ username: data, password: data });
       }
