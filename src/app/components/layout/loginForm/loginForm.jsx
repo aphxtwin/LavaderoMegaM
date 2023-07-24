@@ -47,7 +47,7 @@ function LoginForm() {
     validationSchema,
     onSubmit: async (values, { setErrors }) => {
       setLoading(true);
-      const res = await fetch('/api/users', {
+      const res = await fetch('/api/auth', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
