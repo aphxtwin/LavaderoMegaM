@@ -33,9 +33,22 @@ function LoginForm() {
   };
   const btnLogin = {
     padding: '0.3rem 3rem 0.3rem 3rem',
-    backgroundColor: '#27272a',
+    backgroundColor: '#283D5B',
     '&:hover': {
-      backgroundColor: '#09090b',
+      backgroundColor: '#384E6B',
+    },
+  };
+  const inputFields = {
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: '#283D5B',
+      },
+      '&:hover fieldset': {
+        borderColor: '#283D5B',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#283D5B',
+      },
     },
   };
 
@@ -104,6 +117,8 @@ function LoginForm() {
                 align="center"
                 sx={{
                   fontSize: { xs: '1rem', sm: '1.2rem', md: '1.5rem' },
+                  color: '#082755',
+                  fontWeight: 'semi-bold',
                 }}
               >
                 Ingrese sus datos para continuar
@@ -124,6 +139,7 @@ function LoginForm() {
                 helperText={formik.touched.username && formik.errors.username}
                 fullWidth
                 required
+                sx={inputFields}
               />
             </Grid>
             <Grid item>
@@ -143,6 +159,8 @@ function LoginForm() {
                 helperText={formik.touched.password && formik.errors.password}
                 fullWidth
                 required
+                sx={inputFields}
+
               />
             </Grid>
             <Grid item>
@@ -153,7 +171,7 @@ function LoginForm() {
                 sx={btnLogin}
                 variant="contained"
               >
-                {loading ? <CircularProgress size={24} /> : 'ingresar'}
+                {loading ? <CircularProgress size={24} sx={{ color: 'white' }} /> : 'ingresar'}
               </Button>
             </Grid>
           </Box>
