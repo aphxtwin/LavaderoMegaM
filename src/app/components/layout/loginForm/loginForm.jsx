@@ -75,8 +75,8 @@ function LoginForm() {
         dispatch(logIn(data.user));
       } else {
         setErrors({ username: data, password: data });
+        setLoading(false);
       }
-      setLoading(false);
     },
   });
   return (
