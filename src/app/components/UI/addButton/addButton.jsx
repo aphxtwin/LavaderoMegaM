@@ -41,7 +41,7 @@ function AddButton() {
         sx={{
           '.MuiPaper-root': {
             color: 'white',
-            padding: '0.5rem',
+            padding: '0.4rem',
             backgroundColor: 'rgba(47, 56, 66, 1)',
           },
         }}
