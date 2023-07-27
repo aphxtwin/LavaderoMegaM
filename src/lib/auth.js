@@ -1,5 +1,5 @@
 import { jwtVerify } from 'jose';
-// 
+//
 export const getJwtSecretKey = () => {
   const secret = process.env.JWT_SECRET_KEY;
   if (!secret || secret.length === 0) {
@@ -7,7 +7,7 @@ export const getJwtSecretKey = () => {
   }
   return secret;
 };
-/* Function used to verify the authenticity of the token.*/
+/* Function used to verify the authenticity of the token. */
 export async function verifyAuth(token) {
   try {
     const verified = await jwtVerify(token, new TextEncoder().encode(getJwtSecretKey()));
