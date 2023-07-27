@@ -6,6 +6,7 @@ import { Container } from '@mui/material';
 import { logIn } from '../redux/slices/authSlice';
 import ResponsiveNavbar from '../components/UI/navbar/responsiveNavbar';
 import ServicesInProgressTable from '../components/UI/servicesInProgressTable/servicesInProgressTable';
+import AddButton from '../components/UI/addButton/addButton';
 // eslint-disable-next-line react/prop-types
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ export default function Dashboard() {
       <ResponsiveNavbar />
       <Container maxWidth="xl">
         <ServicesInProgressTable />
+        <AddButton />
       </Container>
 
     </>
