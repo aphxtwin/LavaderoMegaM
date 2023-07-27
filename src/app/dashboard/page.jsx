@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Container } from '@mui/material';
 import { logIn } from '../redux/slices/authSlice';
 import ResponsiveNavbar from '../components/UI/navbar/responsiveNavbar';
@@ -9,7 +9,6 @@ import ServicesInProgressTable from '../components/UI/servicesInProgressTable/se
 // eslint-disable-next-line react/prop-types
 export default function Dashboard() {
   const dispatch = useDispatch();
-  const userAuth = useSelector((state) => state.user.currentUser);
   useEffect(() => {
     const loadUser = async () => {
       const res = await fetch('/api/auth/currentUser');
@@ -24,7 +23,7 @@ export default function Dashboard() {
   return (
     <>
       <ResponsiveNavbar />
-      <Container maxWidth="xl" >
+      <Container maxWidth="xl">
         <ServicesInProgressTable />
       </Container>
 
