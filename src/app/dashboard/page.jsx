@@ -2,9 +2,10 @@
 
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Container } from '@mui/material';
 import { logIn } from '../redux/slices/authSlice';
 import ResponsiveNavbar from '../components/UI/navbar/responsiveNavbar';
-
+import ServicesInProgressTable from '../components/UI/servicesInProgressTable/servicesInProgressTable';
 // eslint-disable-next-line react/prop-types
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -23,9 +24,10 @@ export default function Dashboard() {
   return (
     <>
       <ResponsiveNavbar />
-      Dashboard -
-      {' '}
-      {userAuth && userAuth.nombre}
+      <Container maxWidth="xl" >
+        <ServicesInProgressTable />
+      </Container>
+
     </>
 
   );

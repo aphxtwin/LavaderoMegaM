@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Image from 'next/image';
 import useLogout from '../../../hooks/useLogout';
 
-const pages = ['Servicios', 'Caja', 'Clientes', 'Reportes'];
+const pages = ['Vista General', 'Servicios', 'Caja', 'Clientes'];
 const settings = ['Perfil', 'Logout'];
 
 function ResponsiveNavbar() {
