@@ -3,8 +3,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logIn } from '../redux/slices/authSlice';
-import LogOutButton from '../components/UI/logOutButton';
-import Navbar from '../components/UI/navbar';
+import ResponsiveNavbar from '../components/UI/navbar/responsiveNavbar';
 
 // eslint-disable-next-line react/prop-types
 export default function Dashboard() {
@@ -22,12 +21,12 @@ export default function Dashboard() {
     loadUser();
   }, [dispatch]);
   return (
-    <div>
-      <Navbar />
+    <>
+      <ResponsiveNavbar />
       Dashboard -
       {' '}
       {userAuth && userAuth.nombre}
-      <LogOutButton />
-    </div>
+    </>
+
   );
 }

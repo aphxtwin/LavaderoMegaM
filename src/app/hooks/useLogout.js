@@ -1,14 +1,11 @@
-'use client';
-
-import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Button } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { logOut } from '../../redux/slices/authSlice';
+import { logOut } from '../redux/slices/authSlice';
 
-function LogOutButton() {
+export default function useLogout() {
   const dispatch = useDispatch();
   const router = useRouter();
+
   const handleLogout = async () => {
     const res = await fetch('/api/auth/logOut', { method: 'POST' });
     if (res.ok) {
@@ -17,9 +14,5 @@ function LogOutButton() {
     }
   };
 
-  return (
-    <Button onClick={handleLogout}> Logout </Button>
-  );
+  return handleLogout;
 }
-
-export default LogOutButton;
