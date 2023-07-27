@@ -2,7 +2,6 @@ import './globals.css';
 import React from 'react';
 import { Inter } from 'next/font/google';
 import PropTypes from 'prop-types';
-import { Container, ThemeProvider } from '@mui/material';
 import { ReduxProvider } from './redux/provider';
 
 const inter = Inter({ subsets: ['latin'] });
