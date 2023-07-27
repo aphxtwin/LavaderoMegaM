@@ -1,10 +1,16 @@
+'use client';
 import './globals.css';
 import React from 'react';
-import { Inter } from 'next/font/google';
+import { Roboto_Slab } from 'next/font/google';
 import PropTypes from 'prop-types';
 import { ReduxProvider } from './redux/provider';
 
-const inter = Inter({ subsets: ['latin'] });
+const robotoSlab = Roboto_Slab({
+  weight: ['400', '700'],
+  style: ['normal'],
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 export const metadata = {
   title: 'Mega MultiServicios',
@@ -21,7 +27,12 @@ export default function RootLayout({ children }) {
   };
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <style jsx global>{`
+        html {
+          font-family: ${robotoSlab.style.fontFamily};
+        }
+      `}</style>
+      <body className={robotoSlab.className}>
         <ReduxProvider>
           {children}
         </ReduxProvider>
