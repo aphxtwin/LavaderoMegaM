@@ -38,6 +38,13 @@ function AddButton() {
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}
+        sx={{
+            '.MuiPaper-root': {
+                color: 'white',
+                padding: '0.5rem',
+                backgroundColor: 'rgba(47, 56, 66, 1)',
+            },
+        }}
       >
         <MenuItem onClick={handleClose}>Nuevo Servicio</MenuItem>
         <MenuItem onClick={handleClose}>Nuevo Cliente</MenuItem>
