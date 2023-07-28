@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Box } from '@mui/material';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import AddTaskIcon from '@mui/icons-material/AddTask';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
@@ -46,8 +48,18 @@ function AddButton() {
           },
         }}
       >
-        <MenuItem onClick={handleClose}>Nuevo Servicio</MenuItem>
-        <MenuItem onClick={handleClose}>Nuevo Cliente</MenuItem>
+        <MenuItem onClick={handleClose}>
+            <AddTaskIcon/>
+            <Box sx={{ marginLeft:'5%' }}>
+            Nuevo Servicio
+            </Box>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+            <PersonAddIcon/>
+            <Box sx={{ marginLeft:'5%' }}>
+            Nuevo Cliente
+            </Box>
+        </MenuItem>
       </Menu>
     </Box>
   );

@@ -57,7 +57,6 @@ function ServicesInProgressTable() {
               </Grid>
             </Box>
           </Grid>
-          <Box sx={{ padding: '0.5rem' }} />
           <Grid item xs={12}>
             <TableContainer component={Paper}>
               <Table>
