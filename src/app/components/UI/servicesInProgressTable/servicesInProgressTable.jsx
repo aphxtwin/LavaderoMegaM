@@ -15,6 +15,7 @@ import {
   ThemeProvider,
 } from '@mui/material';
 import theme from './theme';
+import CarReadyCheckbox from '../carReadyCheckbox/carReadyCheckbox';
 
 function ServicesInProgressTable() {
   // dUMMY DATA
@@ -62,6 +63,7 @@ function ServicesInProgressTable() {
               <Table>
                 <TableHead sx={{ borderTop: '4px solid rgba(183, 184, 192, 1)', borderBottom: '4px solid rgba(183, 184, 192, 1)' }}>
                   <TableRow>
+                    <TableCell></TableCell>
                     <TableCell>Patente</TableCell>
                     <TableCell>Auto</TableCell>
                     <TableCell>Cliente</TableCell>
@@ -72,6 +74,13 @@ function ServicesInProgressTable() {
                 <TableBody>
                   {rows.map((row) => (
                     <TableRow key={row.patente}>
+                      <TableCell>
+                        <CarReadyCheckbox
+                          car={row.auto}
+                          plate={row.patente}
+                          client={row.cliente}
+                        />
+                      </TableCell>
                       <TableCell>{row.patente}</TableCell>
                       <TableCell>{row.auto}</TableCell>
                       <TableCell>{row.cliente}</TableCell>
