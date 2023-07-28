@@ -23,6 +23,7 @@ const validationSchema = Yup.object().shape({
 
 function LoginForm() {
   const [loading, setLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useDispatch();
   const formStyle = {
     height: '75vh',
@@ -59,6 +60,7 @@ function LoginForm() {
     },
     validationSchema,
     onSubmit: async (values, { setErrors }) => {
+      setIsSubmitting(true);
       setLoading(true);
       const res = await fetch('/api/auth', {
         method: 'POST',
@@ -76,7 +78,8 @@ function LoginForm() {
       } else {
         setErrors({ username: data, password: data });
         setLoading(false);
-      }
+        setIsSubmitting(false)
+      } 
     },
   });
   return (
@@ -139,6 +142,7 @@ function LoginForm() {
                 helperText={formik.touched.username && formik.errors.username}
                 fullWidth
                 required
+                disabled={ isSubmitting }
                 sx={inputFields}
               />
             </Grid>
@@ -160,7 +164,7 @@ function LoginForm() {
                 fullWidth
                 required
                 sx={inputFields}
-
+                disabled={ isSubmitting }
               />
             </Grid>
             <Grid item>
