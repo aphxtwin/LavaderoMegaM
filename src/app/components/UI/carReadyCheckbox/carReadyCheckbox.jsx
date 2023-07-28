@@ -57,8 +57,8 @@ function CarReadyCheckbox({ car, plate, client }) {
   );
 }
 CarReadyCheckbox.propTypes = {
-    car: PropTypes.string.isRequired,
-    plate: PropTypes.string.isRequired,
-    client: PropTypes.string.isRequired,
+  car: PropTypes.string.isRequired,
+  plate: PropTypes.string.isRequired,
+  client: PropTypes.string.isRequired,
 };
 export default CarReadyCheckbox;

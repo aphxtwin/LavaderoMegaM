@@ -63,7 +63,7 @@ function ServicesInProgressTable() {
               <Table>
                 <TableHead sx={{ borderTop: '4px solid rgba(183, 184, 192, 1)', borderBottom: '4px solid rgba(183, 184, 192, 1)' }}>
                   <TableRow>
-                    <TableCell></TableCell>
+                    <TableCell />
                     <TableCell>Patente</TableCell>
                     <TableCell>Auto</TableCell>
                     <TableCell>Cliente</TableCell>
