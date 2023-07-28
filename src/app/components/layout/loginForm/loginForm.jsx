@@ -78,8 +78,8 @@ function LoginForm() {
       } else {
         setErrors({ username: data, password: data });
         setLoading(false);
-        setIsSubmitting(false)
-      } 
+        setIsSubmitting(false);
+      }
     },
   });
   return (
@@ -142,7 +142,7 @@ function LoginForm() {
                 helperText={formik.touched.username && formik.errors.username}
                 fullWidth
                 required
-                disabled={ isSubmitting }
+                disabled={isSubmitting}
                 sx={inputFields}
               />
             </Grid>
@@ -164,7 +164,7 @@ function LoginForm() {
                 fullWidth
                 required
                 sx={inputFields}
-                disabled={ isSubmitting }
+                disabled={isSubmitting}
               />
             </Grid>
             <Grid item>
