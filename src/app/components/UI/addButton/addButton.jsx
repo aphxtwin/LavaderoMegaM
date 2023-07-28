@@ -49,16 +49,16 @@ function AddButton() {
         }}
       >
         <MenuItem onClick={handleClose}>
-            <AddTaskIcon/>
-            <Box sx={{ marginLeft:'5%' }}>
+          <AddTaskIcon />
+          <Box sx={{ marginLeft: '5%' }}>
             Nuevo Servicio
-            </Box>
+          </Box>
         </MenuItem>
         <MenuItem onClick={handleClose}>
-            <PersonAddIcon/>
-            <Box sx={{ marginLeft:'5%' }}>
+          <PersonAddIcon />
+          <Box sx={{ marginLeft: '5%' }}>
             Nuevo Cliente
-            </Box>
+          </Box>
         </MenuItem>
       </Menu>
     </Box>
