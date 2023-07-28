@@ -151,7 +151,7 @@ function ResponsiveNavbar() {
             >
               <MenuItem onClick={() => { handleCloseUserMenu(); handleLogout(); }}>
                 <LogoutIcon />
-                <Typography sx={{ marginLeft: '2%' }} textAlign="center">Salir</Typography>
+                <Typography sx={{ marginLeft: '2%', paddingRight: '0.5rem' }} textAlign="center">Salir</Typography>
               </MenuItem>
             </Menu>
           </Box>

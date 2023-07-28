@@ -16,7 +16,6 @@ function CarReadyCheckbox({ car, plate, client }) {
   };
 
   const handleConfirm = () => {
-    // Here you can handle the confirmation of the car being ready
     setOpen(false);
   };
 

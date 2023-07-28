@@ -21,16 +21,31 @@ function ServicesInProgressTable() {
   // dUMMY DATA
   const rows = [
     {
-      patente: 'ABC123', auto: 'Toyota', cliente: 'John Doe', entrada: '10:00 AM', estado: 'In Process',
+      patente: 'ABC123', auto: 'Toyota', cliente: 'John Doe', entrada: '10:00 AM', estado: 'Iniciado',
     },
     {
-      patente: 'ABC1235', auto: 'Toyota', cliente: 'John Doe', entrada: '10:00 AM', estado: 'In Process',
+      patente: 'ABC1235', auto: 'Toyota', cliente: 'John Doe', entrada: '10:00 AM', estado: 'En Progreso',
+    },
+    {
+      patente: 'ABC1235', auto: 'Toyota', cliente: 'John Doe', entrada: '10:00 AM', estado: 'Terminado',
     },
     // More rows here...
   ];
   const iniciados = 10;
   const enProgreso = 5;
   const terminados = 15;
+  const statusColor = (state) => {
+    switch (state) {
+      case 'Iniciado':
+        return { color: 'rgba(84, 81, 255, 1)' };
+      case 'En Progreso':
+        return { color: 'rgba(255, 107, 0, 1)' };
+      case 'Terminado':
+        return { color: 'rgba(32, 120, 36, 1)' };
+      default:
+        return {};
+    }
+  };
   return (
     <ThemeProvider theme={theme}>
       <Paper sx={{ marginTop: '2rem' }}>
@@ -85,7 +100,11 @@ function ServicesInProgressTable() {
                       <TableCell>{row.auto}</TableCell>
                       <TableCell>{row.cliente}</TableCell>
                       <TableCell>{row.entrada}</TableCell>
-                      <TableCell>{row.estado}</TableCell>
+                      <TableCell>
+                        <Typography sx={statusColor(row.estado)}>
+                          {row.estado}
+                        </Typography>
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
