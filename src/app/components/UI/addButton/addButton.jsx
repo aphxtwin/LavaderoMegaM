@@ -19,7 +19,7 @@ function AddButton() {
   };
 
   return (
-    <Box sx={{ position: 'fixed', bottom: 16, left: 16 }}>
+    <Box sx={{ position: 'fixed', bottom: 20, left: 16 }}>
       <Fab
         sx={
             {

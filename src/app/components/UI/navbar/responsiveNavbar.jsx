@@ -3,6 +3,7 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
+import LogoutIcon from '@mui/icons-material/Logout';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -15,7 +16,6 @@ import Image from 'next/image';
 import useLogout from '../../../hooks/useLogout';
 
 const pages = ['Vista General', 'Servicios', 'Caja', 'Clientes'];
-const settings = ['Perfil', 'Logout'];
 
 function ResponsiveNavbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -35,16 +35,7 @@ function ResponsiveNavbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
   const handleLogout = useLogout();
-
-  const handleMenuClick = (setting) => {
-    if (setting === 'Logout') {
-      handleLogout();
-    }
-    handleCloseUserMenu();
-  };
-
   return (
     <AppBar position="static" sx={{ backgroundColor: '#2F3842' }}>
       <Container maxWidth="xl">
@@ -158,11 +149,10 @@ function ResponsiveNavbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={() => handleMenuClick(setting)}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={() => { handleCloseUserMenu(); handleLogout(); }}>
+                <LogoutIcon />
+                <Typography sx={{ marginLeft: '2%' }} textAlign="center">Salir</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
