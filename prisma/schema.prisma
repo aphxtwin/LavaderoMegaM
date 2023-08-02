@@ -1,178 +1,25 @@
 generator client {
-  provider = "prisma-client-js"
+provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
-  shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
+provider = "postgresql"
+url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
 }
 
-
-model caja {
-  caja_id       BigInt       @id(map: "caja_key") @default(autoincrement())
-  fecha         DateTime     @db.Timestamp(6)
-  saldo_inicial Decimal      @default(0) @db.Decimal(20, 2)
-  detalle       String?      @db.VarChar(20)
-  saldo_final   Decimal?     @default(0) @db.Decimal(20, 2)
-  conciliado    Boolean?     @default(false)
-  usuario_id    BigInt
-  creado        DateTime     @db.Timestamp(6)
-  modificado    DateTime     @db.Timestamp(6)
-  linea_caja    linea_caja[]
+model User {
+id        String   @id @default(uuid()) @db.Uuid
+username  String   @unique
+email     String   @unique
+password  String
+role      UserRole @default(USER)
+createdAt DateTime @default(now())
+updatedAt DateTime @updatedAt
 }
 
-model vehiculo_cliente {
-  vehiculo_cliente_id BigInt   @id(map: "vehiculo_cliente_key") @default(autoincrement())
-  vehiculo_id         BigInt
-  cliente_id          BigInt
-  fecha               DateTime @db.Timestamp(6)
-  usuario_id          BigInt
-  creado              DateTime @db.Timestamp(6)
-  modificado          DateTime @db.Timestamp(6)
-}
-
-model vehiculo {
-  vehiculo_id BigInt     @id(map: "vehiculo_key") @default(autoincrement())
-  marca       String?    @db.VarChar(20)
-  modelo      String?    @db.VarChar(20)
-  patente     String?    @unique(map: "vehiculo_patente_idx") @db.VarChar(9)
-  obs         String?    @db.VarChar(50)
-  usuario_id  BigInt
-  creado      DateTime   @db.Timestamp(6)
-  modificado  DateTime   @db.Timestamp(6)
-  servicio    servicio[]
-}
-
-model usuario {
-  usuario_id BigInt   @id(map: "usuario_key") @default(autoincrement())
-  nombre     String?  @db.VarChar(20)
-  hash       String?  @db.VarChar(100)
-  admin      Boolean? @default(false)
-}
-
-model servicio {
-  servicio_id    BigInt           @id(map: "servicio_key") @default(autoincrement())
-  fecha          DateTime         @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @db.Timestamp(6)
-  vehiculo_id    BigInt
-  hora_ingreso   DateTime         @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @db.Timestamp(6)
-  hora_salida    DateTime?        @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @db.Timestamp(6)
-  hora_inicio    DateTime?        @db.Timestamp(6)
-  hora_fin       DateTime?        @db.Timestamp(6)
-  espera         Boolean?         @default(false)
-  cta_cte        Boolean?         @default(false)
-  cliente_id     BigInt?
-  obs            String?          @db.VarChar(50)
-  km_vehiculo    Int?             @default(0)
-  liquidado_cc   Boolean?         @default(false)
-  pagado         Boolean?         @default(false)
-  retirado       Boolean?         @default(false)
-  nro_orden      String?          @db.VarChar(10)
-  usuario_id     BigInt
-  creado         DateTime         @db.Timestamp(6)
-  modificado     DateTime         @db.Timestamp(6)
-  nro            Int?
-  demo           Boolean?
-  usados         Boolean?
-  monto_cc       Decimal?         @db.Decimal(20, 2)
-  lineacaja_id   BigInt?
-  linea_servicio linea_servicio[]
-  cliente        cliente?         @relation(fields: [cliente_id], references: [cliente_id], onDelete: NoAction, onUpdate: NoAction, map: "cliente_servicio")
-  vehiculo       vehiculo         @relation(fields: [vehiculo_id], references: [vehiculo_id], onDelete: NoAction, onUpdate: NoAction, map: "vehiculo_servicio")
-}
-
-model precio {
-  precio_id   BigInt   @id(map: "precio_key") @default(autoincrement())
-  lista_id    BigInt
-  concepto_id BigInt
-  precio      Decimal  @default(0) @db.Decimal(20, 2)
-  usuario_id  BigInt
-  creado      DateTime @db.Timestamp(6)
-  modificado  DateTime @db.Timestamp(6)
-  concepto    concepto @relation(fields: [concepto_id], references: [concepto_id], onDelete: NoAction, onUpdate: NoAction, map: "concepto_precio")
-  lista       lista    @relation(fields: [lista_id], references: [lista_id], onDelete: NoAction, onUpdate: NoAction, map: "lista_precio")
-}
-
-model lista {
-  lista_id   BigInt   @id(map: "lista_key") @default(autoincrement())
-  nombre     String?  @db.VarChar(20)
-  cliente_id BigInt
-  usuario_id BigInt
-  creado     DateTime @db.Timestamp(6)
-  modificado DateTime @db.Timestamp(6)
-  cliente    cliente  @relation(fields: [cliente_id], references: [cliente_id], onDelete: NoAction, onUpdate: NoAction, map: "cliente_lista")
-  precio     precio[]
-}
-
-model linea_servicio {
-  linea_id    BigInt    @id(map: "linea_servicio_key") @default(autoincrement())
-  servicio_id BigInt
-  concepto_id BigInt?
-  usuario_id  BigInt
-  creado      DateTime  @db.Timestamp(6)
-  modificado  DateTime  @db.Timestamp(6)
-  concepto    concepto? @relation(fields: [concepto_id], references: [concepto_id], onDelete: NoAction, onUpdate: NoAction, map: "concepto_linea")
-  servicio    servicio  @relation(fields: [servicio_id], references: [servicio_id], onDelete: NoAction, onUpdate: NoAction, map: "servicio_linea")
-}
-
-model concepto {
-  concepto_id    BigInt           @id(map: "concepto_key") @default(autoincrement())
-  detalle        String?          @db.VarChar(40)
-  venta          Boolean?         @default(false)
-  articulo       Boolean?         @default(false)
-  usuario_id     BigInt
-  creado         DateTime         @db.Timestamp(6)
-  modificado     DateTime         @db.Timestamp(6)
-  linea_caja     linea_caja[]
-  linea_servicio linea_servicio[]
-  precio         precio[]
-}
-
-model empleado {
-  empleado_id BigInt       @id(map: "empleado_key") @default(autoincrement())
-  nombre      String?      @db.VarChar(20)
-  apellido    String?      @db.VarChar(20)
-  obs         String?      @db.VarChar(20)
-  usuario_id  BigInt
-  creado      DateTime     @db.Timestamp(6)
-  modificado  DateTime     @db.Timestamp(6)
-  linea_caja  linea_caja[]
-}
-
-model cliente {
-  cliente_id  BigInt     @id(map: "cliente_key") @default(autoincrement())
-  rz          String?    @db.VarChar(40)
-  doc         String?    @db.VarChar(20)
-  dom         String?    @db.VarChar(30)
-  f_nac       DateTime?  @db.Timestamp(6)
-  cond_iva    String?    @db.VarChar(40)
-  tel_1       String?    @db.VarChar(20)
-  tel_2       String?    @db.VarChar(20)
-  correo      String?    @db.VarChar(50)
-  usuario_id  BigInt
-  creado      DateTime   @db.Timestamp(6)
-  modificado  DateTime   @db.Timestamp(6)
-  habilita_du Boolean?
-  es_cc       Boolean?
-  lista       lista[]
-  servicio    servicio[]
-}
-
-model linea_caja {
-  linea_id    BigInt    @id(map: "linea_caja_key") @default(autoincrement())
-  caja_id     BigInt
-  concepto_id BigInt?
-  empleado_id BigInt?
-  nro         Int       @default(0)
-  monto       Decimal   @default(0) @db.Decimal(20, 2)
-  detalle     String?   @db.VarChar(80)
-  usuario_id  BigInt
-  creado      DateTime  @db.Timestamp(6)
-  modificado  DateTime  @db.Timestamp(6)
-  servicio_id BigInt?
-  baja        Boolean?
-  caja        caja      @relation(fields: [caja_id], references: [caja_id], onDelete: NoAction, onUpdate: NoAction, map: "caja_linea")
-  concepto    concepto? @relation(fields: [concepto_id], references: [concepto_id], onDelete: NoAction, onUpdate: NoAction, map: "concepto_linea")
-  empleado    empleado? @relation(fields: [empleado_id], references: [empleado_id], onDelete: NoAction, onUpdate: NoAction, map: "empleado_linea")
+enum UserRole {
+USER
+ADMIN
 }

@@ -15,7 +15,7 @@ import {
   ThemeProvider,
 } from '@mui/material';
 import theme from './theme';
-import CarReadyCheckbox from '../carReadyCheckbox/carReadyCheckbox';
+import CarReadyCheckbox from './carReadyCheckbox/carReadyCheckbox';
 
 function ServicesInProgressTable() {
   // dUMMY DATA
@@ -27,7 +27,7 @@ function ServicesInProgressTable() {
       patente: 'ABC1235', auto: 'Toyota', cliente: 'John Doe', entrada: '10:00 AM', estado: 'En Progreso',
     },
     {
-      patente: 'ABC1235', auto: 'Toyota', cliente: 'John Doe', entrada: '10:00 AM', estado: 'Terminado',
+      patente: 'ABC1255', auto: 'Toyota', cliente: 'John Doe', entrada: '10:00 AM', estado: 'Terminado',
     },
     // More rows here...
   ];

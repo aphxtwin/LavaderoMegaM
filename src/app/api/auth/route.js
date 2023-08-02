@@ -16,10 +16,10 @@ const secretKey = process.env.JWT_SECRET_KEY;
 export async function POST(req) {
   try {
     const { username, password } = await req.json();
-    const genericError = 'Contrasena o usuario invalido.';
-    const user = await prisma.usuario.findFirst({
+    const genericError = 'Invalid username or password.';
+    const user = await prisma.user.findFirst({
       where: {
-        nombre: username,
+        username,
       },
     });
     if (!user) {
@@ -29,9 +29,9 @@ export async function POST(req) {
       });
     }
 
-    const isValidPassword = await bcrypt.compare(password, user.hash);
+    const isValidPassword = await bcrypt.compare(password, user.password);
     if (isValidPassword) {
-      // usuario existe y contraseña es correcta
+      // user exists and password is correct
       const { hash, ...userWithoutHash } = user;
       const token = jwt.sign(userWithoutHash, secretKey, { expiresIn: '10h' });
       return new NextResponse(
