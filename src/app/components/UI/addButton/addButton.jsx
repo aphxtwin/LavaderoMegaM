@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import PropTypes from 'prop-types';
 import { Box } from '@mui/material';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
@@ -7,8 +9,9 @@ import AddTaskIcon from '@mui/icons-material/AddTask';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
-function AddButton() {
+function AddButton({ addCliente, addServicio }) {
   const [anchorEl, setAnchorEl] = useState(null);
+  const router = useRouter();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -16,6 +19,11 @@ function AddButton() {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleMenuItemClick = (route) => {
+    handleClose();
+    router.push(route);
   };
 
   return (
@@ -48,13 +56,13 @@ function AddButton() {
           },
         }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={() => handleMenuItemClick(addServicio)}>
           <AddTaskIcon />
           <Box sx={{ marginLeft: '5%' }}>
             Nuevo Servicio
           </Box>
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={() => handleMenuItemClick(addCliente)}>
           <PersonAddIcon />
           <Box sx={{ marginLeft: '5%' }}>
             Nuevo Cliente
@@ -65,4 +73,12 @@ function AddButton() {
   );
 }
 
+AddButton.propTypes = {
+  addCliente: PropTypes.string,
+  addServicio: PropTypes.string,
+};
+AddButton.defaultProps = {
+  addCliente: '',
+  addServicio: '',
+};
 export default AddButton;

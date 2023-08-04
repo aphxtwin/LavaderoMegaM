@@ -10,7 +10,6 @@ export default async function middleware(req) {
       // eslint-disable-next-line no-console
       console.log(err);
     }));
-
   if (req.nextUrl.pathname.startsWith('/dashboard') && !verifiedToken) {
     return NextResponse.redirect(origin);
   }

@@ -20,13 +20,22 @@ export default function Dashboard() {
       }
     };
     loadUser();
+    /*
+      This is a temporal fix!
+      The browser saves the page in the cache, so when you navigate back,
+      protected pages can be accessed without any trouble.
+      This force a page reaload that triggers the middleware function
+    */
+    window.onpopstate = () => {
+      window.location.reload();
+    };
   }, [dispatch]);
   return (
     <>
       <ResponsiveNavbar />
       <Container maxWidth="xl">
         <ServicesInProgressTable />
-        <AddButton />
+        <AddButton addServicio="dashboard/NuevoServicio" />
       </Container>
 
     </>

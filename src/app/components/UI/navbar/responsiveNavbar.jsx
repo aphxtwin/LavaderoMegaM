@@ -56,7 +56,7 @@ function ResponsiveNavbar() {
             }}
           >
             <Image
-              src="./images/logo-dodlewhite.svg"
+              src="/images/logo-dodlewhite.svg"
               width={100}
               height={50}
               alt="Logo"
