@@ -3,11 +3,12 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
+import LogoutIcon from '@mui/icons-material/Logout';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
@@ -15,7 +16,6 @@ import Image from 'next/image';
 import useLogout from '../../../hooks/useLogout';
 
 const pages = ['Vista General', 'Servicios', 'Caja', 'Clientes'];
-const settings = ['Perfil', 'Logout'];
 
 function ResponsiveNavbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -35,16 +35,7 @@ function ResponsiveNavbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
   const handleLogout = useLogout();
-
-  const handleMenuClick = (setting) => {
-    if (setting === 'Logout') {
-      handleLogout();
-    }
-    handleCloseUserMenu();
-  };
-
   return (
     <AppBar position="static" sx={{ backgroundColor: '#2F3842' }}>
       <Container maxWidth="xl">
@@ -65,7 +56,7 @@ function ResponsiveNavbar() {
             }}
           >
             <Image
-              src="./images/logo-dodlewhite.svg"
+              src="/images/logo-dodlewhite.svg"
               width={100}
               height={50}
               alt="Logo"
@@ -139,7 +130,7 @@ function ResponsiveNavbar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Configuracion">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <AccountCircleIcon sx={{ color: 'white' }} fontSize="large" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -158,11 +149,10 @@ function ResponsiveNavbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={() => handleMenuClick(setting)}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={() => { handleCloseUserMenu(); handleLogout(); }}>
+                <LogoutIcon />
+                <Typography sx={{ marginLeft: '2%', paddingRight: '0.5rem' }} textAlign="center">Salir</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
