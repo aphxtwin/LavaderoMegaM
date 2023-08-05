@@ -9,7 +9,7 @@ import AddTaskIcon from '@mui/icons-material/AddTask';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
-function AddButton({ addCliente, addServicio }) {
+function AddButton({ addServicio, onAddClient }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const router = useRouter();
 
@@ -62,7 +62,7 @@ function AddButton({ addCliente, addServicio }) {
             Nuevo Servicio
           </Box>
         </MenuItem>
-        <MenuItem onClick={() => handleMenuItemClick(addCliente)}>
+        <MenuItem onClick={onAddClient}>
           <PersonAddIcon />
           <Box sx={{ marginLeft: '5%' }}>
             Nuevo Cliente
@@ -74,11 +74,11 @@ function AddButton({ addCliente, addServicio }) {
 }
 
 AddButton.propTypes = {
-  addCliente: PropTypes.string,
   addServicio: PropTypes.string,
+  onAddClient: PropTypes.func.isRequired,
+
 };
 AddButton.defaultProps = {
-  addCliente: '',
   addServicio: '',
 };
 export default AddButton;

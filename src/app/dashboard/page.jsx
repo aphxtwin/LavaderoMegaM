@@ -1,15 +1,17 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Container } from '@mui/material';
+import { Container, Dialog, DialogTitle, DialogContent } from '@mui/material';
 import { logIn } from '../redux/slices/authSlice';
 import ResponsiveNavbar from '../components/UI/navbar/responsiveNavbar';
 import ServicesInProgressTable from '../components/UI/servicesInProgressTable/servicesInProgressTable';
 import AddButton from '../components/UI/addButton/addButton';
+import ClientForm from '../components/UI/client/createClientForm/clientForm';
 // eslint-disable-next-line react/prop-types
 export default function Dashboard() {
   const dispatch = useDispatch();
+  const [showClientForm, setShowClientForm] = useState(false);
   useEffect(() => {
     const loadUser = async () => {
       const res = await fetch('/api/auth/currentUser');
@@ -20,22 +22,27 @@ export default function Dashboard() {
       }
     };
     loadUser();
-    /*
-      This is a temporal fix!
-      The browser saves the page in the cache, so when you navigate back,
-      protected pages can be accessed without any trouble.
-      This force a page reaload that triggers the middleware function
-    */
-    window.onpopstate = () => {
-      window.location.reload();
-    };
   }, [dispatch]);
+  const toggleClientForm = () => {
+    setShowClientForm(!showClientForm);
+  };
   return (
     <>
       <ResponsiveNavbar />
       <Container maxWidth="xl">
         <ServicesInProgressTable />
-        <AddButton addServicio="dashboard/NuevoServicio" />
+        {
+          showClientForm
+          && (
+          <Dialog open={showClientForm} onClose={toggleClientForm} fullWidth maxWidth="sm">
+            <DialogTitle>Agregar Nuevo Cliente</DialogTitle>
+            <DialogContent>
+              <ClientForm />
+            </DialogContent>
+          </Dialog>
+          )
+        }
+        <AddButton addServicio="dashboard/NuevoServicio" onAddClient={toggleClientForm} />
       </Container>
 
     </>

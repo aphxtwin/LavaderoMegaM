@@ -17,6 +17,7 @@ let theme = createTheme({
     h1: {
       fontSize: '3rem',
       fontWeight: 'bold',
+      color:'#283D5B'
     },
     h2: {
       fontSize: '1rem',
