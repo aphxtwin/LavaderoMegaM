@@ -4,7 +4,6 @@ import * as Yup from 'yup';
 import {
   TextField,
   Button,
-  Grid,
   Box,
   CircularProgress,
   FormControl,
@@ -12,6 +11,7 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
+
 
 function ClientForm() {
   const validationSchema = Yup.object().shape({
@@ -62,113 +62,112 @@ function ClientForm() {
   };
 
   return (
-    <Grid container justifyContent="center">
-      <Grid item>
-        <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema}>
-          {({
-            isSubmitting, handleChange, values, errors, touched,
-          }) => (
-            <Form>
-              <Box sx={{ my: 2 }}>
-                <Field
-                  as={TextField}
-                  name="name"
-                  label="Nombre"
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                  error={touched.name && !!errors.name}
-                  helperText={touched.name && errors.name}
-                />
-              </Box>
-              <Box sx={{ my: 2 }}>
-                <Field
-                  as={TextField}
-                  name="idNumber"
-                  label="Documento"
-                  variant="outlined"
-                  type="number"
-                  inputProps={{ pattern: '[0-9]*' }}
-                  InputProps={{
-                    inputMode: 'numeric',
-                    maxLength: 8,
-                  }}
-                  fullWidth
-                  error={touched.idNumber && !!errors.idNumber}
-                  helperText={touched.idNumber && errors.idNumber}
-                />
-              </Box>
-              <Box sx={{ my: 2 }}>
-                <Field
-                  as={TextField}
-                  name="address"
-                  label="Domicilio"
-                  variant="outlined"
-                  fullWidth
-                  error={touched.address && !!errors.address}
-                  helperText={touched.address && errors.address}
-                />
-              </Box>
-              <Box sx={{ my: 2 }}>
-                <Field
-                  as={TextField}
-                  name="phoneNumber"
-                  label="Teléfono"
-                  variant="outlined"
-                  type="tel"
-                  inputProps={{ pattern: '[0-9]*' }}
-                  InputProps={{
-                    inputMode: 'numeric',
-                    maxLength: 10,
-                  }}
-                  fullWidth
-                  error={touched.phoneNumber && !!errors.phoneNumber}
-                  helperText={touched.phoneNumber && errors.phoneNumber}
-                />
-              </Box>
-              <Box sx={{ my: 2 }}>
-                <FormControl fullWidth variant="outlined">
-                  <InputLabel htmlFor="iva-condition">Condición IVA</InputLabel>
-                  <Select
-                    name="ivaCondition"
-                    label="Condición IVA"
-                    value={values.ivaCondition}
-                    onChange={handleChange}
-                    labelId="iva-condition"
-                  >
-                    <MenuItem value="Consumidor Final">Consumidor Final</MenuItem>
-                    <MenuItem value="Monotributista">Monotributista</MenuItem>
-                    <MenuItem value="Responsable inscripto">Responsable inscripto</MenuItem>
-                  </Select>
-                </FormControl>
-              </Box>
-              <Box sx={{ my: 2 }}>
-                <Field
-                  as={TextField}
-                  name="email"
-                  label="Correo electrónico"
-                  variant="outlined"
-                  type="email"
-                  fullWidth
-                  error={touched.email && !!errors.email}
-                  helperText={touched.email && errors.email}
-                />
-              </Box>
-              <Box sx={{ my: 2 }} textAlign="center">
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? <CircularProgress size={24} color="inherit" /> : 'Enviar formulario'}
-                </Button>
-              </Box>
-            </Form>
-          )}
-        </Formik>
-      </Grid>
-    </Grid>
+    <Formik 
+      initialValues={initialValues} 
+      onSubmit={handleSubmit} 
+      validationSchema={validationSchema}>
+      {({
+        isSubmitting, handleChange, values, errors, touched,
+      }) => (
+        <Form>
+          <Box>
+            <Field
+              as={TextField}
+              name="name"
+              label="Nombre"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              error={touched.name && !!errors.name}
+              helperText={touched.name && errors.name}
+            />
+          </Box>
+          <Box sx={{ my: 2 }}>
+            <Field
+              as={TextField}
+              name="idNumber"
+              label="Documento"
+              variant="outlined"
+              type="number"
+              inputProps={{ pattern: '[0-9]*' }}
+              InputProps={{
+                inputMode: 'numeric',
+                maxLength: 8,
+              }}
+              fullWidth
+              error={touched.idNumber && !!errors.idNumber}
+              helperText={touched.idNumber && errors.idNumber}
+            />
+          </Box>
+          <Box sx={{ my: 2 }}>
+            <Field
+              as={TextField}
+              name="address"
+              label="Domicilio"
+              variant="outlined"
+              fullWidth
+              error={touched.address && !!errors.address}
+              helperText={touched.address && errors.address}
+            />
+          </Box>
+          <Box sx={{ my: 2 }}>
+            <Field
+              as={TextField}
+              name="phoneNumber"
+              label="Teléfono"
+              variant="outlined"
+              type="tel"
+              inputProps={{ pattern: '[0-9]*' }}
+              InputProps={{
+                inputMode: 'numeric',
+                maxLength: 10,
+              }}
+              fullWidth
+              error={touched.phoneNumber && !!errors.phoneNumber}
+              helperText={touched.phoneNumber && errors.phoneNumber}
+            />
+          </Box>
+          <Box sx={{ my: 2 }}>
+            <FormControl fullWidth variant="outlined">
+              <InputLabel htmlFor="iva-condition">Condición IVA</InputLabel>
+              <Select
+                name="ivaCondition"
+                label="Condición IVA"
+                value={values.ivaCondition}
+                onChange={handleChange}
+                labelId="iva-condition"
+              >
+                <MenuItem value="Consumidor Final">Consumidor Final</MenuItem>
+                <MenuItem value="Monotributista">Monotributista</MenuItem>
+                <MenuItem value="Responsable inscripto">Responsable inscripto</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+          <Box sx={{ my: 2 }}>
+            <Field
+              as={TextField}
+              name="email"
+              label="Correo electrónico"
+              variant="outlined"
+              type="email"
+              fullWidth
+              error={touched.email && !!errors.email}
+              helperText={touched.email && errors.email}
+            />
+          </Box>
+          <Box sx={{ my: 2 }} textAlign="center">
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? <CircularProgress size={24} color="inherit" /> : 'Agregar cliente'}
+            </Button>
+          </Box>
+        </Form>
+      )}
+    </Formik>
   );
 }
 

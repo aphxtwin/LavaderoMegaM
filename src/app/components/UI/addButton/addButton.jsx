@@ -9,7 +9,7 @@ import AddTaskIcon from '@mui/icons-material/AddTask';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
-function AddButton({ addServicio, onAddClient }) {
+function AddButton({ addServicio = '', onAddClient }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const router = useRouter();
 
@@ -77,8 +77,5 @@ AddButton.propTypes = {
   addServicio: PropTypes.string,
   onAddClient: PropTypes.func.isRequired,
 
-};
-AddButton.defaultProps = {
-  addServicio: '',
 };
 export default AddButton;

@@ -1,25 +1,49 @@
 generator client {
-provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-provider = "postgresql"
-url = env("POSTGRES_PRISMA_URL") // uses connection pooling
-directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
-shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
+  provider          = "postgresql"
+  url               = env("POSTGRES_PRISMA_URL")
+  directUrl         = env("POSTGRES_URL_NON_POOLING")
+  shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model User {
-id        String   @id @default(uuid()) @db.Uuid
-username  String   @unique
-email     String   @unique
-password  String
-role      UserRole @default(USER)
-createdAt DateTime @default(now())
-updatedAt DateTime @updatedAt
+  id        String   @id @default(uuid()) @db.Uuid
+  username  String   @unique
+  email     String   @unique
+  password  String
+  role      UserRole @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Cliente {
+  clienteId         Int     @id @default(autoincrement())
+  nombreCompleto    String
+  documento         Int
+  email             String  @unique
+  condicionIva      CondicionIva
+  cuit              String  @unique
+  telefono          String
+  esCuentaCorriente Boolean
+}
+enum CondicionIva {
+  ConsumidorFinal
+  Monotributista
+  ResponsableInscripto
 }
 
 enum UserRole {
-USER
-ADMIN
+  USER
+  ADMIN
+}
+
+enum TipoVehiculo {
+  SEDAN	
+  SUV	
+  MOTO	
+  FURGON	
+  CAMION
 }

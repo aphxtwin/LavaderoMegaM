@@ -7,7 +7,7 @@ import { logIn } from '../redux/slices/authSlice';
 import ResponsiveNavbar from '../components/UI/navbar/responsiveNavbar';
 import ServicesInProgressTable from '../components/UI/servicesInProgressTable/servicesInProgressTable';
 import AddButton from '../components/UI/addButton/addButton';
-import ClientForm from '../components/UI/client/createClientForm/clientForm';
+import ClientDialog from '../components/UI/client/createClientForm/dialogCreateClient';
 // eslint-disable-next-line react/prop-types
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -34,12 +34,10 @@ export default function Dashboard() {
         {
           showClientForm
           && (
-          <Dialog open={showClientForm} onClose={toggleClientForm} fullWidth maxWidth="sm">
-            <DialogTitle>Agregar Nuevo Cliente</DialogTitle>
-            <DialogContent>
-              <ClientForm />
-            </DialogContent>
-          </Dialog>
+            <ClientDialog
+              showClientForm={showClientForm}
+              toggleClientForm={toggleClientForm}
+            />
           )
         }
         <AddButton addServicio="dashboard/NuevoServicio" onAddClient={toggleClientForm} />

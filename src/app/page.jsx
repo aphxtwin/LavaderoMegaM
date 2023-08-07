@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { Grid } from '@mui/material';
-import LoginForm from './components/layout/loginForm/loginForm';
+import LoginForm from './components/UI/loginForm/loginForm';
 
 export default function Home() {
   const router = useRouter();
