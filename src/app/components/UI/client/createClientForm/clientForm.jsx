@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
@@ -10,26 +11,30 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Switch,
+  FormControlLabel,
 } from '@mui/material';
-
+import { CondicionIva } from '@prisma/client';
 
 function ClientForm() {
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required('El nombre es obligatorio'),
-    idNumber: Yup.string().required('El documento es obligatorio').max(8, 'Máximo 8 caracteres'),
-    address: Yup.string().required('El domicilio es obligatorio'),
-    phoneNumber: Yup.string().required('El teléfono es obligatorio'),
-    ivaCondition: Yup.string().required('La condición IVA es obligatoria'),
-    email: Yup.string().email('Formato de correo inválido').required('El correo es obligatorio'),
+    nombreCompleto: Yup.string().required('El nombre es obligatorio'),
+    documento: Yup.string().required('El documento es obligatorio').max(8, 'Máximo 8 caracteres'),
+    email: Yup.string().email('Formato de correo inválido'),
+    condicionIva: Yup.string().required('La condición IVA es obligatoria'),
+    cuit: Yup.string().max(11, 'Máximo 11 caracteres'),
+    telefono: Yup.string().required('El teléfono es obligatorio'),
+    esCuentaCorriente: Yup.boolean(),
   });
 
   const initialValues = {
-    name: '',
-    idNumber: '',
-    address: '',
-    phoneNumber: '',
-    ivaCondition: 'Consumidor Final',
+    nombreCompleto: '',
+    documento: '',
     email: '',
+    condicionIva: CondicionIva.ConsumidorFinal,
+    cuit: '',
+    telefono: '',
+    esCuentaCorriente: false,
   };
 
   const handleSubmit = async (values) => {
@@ -42,12 +47,13 @@ function ClientForm() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name: formData.name,
-          idNumber: formData.idNumber,
-          address: formData.address,
-          phoneNumber: formData.phoneNumber,
-          ivaCondition: formData.ivaCondition,
+          nombreCompleto: formData.nombreCompleto,
+          documento: formData.documento,
           email: formData.email,
+          telefono: formData.telefono,
+          cuit: formData.cuit,
+          condicionIva: formData.condicionIva,
+          esCuentaCorriente: formData.esCuentaCorriente,
         }),
       });
 
@@ -60,12 +66,12 @@ function ClientForm() {
       console.error('Error al enviar el formulario', error);
     }
   };
-
   return (
-    <Formik 
-      initialValues={initialValues} 
-      onSubmit={handleSubmit} 
-      validationSchema={validationSchema}>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={handleSubmit}
+      validationSchema={validationSchema}
+    >
       {({
         isSubmitting, handleChange, values, errors, touched,
       }) => (
@@ -73,73 +79,71 @@ function ClientForm() {
           <Box>
             <Field
               as={TextField}
-              name="name"
-              label="Nombre"
+              name="nombreCompleto"
+              label="Nombre Completo"
               variant="outlined"
               fullWidth
               margin="normal"
-              error={touched.name && !!errors.name}
-              helperText={touched.name && errors.name}
+              error={touched.nombreCompleto && !!errors.nombreCompleto}
+              helperText={touched.nombreCompleto && errors.nombreCompleto}
             />
           </Box>
           <Box sx={{ my: 2 }}>
             <Field
               as={TextField}
-              name="idNumber"
+              name="documento"
               label="Documento"
               variant="outlined"
               type="number"
-              inputProps={{ pattern: '[0-9]*' }}
               InputProps={{
                 inputMode: 'numeric',
                 maxLength: 8,
               }}
               fullWidth
-              error={touched.idNumber && !!errors.idNumber}
-              helperText={touched.idNumber && errors.idNumber}
+              error={touched.documento && !!errors.documento}
+              helperText={touched.documento && errors.documento}
             />
           </Box>
           <Box sx={{ my: 2 }}>
             <Field
               as={TextField}
-              name="address"
-              label="Domicilio"
+              name="cuit"
+              label="CUIT"
               variant="outlined"
               fullWidth
-              error={touched.address && !!errors.address}
-              helperText={touched.address && errors.address}
+              error={touched.cuit && !!errors.cuit}
+              helperText={touched.cuit && errors.cuit}
             />
           </Box>
           <Box sx={{ my: 2 }}>
             <Field
               as={TextField}
-              name="phoneNumber"
+              name="telefono"
               label="Teléfono"
               variant="outlined"
               type="tel"
-              inputProps={{ pattern: '[0-9]*' }}
               InputProps={{
                 inputMode: 'numeric',
                 maxLength: 10,
               }}
               fullWidth
-              error={touched.phoneNumber && !!errors.phoneNumber}
-              helperText={touched.phoneNumber && errors.phoneNumber}
+              error={touched.telefono && !!errors.telefono}
+              helperText={touched.telefono && errors.telefono}
             />
           </Box>
           <Box sx={{ my: 2 }}>
             <FormControl fullWidth variant="outlined">
               <InputLabel htmlFor="iva-condition">Condición IVA</InputLabel>
               <Select
-                name="ivaCondition"
+                name="condicionIva"
                 label="Condición IVA"
-                value={values.ivaCondition}
+                value={values.condicionIva}
                 onChange={handleChange}
                 labelId="iva-condition"
               >
-                <MenuItem value="Consumidor Final">Consumidor Final</MenuItem>
-                <MenuItem value="Monotributista">Monotributista</MenuItem>
-                <MenuItem value="Responsable inscripto">Responsable inscripto</MenuItem>
+                <MenuItem value={CondicionIva.ConsumidorFinal}>Consumidor Final</MenuItem>
+                <MenuItem value={CondicionIva.Monotributista}>Monotributista</MenuItem>
+                <MenuItem value={CondicionIva.ResponsableInscripto}>Responsable inscripto</MenuItem>
               </Select>
             </FormControl>
           </Box>
@@ -153,6 +157,19 @@ function ClientForm() {
               fullWidth
               error={touched.email && !!errors.email}
               helperText={touched.email && errors.email}
+            />
+          </Box>
+          <Box sx={{ my: 2 }}>
+            <FormControlLabel
+              label="¿Cuenta Corriente?"
+              control={(
+                <Switch
+                  checked={values.esCuentaCorriente}
+                  onChange={handleChange}
+                  name="esCuentaCorriente"
+                  color="primary"
+                />
+                )}
             />
           </Box>
           <Box sx={{ my: 2 }} textAlign="center">

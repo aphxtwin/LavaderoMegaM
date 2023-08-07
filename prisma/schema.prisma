@@ -20,14 +20,16 @@ model User {
 }
 
 model Cliente {
-  clienteId         Int     @id @default(autoincrement())
-  nombreCompleto    String
-  documento         Int
-  email             String  @unique
-  condicionIva      CondicionIva
-  cuit              String  @unique
-  telefono          String
-  esCuentaCorriente Boolean
+  clienteId          Int          @id @default(autoincrement())
+  nombreCompleto     String       @db.VarChar(255)
+  documento          Int          
+  email              String?      @unique @db.VarChar(255)
+  condicionIva       CondicionIva @default(ConsumidorFinal)
+  cuit               String?      @unique @db.VarChar(11)
+  telefono           String       @db.VarChar(50)
+  esCuentaCorriente  Boolean      @default(false)
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
 }
 enum CondicionIva {
   ConsumidorFinal
@@ -38,12 +40,4 @@ enum CondicionIva {
 enum UserRole {
   USER
   ADMIN
-}
-
-enum TipoVehiculo {
-  SEDAN	
-  SUV	
-  MOTO	
-  FURGON	
-  CAMION
 }

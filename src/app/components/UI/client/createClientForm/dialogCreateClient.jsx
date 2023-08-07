@@ -5,7 +5,6 @@ import {
   DialogContent,
   Typography,
   Box,
-  IconButton,
   ThemeProvider,
 } from '@mui/material';
 import PropTypes from 'prop-types';
@@ -19,7 +18,7 @@ function ClientDialog({ showClientForm, toggleClientForm }) {
       <Dialog open={showClientForm} onClose={toggleClientForm} fullWidth maxWidth="sm">
         <DialogTitle>
           <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" sx={{}}>
-              <PersonAddIcon sx={{width:'50px',height:'50px'}} />
+            <PersonAddIcon sx={{ width: '40px', height: '40px' }} />
             <Typography variant="h4" component="div" color="primary">
               Agregar Nuevo Cliente
             </Typography>
