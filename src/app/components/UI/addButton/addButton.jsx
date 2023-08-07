@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import PropTypes from 'prop-types';
@@ -76,6 +77,5 @@ function AddButton({ addServicio = '', onAddClient }) {
 AddButton.propTypes = {
   addServicio: PropTypes.string,
   onAddClient: PropTypes.func.isRequired,
-
 };
 export default AddButton;

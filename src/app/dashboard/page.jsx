@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Container, Dialog, DialogTitle, DialogContent } from '@mui/material';
+import { Container } from '@mui/material';
 import { logIn } from '../redux/slices/authSlice';
 import ResponsiveNavbar from '../components/UI/navbar/responsiveNavbar';
 import ServicesInProgressTable from '../components/UI/servicesInProgressTable/servicesInProgressTable';

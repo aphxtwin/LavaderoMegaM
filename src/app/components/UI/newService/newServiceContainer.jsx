@@ -8,6 +8,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useRouter } from 'next/navigation';
 import theme from './theme';
 
+// eslint-disable-next-line react/prop-types
 function NewServiceContainer({ children }) {
   const router = useRouter();
   const [activeStep] = useState(0);
