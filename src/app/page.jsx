@@ -1,11 +1,10 @@
 'use client';
 
-import React, { useEffect, Suspense } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
-import { Grid, Skeleton } from '@mui/material';
-
-const LazyLoginForm = React.lazy(() => import('./components/UI/loginForm/loginForm'));
+import { Grid } from '@mui/material';
+import LoginForm from './components/UI/loginForm/loginForm';
 
 export default function Home() {
   const router = useRouter();
@@ -27,18 +26,7 @@ export default function Home() {
       disableequaloverflow="true"
       spacing={3}
     >
-      <Suspense fallback={<FormSkeleton />}>
-        <LazyLoginForm />
-      </Suspense>
+      <LoginForm />
     </Grid>
-  );
-}
-function FormSkeleton() {
-  return (
-    <div>
-      <Skeleton variant="rectangular" height={56} animation="wave" />
-      <Skeleton variant="rectangular" height={56} animation="wave" style={{ marginTop: '16px' }} />
-      <Skeleton variant="rectangular" height={56} animation="wave" style={{ marginTop: '16px' }} />
-    </div>
   );
 }

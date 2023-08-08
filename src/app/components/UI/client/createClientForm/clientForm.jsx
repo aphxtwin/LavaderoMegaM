@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import {
-  Formik, Form, Field, setFieldValue,
+  Formik, Form, Field,
 } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -204,7 +204,7 @@ function ClientForm() {
               }}
               error={touched.cuit && !!errors.cuit}
               helperText={touched.cuit && errors.cuit}
-              required = {values.condicionIva === CondicionIva.ResponsableInscripto}
+              required={values.condicionIva === CondicionIva.ResponsableInscripto}
             />
           </Box>
           <Box sx={{ my: 2 }}>
