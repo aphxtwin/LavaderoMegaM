@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
-import { Formik, Form, Field } from 'formik';
+import {
+  Formik, Form, Field, setFieldValue,
+} from 'formik';
 import * as Yup from 'yup';
 import {
   TextField,
@@ -21,16 +23,19 @@ function ClientForm() {
 
   const validationSchema = Yup.object().shape({
     nombreCompleto: Yup.string().required('El nombre es obligatorio'),
-    documento: Yup.string().test('documentoOcuit', 'Ingresa DNI o CUIT', function(value) {
-      const cuitValue = this.parent.cuit; // Obtén el valor de "cuit"
+    documento: Yup.string().test('documentoOcuit', 'Ingresa DNI o CUIT', (value) => {
+      const cuitValue = value; // Obtén el valor de "cuit"
       return !!(value || cuitValue); // Al menos uno debe tener valor
-    }),
-    cuit: Yup.string().test('documentoOcuit', 'Ingresa DNI o CUIT', function(value) {
-      const documentoValue = this.parent.documento; // Obtén el valor de "documento"
-      return !!(value || documentoValue); // Al menos uno debe tener valor
     }),
     email: Yup.string().email('Formato de correo inválido'),
     condicionIva: Yup.string().required('La condición IVA es obligatoria'),
+    cuit: Yup.string()
+      .when('condicionIva', {
+        is: (value) => value === CondicionIva.ResponsableInscripto,
+        then: () => Yup.string()
+          .required('El CUIT es obligatorio')
+          .matches(/^[0-9]{2}-[0-9]{8}-[0-9]{1}$/, 'El CUIT debe tener 11 dígitos y el formato XX-XXXXXXXX-X'),
+      }),
     telefono: Yup.string().required('El teléfono es obligatorio'),
     esCuentaCorriente: Yup.boolean(),
   });
@@ -47,7 +52,7 @@ function ClientForm() {
 
   const handleSubmit = async (values) => {
     const formData = { ...values };
-    formData.cuit = formData.cuit.replace(/\D/g, '');
+    formData.cuit = formData.cuit.replace(/\D/g, '-');
 
     try {
       const res = await fetch('/api/client', {
@@ -79,6 +84,7 @@ function ClientForm() {
 
   const formatCuit = (input) => {
     const value = input.replace(/\D/g, '');
+
     const parts = [
       value.substr(0, 2),
       value.substr(2, 8),
@@ -86,7 +92,6 @@ function ClientForm() {
     ];
     return parts.filter(Boolean).join('-');
   };
-
 
   return (
     <Formik
@@ -127,7 +132,7 @@ function ClientForm() {
                 const value = event.target.value.slice(0, 8);
                 handleChange({
                   target: {
-                    name: "documento",
+                    name: 'documento',
                     value,
                   },
                 });
@@ -135,27 +140,6 @@ function ClientForm() {
               //
               error={touched.documento && !!errors.documento}
               helperText={touched.documento && errors.documento}
-            />
-          </Box>
-          <Box sx={{ my: 2 }}>
-            <Field
-              as={TextField}
-              name="cuit"
-              label="CUIT"
-              variant="outlined"
-              fullWidth
-              value={formatCuit(values.cuit)}
-              onChange={(event) => {
-                const formattedValue = formatCuit(event.target.value);
-                handleChange({
-                  target: {
-                    name: 'cuit',
-                    value: formattedValue,
-                  },
-                });
-              }}
-              error={touched.cuit && !!errors.cuit}
-              helperText={touched.cuit && errors.cuit}
             />
           </Box>
           <Box sx={{ my: 2 }}>
@@ -176,7 +160,7 @@ function ClientForm() {
                 const formattedValue = numericValue.slice(0, 13); // Limitar a 10 caracteres
                 handleChange({
                   target: {
-                    name: "telefono",
+                    name: 'telefono',
                     value: formattedValue,
                   },
                 });
@@ -200,6 +184,28 @@ function ClientForm() {
                 <MenuItem value={CondicionIva.ResponsableInscripto}>Responsable inscripto</MenuItem>
               </Select>
             </FormControl>
+          </Box>
+          <Box sx={{ my: 2 }}>
+            <Field
+              as={TextField}
+              name="cuit"
+              label="CUIT"
+              variant="outlined"
+              fullWidth
+              value={formatCuit(values.cuit)}
+              onChange={(event) => {
+                const formattedValue = formatCuit(event.target.value);
+                handleChange({
+                  target: {
+                    name: 'cuit',
+                    value: formattedValue,
+                  },
+                });
+              }}
+              error={touched.cuit && !!errors.cuit}
+              helperText={touched.cuit && errors.cuit}
+              required = {values.condicionIva === CondicionIva.ResponsableInscripto}
+            />
           </Box>
           <Box sx={{ my: 2 }}>
             <Field

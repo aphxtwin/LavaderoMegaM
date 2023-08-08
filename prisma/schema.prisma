@@ -25,7 +25,7 @@ model Cliente {
   documento          Int          
   email              String?      @unique @db.VarChar(255)
   condicionIva       CondicionIva @default(ConsumidorFinal)
-  cuit               String?      @unique @db.VarChar(11)
+  cuit               String?      @unique @db.VarChar(13)
   telefono           String       @db.VarChar(50)
   esCuentaCorriente  Boolean      @default(false)
   createdAt          DateTime     @default(now())
