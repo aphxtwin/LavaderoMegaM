@@ -95,6 +95,7 @@ function LoginForm() {
                     width={200}
                     height={100}
                     alt="Logo"
+                    priority
                   />
                 </Typography>
                 <Typography
@@ -124,6 +125,7 @@ function LoginForm() {
                   }
                   helperText={formik.touched.username && formik.errors.username}
                   fullWidth
+                  autoComplete="username"
                   required
                   disabled={isSubmitting}
                 />
@@ -135,7 +137,7 @@ function LoginForm() {
                   label="Contraseña"
                   name="password"
                   type="password"
-                  autoComplete="current-password"
+                  autoComplete="password"
                   variant="outlined"
                   value={formik.values.password}
                   onChange={formik.handleChange}

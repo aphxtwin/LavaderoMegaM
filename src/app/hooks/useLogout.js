@@ -10,7 +10,7 @@ export default function useLogout() {
     const res = await fetch('/api/auth/logOut', { method: 'POST' });
     if (res.ok) {
       dispatch(logOut());
-      router.push('/');
+      router.replace('/');
     }
   };
 
