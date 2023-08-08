@@ -8,6 +8,7 @@ import ResponsiveNavbar from '../components/UI/navbar/responsiveNavbar';
 import ServicesInProgressTable from '../components/UI/servicesInProgressTable/servicesInProgressTable';
 import AddButton from '../components/UI/addButton/addButton';
 import ClientDialog from '../components/UI/client/createClientForm/dialogCreateClient';
+
 // eslint-disable-next-line react/prop-types
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -16,7 +17,6 @@ export default function Dashboard() {
     const loadUser = async () => {
       const res = await fetch('/api/auth/currentUser');
       const user = await res.json();
-
       if (res.ok) {
         dispatch(logIn(user));
       }
