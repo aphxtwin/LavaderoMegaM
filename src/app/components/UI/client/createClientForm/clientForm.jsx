@@ -74,7 +74,7 @@ function ClientForm() {
       if (res.ok) {
         setMessage({ text: 'El cliente se ha guardado exitosamente', success: true });
       } else {
-        setMessage({ text: 'Hubo un error al guardar el cliente', success: false });
+        setMessage({ text: 'Ya existe un cliente con esta información', success: false });
       }
     } catch (error) {
       console.error('Error al enviar el formulario', error);

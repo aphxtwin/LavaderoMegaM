@@ -19,6 +19,20 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
+model Vehiculo {
+  vehiculoId         Int          @id @default(autoincrement())
+  cliente            Cliente      @relation(fields: [clienteId], references: [clienteId])
+  clienteId          Int
+  tipoVehiculo       TipoVehiculo 
+  marca              Marca           
+  modelo             Modelo       
+  condicionIva       CondicionIva 
+  patente            String       @unique @db.VarChar(7)
+  observaciones      String?      @db.VarChar(255)
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+}
+
 model Cliente {
   clienteId          Int          @id @default(autoincrement())
   nombreCompleto     String       @db.VarChar(255)
@@ -28,6 +42,7 @@ model Cliente {
   cuit               String?      @unique @db.VarChar(13)
   telefono           String       @db.VarChar(50)
   esCuentaCorriente  Boolean      @default(false)
+  vehiculos          Vehiculo[]
   createdAt          DateTime     @default(now())
   updatedAt          DateTime     @updatedAt
 }
@@ -35,6 +50,54 @@ enum CondicionIva {
   ConsumidorFinal
   Monotributista
   ResponsableInscripto
+}
+
+enum TipoVehiculo {
+  SEDAN
+  SUV
+  MOTO
+  FURGON
+  CAMION
+}
+
+enum Marca {
+  Suzuki
+  Hyundai
+  Ford
+  Dodge
+  Jeep
+  Audi
+  DS
+  Toyota
+  Honda
+  Chrysler
+  Citroen
+  LandRover
+  Agrale
+  Renault
+  Chevrolet
+  Nissan
+  Kia
+  Fiat
+  Isuzu
+  Mitsubishi
+  Peugeot
+  Seat
+  AlfaRomeo
+  Mini
+  Jac
+  Ram
+  Chery
+  Volvo
+  Deutz
+  MercedesBenz
+  Iveco
+  BMW
+  Volkswagen
+  Subaru
+  Daihatsu
+  Benelli
+  Kawasaki
 }
 
 enum UserRole {
