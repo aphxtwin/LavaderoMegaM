@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -17,12 +17,20 @@ import {
 import { CondicionIva } from '@prisma/client';
 
 function ClientForm() {
+  const [message, setMessage] = useState({ text: '', success: true });
+
   const validationSchema = Yup.object().shape({
     nombreCompleto: Yup.string().required('El nombre es obligatorio'),
-    documento: Yup.string().required('El documento es obligatorio').max(8, 'Máximo 8 caracteres'),
+    documento: Yup.string().test('documentoOcuit', 'Ingresa DNI o CUIT', function(value) {
+      const cuitValue = this.parent.cuit; // Obtén el valor de "cuit"
+      return !!(value || cuitValue); // Al menos uno debe tener valor
+    }),
+    cuit: Yup.string().test('documentoOcuit', 'Ingresa DNI o CUIT', function(value) {
+      const documentoValue = this.parent.documento; // Obtén el valor de "documento"
+      return !!(value || documentoValue); // Al menos uno debe tener valor
+    }),
     email: Yup.string().email('Formato de correo inválido'),
     condicionIva: Yup.string().required('La condición IVA es obligatoria'),
-    cuit: Yup.string().max(11, 'Máximo 11 caracteres'),
     telefono: Yup.string().required('El teléfono es obligatorio'),
     esCuentaCorriente: Yup.boolean(),
   });
@@ -39,6 +47,7 @@ function ClientForm() {
 
   const handleSubmit = async (values) => {
     const formData = { ...values };
+    formData.cuit = formData.cuit.replace(/\D/g, '');
 
     try {
       const res = await fetch('/api/client', {
@@ -58,14 +67,27 @@ function ClientForm() {
       });
 
       if (res.ok) {
-        console.log('El cliente se ha guardado exitosamente');
+        setMessage({ text: 'El cliente se ha guardado exitosamente', success: true });
       } else {
-        console.log('Hubo un error al guardar el cliente');
+        setMessage({ text: 'Hubo un error al guardar el cliente', success: false });
       }
     } catch (error) {
       console.error('Error al enviar el formulario', error);
+      setMessage({ text: 'Error al enviar el formulario', success: false });
     }
   };
+
+  const formatCuit = (input) => {
+    const value = input.replace(/\D/g, '');
+    const parts = [
+      value.substr(0, 2),
+      value.substr(2, 8),
+      value.substr(10, 1),
+    ];
+    return parts.filter(Boolean).join('-');
+  };
+
+
   return (
     <Formik
       initialValues={initialValues}
@@ -92,7 +114,7 @@ function ClientForm() {
             <Field
               as={TextField}
               name="documento"
-              label="Documento"
+              label="DNI"
               variant="outlined"
               type="number"
               InputProps={{
@@ -100,6 +122,17 @@ function ClientForm() {
                 maxLength: 8,
               }}
               fullWidth
+              //
+              onChange={(event) => {
+                const value = event.target.value.slice(0, 8);
+                handleChange({
+                  target: {
+                    name: "documento",
+                    value,
+                  },
+                });
+              }}
+              //
               error={touched.documento && !!errors.documento}
               helperText={touched.documento && errors.documento}
             />
@@ -111,6 +144,16 @@ function ClientForm() {
               label="CUIT"
               variant="outlined"
               fullWidth
+              value={formatCuit(values.cuit)}
+              onChange={(event) => {
+                const formattedValue = formatCuit(event.target.value);
+                handleChange({
+                  target: {
+                    name: 'cuit',
+                    value: formattedValue,
+                  },
+                });
+              }}
               error={touched.cuit && !!errors.cuit}
               helperText={touched.cuit && errors.cuit}
             />
@@ -127,6 +170,17 @@ function ClientForm() {
                 maxLength: 10,
               }}
               fullWidth
+              value={values.telefono}
+              onChange={(event) => {
+                const numericValue = event.target.value.replace(/\D/g, ''); // Remover caracteres no numéricos
+                const formattedValue = numericValue.slice(0, 13); // Limitar a 10 caracteres
+                handleChange({
+                  target: {
+                    name: "telefono",
+                    value: formattedValue,
+                  },
+                });
+              }}
               error={touched.telefono && !!errors.telefono}
               helperText={touched.telefono && errors.telefono}
             />
@@ -172,6 +226,19 @@ function ClientForm() {
                 )}
             />
           </Box>
+          {message.text && (
+            <Box
+              sx={{
+                backgroundColor: message.success ? '#4CAF50' : '#E57373',
+                color: 'white',
+                padding: '10px',
+                borderRadius: '5px',
+                marginTop: '10px',
+              }}
+            >
+              {message.text}
+            </Box>
+          )}
           <Box sx={{ my: 2 }} textAlign="center">
             <Button
               type="submit"
