@@ -11,8 +11,8 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.14.1",
-    "@mui/material": "^5.13.6",
+    "@mui/icons-material": "^5.14.3",
+    "@mui/material": "^5.14.3",
     "@prisma/client": "^4.16.2",
     "@reduxjs/toolkit": "^1.9.5",
     "@vercel/postgres": "^0.4.1",
