@@ -24,8 +24,7 @@ model Vehiculo {
   cliente            Cliente      @relation(fields: [clienteId], references: [clienteId])
   clienteId          Int
   tipoVehiculo       TipoVehiculo 
-  marca              Marca           
-  modelo             Modelo       
+  marca              Marca             
   condicionIva       CondicionIva 
   patente            String       @unique @db.VarChar(7)
   observaciones      String?      @db.VarChar(255)
