@@ -17,6 +17,7 @@ import {
   FormControlLabel,
 } from '@mui/material';
 import { CondicionIva } from '@prisma/client';
+import AddVehicleButton from '../../vehicle/addVehicleButton/addVehicleButton';
 
 function ClientForm() {
   const [message, setMessage] = useState({ text: '', success: true });
@@ -219,19 +220,25 @@ function ClientForm() {
               helperText={touched.email && errors.email}
             />
           </Box>
-          <Box sx={{ my: 2 }}>
-            <FormControlLabel
-              label="¿Cuenta Corriente?"
-              control={(
-                <Switch
-                  checked={values.esCuentaCorriente}
-                  onChange={handleChange}
-                  name="esCuentaCorriente"
-                  color="primary"
-                />
-                )}
-            />
+          <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+            <Box sx={{ my: 2 }}>
+              <AddVehicleButton />
+            </Box>
+            <Box sx={{ my: 2, marginLeft: '1rem' }}>
+              <FormControlLabel
+                label="¿Abrir una Cuenta Corriente?"
+                control={(
+                  <Switch
+                    checked={values.esCuentaCorriente}
+                    onChange={handleChange}
+                    name="esCuentaCorriente"
+                    color="primary"
+                  />
+                  )}
+              />
+            </Box>
           </Box>
+
           {message.text && (
             <Box
               sx={{

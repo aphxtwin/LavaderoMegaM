@@ -44,13 +44,14 @@ function LoginForm() {
     onSubmit: async (values, { setErrors }) => {
       setIsSubmitting(true);
       setLoading(true);
+      const trimmedUsername = values.username.trim();
       const res = await fetch('/api/auth', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username: values.username,
+          username: trimmedUsername,
           password: values.password,
         }),
       });
