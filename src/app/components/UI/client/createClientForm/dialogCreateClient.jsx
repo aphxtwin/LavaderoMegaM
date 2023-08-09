@@ -5,10 +5,12 @@ import {
   DialogContent,
   Typography,
   Box,
+  IconButton,
   ThemeProvider,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import CloseIcon from '@mui/icons-material/Close';
 import ClientForm from './clientForm';
 import theme from '../../loginForm/theme';
 
@@ -22,6 +24,11 @@ function ClientDialog({ showClientForm, toggleClientForm }) {
             <Typography variant="h4" component="div" color="primary">
               Agregar Nuevo Cliente
             </Typography>
+            <Box sx={{ position: 'absolute', right: 8, top: 8 }}>
+              <IconButton onClick={toggleClientForm} color="inherit">
+                <CloseIcon />
+              </IconButton>
+            </Box>
           </Box>
         </DialogTitle>
         <DialogContent>
