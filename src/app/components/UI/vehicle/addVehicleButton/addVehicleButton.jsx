@@ -23,7 +23,7 @@ function AddVehicleButton() {
           top: '0px',
         }}
       >
-        <Image height={60} width={70} src="/images/addCarIconGray.svg" alt="add car" />
+        <Image height={60} width={70} src="/images/addCarIcon.svg" alt="add car" />
         <Typography sx={{ marginTop: '0.1rem' }} variant="button">
           Añadir vehículo
         </Typography>
