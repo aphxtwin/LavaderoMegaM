@@ -5,7 +5,7 @@ const theme = createTheme({
     fontFamily: 'Roboto slab',
     fontWeight: 'regular',
     button: {
-      color: '#808080', // Gray color for the button text
+      color: 'rgba(64, 87, 121, 1)', // Gray color for the button text
       fontSize: '0.6rem', // Default font size
       '@media (max-width:600px)': {
         fontSize: '0.8rem', // Smaller font size for screens less than or equal to 600px
