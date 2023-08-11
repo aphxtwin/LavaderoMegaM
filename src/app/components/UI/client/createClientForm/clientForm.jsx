@@ -111,7 +111,7 @@ function ClientForm() {
       validationSchema={validationSchema}
     >
       {({
-        isSubmitting, handleChange, values, errors, touched,
+        isSubmitting, handleChange, values, errors, touched, setFieldValue,
       }) => (
         <Form>
           <Box sx={{ my: 2 }}>
@@ -121,7 +121,12 @@ function ClientForm() {
                 name="tipoDeCliente"
                 label="Tipo de Cliente"
                 value={values.tipoDeCliente}
-                onChange={handleChange}
+                onChange={(e) => {
+                  handleChange(e);
+                  if (e.target.value === TipoDeCliente.EMPRESA) {
+                    setFieldValue('documento', null);
+                  }
+                }}
                 labelId="tipo-de-cliente"
               >
                 <MenuItem value={TipoDeCliente.INDIVIDUO}>Individuo</MenuItem>
