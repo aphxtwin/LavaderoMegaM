@@ -1,11 +1,10 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import {
-  Formik, Form, Field,
+  Formik, Form,
 } from 'formik';
 import * as Yup from 'yup';
 import {
-  TextField,
   Button,
   Box,
   CircularProgress,
@@ -16,7 +15,9 @@ import {
   Switch,
   FormControlLabel,
 } from '@mui/material';
-import { CondicionIva } from '@prisma/client';
+import { CondicionIva, TipoDeCliente } from '@prisma/client';
+import IndividualForm from './individuoFields';
+import EmpresaForm from './companyFields';
 import AddVehicleButton from '../../vehicle/addVehicleButton/addVehicleButton';
 
 function ClientForm() {
@@ -24,37 +25,45 @@ function ClientForm() {
 
   const validationSchema = Yup.object().shape({
     nombreCompleto: Yup.string().required('El nombre es obligatorio'),
-    documento: Yup.string().test('documentoOcuit', 'Ingresa DNI o CUIT', (value) => {
-      const cuitValue = value; // Obtén el valor de "cuit"
-      return !!(value || cuitValue); // Al menos uno debe tener valor
-    }),
+    documento: Yup.number()
+      .nullable()
+      .when('tipoDeCliente', (tipoDeCliente, field) => (
+        tipoDeCliente[0] === TipoDeCliente.INDIVIDUO // Comparing the first element of the array
+          ? field.required('El documento es obligatorio')
+          : field)),
     email: Yup.string().email('Formato de correo inválido'),
     condicionIva: Yup.string().required('La condición IVA es obligatoria'),
     cuit: Yup.string()
-      .when('condicionIva', {
-        is: (value) => value === CondicionIva.ResponsableInscripto,
-        then: () => Yup.string()
-          .required('El CUIT es obligatorio')
-          .matches(/^[0-9]{2}-[0-9]{8}-[0-9]{1}$/, 'El CUIT debe tener 11 dígitos y el formato XX-XXXXXXXX-X'),
-      }),
+      .test(
+        'cuit-validation',
+        'El CUIT es obligatorio',
+        (value, { parent }) => {
+          const { condicionIva, tipoDeCliente } = parent;
+          return !(
+            (condicionIva === CondicionIva.ResponsableInscripto
+            || tipoDeCliente === TipoDeCliente.EMPRESA)
+            && !value
+          );
+        },
+      )
+      .matches(/^[0-9]{2}-[0-9]{8}-[0-9]{1}$/, 'El CUIT debe tener 11 dígitos y el formato XX-XXXXXXXX-X'),
     telefono: Yup.string().required('El teléfono es obligatorio'),
     esCuentaCorriente: Yup.boolean(),
   });
 
   const initialValues = {
     nombreCompleto: '',
-    documento: '',
+    tipoDeCliente: TipoDeCliente.INDIVIDUO,
+    documento: null,
     email: '',
     condicionIva: CondicionIva.ConsumidorFinal,
     cuit: '',
     telefono: '',
     esCuentaCorriente: false,
   };
-
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { resetForm }) => {
     const formData = { ...values };
     formData.cuit = formData.cuit.replace(/\D/g, '-');
-
     try {
       const res = await fetch('/api/client', {
         method: 'POST',
@@ -62,6 +71,7 @@ function ClientForm() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          tipoDeCliente: formData.tipoDeCliente,
           nombreCompleto: formData.nombreCompleto,
           documento: formData.documento,
           email: formData.email,
@@ -74,6 +84,7 @@ function ClientForm() {
 
       if (res.ok) {
         setMessage({ text: 'El cliente se ha guardado exitosamente', success: true });
+        resetForm();
       } else {
         setMessage({ text: 'Ya existe un cliente con esta información', success: false });
       }
@@ -82,7 +93,6 @@ function ClientForm() {
       setMessage({ text: 'Error al enviar el formulario', success: false });
     }
   };
-
   const formatCuit = (input) => {
     const value = input.replace(/\D/g, '');
 
@@ -104,122 +114,38 @@ function ClientForm() {
         isSubmitting, handleChange, values, errors, touched,
       }) => (
         <Form>
-          <Box>
-            <Field
-              as={TextField}
-              name="nombreCompleto"
-              label="Nombre Completo"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              error={touched.nombreCompleto && !!errors.nombreCompleto}
-              helperText={touched.nombreCompleto && errors.nombreCompleto}
-            />
-          </Box>
-          <Box sx={{ my: 2 }}>
-            <Field
-              as={TextField}
-              name="documento"
-              label="DNI"
-              variant="outlined"
-              type="number"
-              InputProps={{
-                inputMode: 'numeric',
-                maxLength: 8,
-              }}
-              fullWidth
-              //
-              onChange={(event) => {
-                const value = event.target.value.slice(0, 8);
-                handleChange({
-                  target: {
-                    name: 'documento',
-                    value,
-                  },
-                });
-              }}
-              //
-              error={touched.documento && !!errors.documento}
-              helperText={touched.documento && errors.documento}
-            />
-          </Box>
-          <Box sx={{ my: 2 }}>
-            <Field
-              as={TextField}
-              name="telefono"
-              label="Teléfono"
-              variant="outlined"
-              type="tel"
-              InputProps={{
-                inputMode: 'numeric',
-                maxLength: 10,
-              }}
-              fullWidth
-              value={values.telefono}
-              onChange={(event) => {
-                const numericValue = event.target.value.replace(/\D/g, ''); // Remover caracteres no numéricos
-                const formattedValue = numericValue.slice(0, 13); // Limitar a 10 caracteres
-                handleChange({
-                  target: {
-                    name: 'telefono',
-                    value: formattedValue,
-                  },
-                });
-              }}
-              error={touched.telefono && !!errors.telefono}
-              helperText={touched.telefono && errors.telefono}
-            />
-          </Box>
           <Box sx={{ my: 2 }}>
             <FormControl fullWidth variant="outlined">
-              <InputLabel htmlFor="iva-condition">Condición IVA</InputLabel>
+              <InputLabel htmlFor="client-type">Tipo de Cliente</InputLabel>
               <Select
-                name="condicionIva"
-                label="Condición IVA"
-                value={values.condicionIva}
+                name="tipoDeCliente"
+                label="Tipo de Cliente"
+                value={values.tipoDeCliente}
                 onChange={handleChange}
-                labelId="iva-condition"
+                labelId="tipo-de-cliente"
               >
-                <MenuItem value={CondicionIva.ConsumidorFinal}>Consumidor Final</MenuItem>
-                <MenuItem value={CondicionIva.Monotributista}>Monotributista</MenuItem>
-                <MenuItem value={CondicionIva.ResponsableInscripto}>Responsable inscripto</MenuItem>
+                <MenuItem value={TipoDeCliente.INDIVIDUO}>Individuo</MenuItem>
+                <MenuItem value={TipoDeCliente.EMPRESA}>Empresa</MenuItem>
               </Select>
             </FormControl>
           </Box>
-          <Box sx={{ my: 2 }}>
-            <Field
-              as={TextField}
-              name="cuit"
-              label="CUIT"
-              variant="outlined"
-              fullWidth
-              value={formatCuit(values.cuit)}
-              onChange={(event) => {
-                const formattedValue = formatCuit(event.target.value);
-                handleChange({
-                  target: {
-                    name: 'cuit',
-                    value: formattedValue,
-                  },
-                });
-              }}
-              error={touched.cuit && !!errors.cuit}
-              helperText={touched.cuit && errors.cuit}
-              required={values.condicionIva === CondicionIva.ResponsableInscripto}
+          {values.tipoDeCliente === TipoDeCliente.INDIVIDUO ? (
+            <IndividualForm
+              values={values}
+              handleChange={handleChange}
+              touched={touched}
+              errors={errors}
+              formatCuit={formatCuit}
             />
-          </Box>
-          <Box sx={{ my: 2 }}>
-            <Field
-              as={TextField}
-              name="email"
-              label="Correo electrónico"
-              variant="outlined"
-              type="email"
-              fullWidth
-              error={touched.email && !!errors.email}
-              helperText={touched.email && errors.email}
+          ) : (
+            <EmpresaForm
+              values={values}
+              handleChange={handleChange}
+              touched={touched}
+              errors={errors}
+              formatCuit={formatCuit}
             />
-          </Box>
+          )}
           <Box sx={{ display: 'flex', flexDirection: 'row' }}>
             <Box sx={{ my: 2 }}>
               <AddVehicleButton />
