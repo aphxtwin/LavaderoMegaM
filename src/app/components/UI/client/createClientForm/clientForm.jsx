@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useState } from 'react';
 import {
   Formik, Form,
@@ -18,11 +17,12 @@ import {
 import { CondicionIva, TipoDeCliente } from '@prisma/client';
 import IndividualForm from './individuoFields';
 import EmpresaForm from './companyFields';
-import AddVehicleButton from '../../vehicle/addVehicleButton/addVehicleButton';
+import AddCarDashboard from '../../vehicle/addCarDashboard/addCarDashboard';
+import ButtonAddCar from './buttonAddCar/buttonAddCar';
 
 function ClientForm() {
   const [message, setMessage] = useState({ text: '', success: true });
-
+  const [showCarDashboard, setshowCarDashboard] = useState(false);
   const validationSchema = Yup.object().shape({
     nombreCompleto: Yup.string().required('El nombre es obligatorio'),
     documento: Yup.number()
@@ -89,7 +89,6 @@ function ClientForm() {
         setMessage({ text: 'Ya existe un cliente con esta información', success: false });
       }
     } catch (error) {
-      console.error('Error al enviar el formulario', error);
       setMessage({ text: 'Error al enviar el formulario', success: false });
     }
   };
@@ -103,7 +102,9 @@ function ClientForm() {
     ];
     return parts.filter(Boolean).join('-');
   };
-
+  const toggleCarDashboard = () => {
+    setshowCarDashboard(!showCarDashboard);
+  };
   return (
     <Formik
       initialValues={initialValues}
@@ -151,9 +152,13 @@ function ClientForm() {
               formatCuit={formatCuit}
             />
           )}
+          <AddCarDashboard
+            showCarDashboard={showCarDashboard}
+            toggleCarDashboard={toggleCarDashboard}
+          />
           <Box sx={{ display: 'flex', flexDirection: 'row' }}>
             <Box sx={{ my: 2 }}>
-              <AddVehicleButton />
+              <ButtonAddCar onClick={toggleCarDashboard} />
             </Box>
             <Box sx={{ my: 2, marginLeft: '1rem' }}>
               <FormControlLabel
@@ -193,6 +198,7 @@ function ClientForm() {
               {isSubmitting ? <CircularProgress size={24} color="inherit" /> : 'Agregar cliente'}
             </Button>
           </Box>
+
         </Form>
       )}
     </Formik>

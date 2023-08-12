@@ -3,9 +3,10 @@ import {
   Button, ThemeProvider, Typography,
 } from '@mui/material';
 import Image from 'next/image';
+import PropTypes from 'prop-types';
 import theme from './theme';
 
-function AddVehicleButton() {
+function ButtonAddCar({ onClick }) {
   return (
     <ThemeProvider theme={theme}>
       <Button
@@ -22,6 +23,7 @@ function AddVehicleButton() {
           position: 'sticky',
           top: '0px',
         }}
+        onClick={onClick}
       >
         <Image height={60} width={70} src="/images/addCarIcon.svg" alt="add car" />
         <Typography sx={{ marginTop: '0.1rem' }} variant="button">
@@ -31,5 +33,7 @@ function AddVehicleButton() {
     </ThemeProvider>
   );
 }
-
-export default AddVehicleButton;
+ButtonAddCar.propTypes = {
+  onClick: PropTypes.bool.isRequired,
+};
+export default ButtonAddCar;

@@ -9,39 +9,39 @@ import {
   ThemeProvider,
 } from '@mui/material';
 import PropTypes from 'prop-types';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import DriveEtaIcon from '@mui/icons-material/DriveEta';
 import CloseIcon from '@mui/icons-material/Close';
-import ClientForm from './clientForm';
-import theme from '../../loginForm/theme';
+import FormNuevoVehiculo from './formNuevoVehiculo';
+import theme from '../../loginForm/theme'; // You can customize the theme as needed
 
-function ClientDialog({ showClientForm, toggleClientForm }) {
-  // Dialog that wraps the Client form. For reusability puposes
+function DialogFormNuevoVehiculo({ open, onClose }) {
   return (
     <ThemeProvider theme={theme}>
-      <Dialog open={showClientForm} onClose={toggleClientForm} fullWidth maxWidth="sm">
+      <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
         <DialogTitle>
           <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-            <PersonAddIcon sx={{ width: '40px', height: '40px' }} />
+            <DriveEtaIcon sx={{ width: '40px', height: '40px' }} />
             <Typography variant="h4" component="div" color="primary">
-              Agregar Nuevo Cliente
+              Agregar Nuevo Vehículo
             </Typography>
             <Box sx={{ position: 'absolute', right: 8, top: 8 }}>
-              <IconButton onClick={toggleClientForm} color="inherit">
+              <IconButton onClick={onClose} color="inherit">
                 <CloseIcon />
               </IconButton>
             </Box>
           </Box>
         </DialogTitle>
         <DialogContent>
-          <ClientForm />
+          <FormNuevoVehiculo />
         </DialogContent>
       </Dialog>
     </ThemeProvider>
-
   );
 }
-ClientDialog.propTypes = {
-  showClientForm: PropTypes.bool.isRequired,
-  toggleClientForm: PropTypes.func.isRequired,
+
+DialogFormNuevoVehiculo.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
-export default ClientDialog;
+
+export default DialogFormNuevoVehiculo;
