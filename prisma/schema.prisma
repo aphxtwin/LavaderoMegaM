@@ -65,43 +65,42 @@ enum TipoVehiculo {
 }
 
 enum Marca {
-  Suzuki
-  Hyundai
-  Ford
-  Dodge
-  Jeep
+  Agrale
+  AlfaRomeo
   Audi
-  DS
-  Toyota
-  Honda
+  Benelli
+  BMW
+  Chery
+  Chevrolet
   Chrysler
   Citroen
-  LandRover
-  Agrale
-  Renault
-  Chevrolet
-  Nissan
-  Kia
-  Fiat
-  Isuzu
-  Mitsubishi
-  Peugeot
-  Seat
-  AlfaRomeo
-  Mini
-  Jac
-  Ram
-  Chery
-  Volvo
-  Deutz
-  MercedesBenz
-  Iveco
-  BMW
-  Volkswagen
-  Subaru
   Daihatsu
-  Benelli
+  Deutz
+  Dodge
+  DS
+  Fiat
+  Ford
+  Honda
+  Hyundai
+  Iveco
+  Jac
+  Jeep
   Kawasaki
+  Kia
+  LandRover
+  MercedesBenz
+  MiniCooper
+  Mitsubishi
+  Nissan
+  Peugeot
+  Ram
+  Renault
+  Seat
+  Subaru
+  Suzuki
+  Toyota
+  Volkswagen
+  Volvo
 }
 
 enum UserRole {

@@ -43,8 +43,8 @@ function AddCarDashboard({ showCarDashboard, toggleCarDashboard }) {
             <CloseIcon />
           </IconButton>
         </Box>
-        <Box display="flex" justifyContent="space-between" alignItems="center" padding={2}>
-          <Typography variant="h4" component="div" color="primary" sx={{ fontWeight: 'bold', fontSize: '24px' }}>
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Typography variant="h4" component="div" color="primary" sx={{ fontWeight: 'bold', fontSize: '2rem' }}>
             Agrega un nuevo vehículo
           </Typography>
           <Button
@@ -59,18 +59,19 @@ function AddCarDashboard({ showCarDashboard, toggleCarDashboard }) {
               alignItems: 'center',
               textAlign: 'center',
               color: '#FFFFFF',
-              padding: '5px 20px',
+              padding: '10px 25px',
             }}
           >
-            Añadir +
+            Añadir+
           </Button>
         </Box>
       </DialogTitle>
-      <DialogContent sx={{ pt: 0 }}>
+      <DialogContent sx={{ pt: 0, marginBottom: '1rem' }}>
         <Table>
           <TableHead>
             <TableRow>
               <TableCell sx={{ borderBottom: '1px solid rgba(159, 159, 159, 1)', borderTop: '1px solid rgba(159, 159, 159, 1)', padding: '10px' }}>Patente</TableCell>
+              <TableCell sx={{ borderBottom: '1px solid rgba(159, 159, 159, 1)', borderTop: '1px solid rgba(159, 159, 159, 1)', padding: '10px' }}>Tipo de Vehículo</TableCell>
               <TableCell sx={{ borderBottom: '1px solid rgba(159, 159, 159, 1)', borderTop: '1px solid rgba(159, 159, 159, 1)', padding: '10px' }}>Marca</TableCell>
               <TableCell sx={{ borderBottom: '1px solid rgba(159, 159, 159, 1)', borderTop: '1px solid rgba(159, 159, 159, 1)', padding: '10px' }}>Modelo</TableCell>
               <TableCell sx={{ borderBottom: '1px solid rgba(159, 159, 159, 1)', borderTop: '1px solid rgba(159, 159, 159, 1)', padding: '10px' }}>Observaciones</TableCell>

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import PropTypes from 'prop-types';
-import { Box } from '@mui/material';
+import { Box, Tooltip } from '@mui/material';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
@@ -29,20 +29,25 @@ function AddButton({ addServicio = '', onAddClient }) {
 
   return (
     <Box sx={{ position: 'fixed', bottom: 20, left: 16 }}>
-      <Fab
-        sx={
-            {
-              backgroundColor: 'rgba(47, 56, 66, 1)',
-              '&:hover': {
-                backgroundColor: 'rgba(57, 66, 76, 1)',
-              },
-            }
-        }
-        aria-label="add"
-        onClick={handleClick}
-      >
-        <AddIcon sx={{ color: 'white' }} />
-      </Fab>
+      <Tooltip title="Añade un nuevo servicio o cliente">
+        <Fab
+          sx={
+              {
+                backgroundColor: 'rgba(47, 56, 66, 1)',
+                '&:hover': {
+                  backgroundColor: 'rgba(57, 66, 76, 1)',
+                },
+                width: '60px',
+                height: '60px',
+              }
+          }
+          aria-label="add"
+          onClick={handleClick}
+        >
+          <AddIcon sx={{ color: 'white' }} />
+        </Fab>
+      </Tooltip>
+
       <Menu
         id="simple-menu"
         anchorEl={anchorEl}
