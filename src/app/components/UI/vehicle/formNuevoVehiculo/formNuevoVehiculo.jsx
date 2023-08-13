@@ -31,8 +31,7 @@ function FormNuevoVehiculo() {
     observaciones: '',
   };
 
-  const handleSubmit = async (values) => {
-    // Handle form submission logic here
+  const handleSubmit = async () => {
   };
 
   return (
@@ -41,9 +40,14 @@ function FormNuevoVehiculo() {
       onSubmit={handleSubmit}
       validationSchema={validationSchema}
     >
-      {({ handleChange, values, errors, touched }) => (
+      {({
+        handleChange, values, errors, touched,
+      }) => (
         <Form>
-          <Box sx={{ my: 2 }}>
+          <Box sx={{
+            my: 2, display: 'flex', flexDirection: 'column', gap: '2rem',
+          }}
+          >
             <FormControl fullWidth variant="outlined">
               <InputLabel htmlFor="vehicle-type">Tipo de Vehículo</InputLabel>
               <Select

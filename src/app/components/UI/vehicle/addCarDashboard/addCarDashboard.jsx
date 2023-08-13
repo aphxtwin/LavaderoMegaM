@@ -76,8 +76,7 @@ function AddCarDashboard({ showCarDashboard, toggleCarDashboard }) {
               <TableCell sx={{ borderBottom: '1px solid rgba(159, 159, 159, 1)', borderTop: '1px solid rgba(159, 159, 159, 1)', padding: '10px' }}>Observaciones</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-          </TableBody>
+          <TableBody />
         </Table>
         <DialogFormNuevoVehiculo
           open={showDialogFormNuevoVehiculo}
