@@ -13,7 +13,7 @@ import {
   TextField,
 } from '@mui/material';
 import { TipoVehiculo, Marca } from '@prisma/client';
-import { useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux';
 import { addVehicle } from '@/app/redux/slices/vehicleSlice';
 
 function FormNuevoVehiculo() {
@@ -39,9 +39,8 @@ function FormNuevoVehiculo() {
 
   const handleSubmit = async (values, { resetForm }) => {
     const formData = { ...values };
-    dispatch(addVehicle(formData))
+    dispatch(addVehicle(formData));
   };
-
 
   return (
     <Formik
@@ -143,31 +142,30 @@ function FormNuevoVehiculo() {
 export default FormNuevoVehiculo;
 
 
-  // const handleSubmit = async (values, { resetForm }) => {
-  //   const formData = { ...values };
-  //   try {
-  //     const res = await fetch('/api/vehicle', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         tipoDeVehiculo: formData.tipoDeVehiculo,
-  //         patente: formData.patente,
-  //         marca: formData.marca,
-  //         modelo: formData.modelo,
-  //         observaciones: formData.observacion,
-  //       }),
-  //     });
+// const handleSubmit = async (values, { resetForm }) => {
+//   const formData = { ...values };
+//   try {
+//     const res = await fetch('/api/vehicle', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify({
+//         tipoDeVehiculo: formData.tipoDeVehiculo,
+//         patente: formData.patente,
+//         marca: formData.marca,
+//         modelo: formData.modelo,
+//         observaciones: formData.observacion,
+//       }),
+//     });
 
-  //     if (res.ok) {
-  //       setMessage({ text: 'El vehículo se ha guardado exitosamente', success: true });
-  //       resetForm();
-  //     } else {
-  //       setMessage({ text: 'Ya existe un vehículo con esta información', success: false });
-  //     }
-  //   } catch (error) {
-  //     setMessage({ text: 'Error al enviar el formulario', success: false });
-  //   }
-  // };
-
+//     if (res.ok) {
+//       setMessage({ text: 'El vehículo se ha guardado exitosamente', success: true });
+//       resetForm();
+//     } else {
+//       setMessage({ text: 'Ya existe un vehículo con esta información', success: false });
+//     }
+//   } catch (error) {
+//     setMessage({ text: 'Error al enviar el formulario', success: false });
+//   }
+// };

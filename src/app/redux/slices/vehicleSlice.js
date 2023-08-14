@@ -1,11 +1,12 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    tipoDeVehiculo: "",
-    patente: "",
-    marca: "",
-    modelo: "",
-    observaciones: "",
+  tipoDeVehiculo: '',
+  patente: '',
+  marca: '',
+  modelo: '',
+  observaciones: '',
 };
 
 const vehicleSlice = createSlice({
@@ -13,12 +14,14 @@ const vehicleSlice = createSlice({
   initialState,
   reducers: {
     addVehicle: (state, action) => {
-        const { tipoDeVehiculo, patente, marca, modelo, observaciones } = action.payload;
-        state.tipoDeVehiculo = tipoDeVehiculo;
-        state.patente = patente;
-        state.marca = marca;
-        state.modelo = modelo;
-        state.observaciones = observaciones;
+      const {
+        tipoDeVehiculo, patente, marca, modelo, observaciones,
+      } = action.payload;
+      state.tipoDeVehiculo = tipoDeVehiculo;
+      state.patente = patente;
+      state.marca = marca;
+      state.modelo = modelo;
+      state.observaciones = observaciones;
     },
   },
 });
