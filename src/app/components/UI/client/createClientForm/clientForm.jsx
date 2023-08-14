@@ -67,12 +67,8 @@ function ClientForm() {
     const formData = { ...values };
     formData.cuit = formData.cuit.replace(/\D/g, '-');
     try {
-      const res = await fetch('/api/client', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      const requestData = {
+        clientData: {
           tipoDeCliente: formData.tipoDeCliente,
           nombreCompleto: formData.nombreCompleto,
           documento: formData.documento,
@@ -81,7 +77,15 @@ function ClientForm() {
           cuit: formData.cuit,
           condicionIva: formData.condicionIva,
           esCuentaCorriente: formData.esCuentaCorriente,
-        }),
+        },
+        vehicleData: vehicleState.vehicles,
+      };
+      const res = await fetch('/api/client', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
       });
 
       if (res.ok) {

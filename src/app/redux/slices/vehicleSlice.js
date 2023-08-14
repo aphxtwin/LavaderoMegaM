@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  vehicles: [], // Cambiamos a un array para almacenar múltiples vehículos
+  vehicles: [],
 };
 
 const vehicleSlice = createSlice({
@@ -9,7 +9,6 @@ const vehicleSlice = createSlice({
   initialState,
   reducers: {
     addVehicle: (state, action) => {
-      // Añadimos el nuevo vehículo al array de vehículos en el estado
       state.vehicles.push(action.payload);
     },
   },
