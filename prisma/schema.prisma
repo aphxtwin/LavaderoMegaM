@@ -20,31 +20,31 @@ model User {
 }
 
 model Vehiculo {
-  vehiculoId         Int          @id @default(autoincrement())
-  cliente            Cliente      @relation(fields: [clienteId], references: [clienteId])
-  clienteId          Int
-  tipoVehiculo       TipoVehiculo 
-  marca              Marca             
-  condicionIva       CondicionIva 
-  patente            String       @unique @db.VarChar(7)
-  observaciones      String?      @db.VarChar(255)
-  createdAt          DateTime     @default(now())
-  updatedAt          DateTime     @updatedAt
+  vehiculoId    Int          @id @default(autoincrement())
+  clienteId     Int
+  tipoVehiculo  TipoVehiculo
+  marca         Marca
+  modelo        String       @db.VarChar(25)
+  patente       String       @unique @db.VarChar(7)
+  observaciones String?      @db.VarChar(255)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  cliente       Cliente      @relation(fields: [clienteId], references: [clienteId])
 }
 
 model Cliente {
-  clienteId          Int          @id @default(autoincrement())
-  tipoDeCliente      TipoDeCliente @default(INDIVIDUO)
-  nombreCompleto     String       @db.VarChar(255)
-  documento          Int?          
-  email              String?      @unique @db.VarChar(255)
-  condicionIva       CondicionIva @default(ConsumidorFinal)
-  cuit               String?      @unique @db.VarChar(13)
-  telefono           String       @db.VarChar(50)
-  esCuentaCorriente  Boolean      @default(false)
-  vehiculos          Vehiculo[]
-  createdAt          DateTime     @default(now())
-  updatedAt          DateTime     @updatedAt
+  clienteId         Int           @id @default(autoincrement())
+  nombreCompleto    String        @db.VarChar(255)
+  documento         Int?
+  email             String?       @unique @db.VarChar(255)
+  condicionIva      CondicionIva  @default(ConsumidorFinal)
+  cuit              String?       @unique @db.VarChar(13)
+  telefono          String        @db.VarChar(50)
+  esCuentaCorriente Boolean       @default(false)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  tipoDeCliente     TipoDeCliente @default(INDIVIDUO)
+  vehiculos         Vehiculo[]
 }
 
 enum CondicionIva {
@@ -52,10 +52,12 @@ enum CondicionIva {
   Monotributista
   ResponsableInscripto
 }
+
 enum TipoDeCliente {
   INDIVIDUO
   EMPRESA
 }
+
 enum TipoVehiculo {
   AUTO
   CAMIONETA

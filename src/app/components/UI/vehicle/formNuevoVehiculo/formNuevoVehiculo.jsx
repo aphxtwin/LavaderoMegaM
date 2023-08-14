@@ -31,7 +31,33 @@ function FormNuevoVehiculo() {
     observaciones: '',
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (values, { resetForm }) => {
+    const formData = { ...values };
+    // Poner todo en mayusculas la patente
+    try {
+      const res = await fetch('/api/vehicle', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          tipoDeVehiculo: formData.tipoDeVehiculo,
+          patente: formData.patente,
+          marca: formData.marca,
+          modelo: formData.modelo,
+          observaciones: formData.observacion,
+        }),
+      });
+
+      if (res.ok) {
+        setMessage({ text: 'El vehículo se ha guardado exitosamente', success: true });
+        resetForm();
+      } else {
+        setMessage({ text: 'Ya existe un vehículo con esta información', success: false });
+      }
+    } catch (error) {
+      setMessage({ text: 'Error al enviar el formulario', success: false });
+    }
   };
 
   return (
