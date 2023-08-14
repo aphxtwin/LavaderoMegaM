@@ -19,8 +19,10 @@ import IndividualForm from './individuoFields';
 import EmpresaForm from './companyFields';
 import AddCarDashboard from '../../vehicle/addCarDashboard/addCarDashboard';
 import ButtonAddCar from './buttonAddCar/buttonAddCar';
+import { useSelector } from 'react-redux';
 
 function ClientForm() {
+  const vehicleState = useSelector(state => state.vehicle);
   const [message, setMessage] = useState({ text: '', success: true });
   const [showCarDashboard, setshowCarDashboard] = useState(false);
   const validationSchema = Yup.object().shape({
@@ -79,6 +81,11 @@ function ClientForm() {
           cuit: formData.cuit,
           condicionIva: formData.condicionIva,
           esCuentaCorriente: formData.esCuentaCorriente,
+          tipoDeVehiculo: vehicleState.tipoDeVehiculo,
+          patente: vehicleState.patente,
+          marca: vehicleState.marca,
+          modelo: vehicleState.modelo,
+          observaciones: vehicleState.observaciones,
         }),
       });
 
