@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Formik, Form,
 } from 'formik';
@@ -15,6 +15,8 @@ import {
 import { TipoVehiculo, Marca } from '@prisma/client';
 
 function FormNuevoVehiculo() {
+  const [message, setMessage] = useState({ text: '', success: true });
+
   const validationSchema = Yup.object().shape({
     tipoDeVehiculo: Yup.string().required('El tipo de vehículo es obligatorio'),
     patente: Yup.string().required('La patente es obligatoria'),
@@ -92,10 +94,18 @@ function FormNuevoVehiculo() {
               name="patente"
               label="Patente"
               value={values.patente}
-              onChange={handleChange}
+              inputProps={{
+                maxLength: 7,
+                style: { textTransform: 'uppercase' },
+              }}
+              onChange={(e) => {
+                e.target.value = e.target.value.toUpperCase().slice(0, 7);
+                handleChange(e);
+              }}
               error={touched.patente && Boolean(errors.patente)}
               helperText={touched.patente && errors.patente}
             />
+
             <FormControl fullWidth variant="outlined">
               <InputLabel htmlFor="marca">Marca</InputLabel>
               <Select
@@ -125,6 +135,19 @@ function FormNuevoVehiculo() {
               onChange={handleChange}
             />
           </Box>
+          {message.text && (
+            <Box
+              sx={{
+                backgroundColor: message.success ? '#4CAF50' : '#E57373',
+                color: 'white',
+                padding: '10px',
+                borderRadius: '5px',
+                marginTop: '10px',
+              }}
+            >
+              {message.text}
+            </Box>
+          )}
           <Box sx={{ my: 2 }} textAlign="center">
             <Button type="submit" variant="contained" color="primary">
               Agregar vehículo
