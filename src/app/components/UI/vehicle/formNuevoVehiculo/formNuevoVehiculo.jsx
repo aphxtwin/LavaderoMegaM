@@ -35,9 +35,19 @@ function FormNuevoVehiculo() {
     observaciones: '',
   };
 
-  const handleSubmit = async (values, { resetForm }) => {
+  const handleSubmit = (values, { resetForm }) => {
     const formData = { ...values };
-    dispatch(addVehicle(formData));
+    const newVehicle = {
+      tipoDeVehiculo: formData.tipoDeVehiculo,
+      patente: formData.patente,
+      marca: formData.marca,
+      modelo: formData.modelo,
+      observaciones: formData.observaciones,
+    }
+
+    dispatch(addVehicle(newVehicle));
+
+    resetForm();
   };
 
   return (

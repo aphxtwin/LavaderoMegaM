@@ -81,11 +81,6 @@ function ClientForm() {
           cuit: formData.cuit,
           condicionIva: formData.condicionIva,
           esCuentaCorriente: formData.esCuentaCorriente,
-          tipoDeVehiculo: vehicleState.tipoDeVehiculo,
-          patente: vehicleState.patente,
-          marca: vehicleState.marca,
-          modelo: vehicleState.modelo,
-          observaciones: vehicleState.observaciones,
         }),
       });
 

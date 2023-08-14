@@ -1,12 +1,7 @@
-/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  tipoDeVehiculo: '',
-  patente: '',
-  marca: '',
-  modelo: '',
-  observaciones: '',
+  vehicles: [], // Cambiamos a un array para almacenar múltiples vehículos
 };
 
 const vehicleSlice = createSlice({
@@ -14,14 +9,8 @@ const vehicleSlice = createSlice({
   initialState,
   reducers: {
     addVehicle: (state, action) => {
-      const {
-        tipoDeVehiculo, patente, marca, modelo, observaciones,
-      } = action.payload;
-      state.tipoDeVehiculo = tipoDeVehiculo;
-      state.patente = patente;
-      state.marca = marca;
-      state.modelo = modelo;
-      state.observaciones = observaciones;
+      // Añadimos el nuevo vehículo al array de vehículos en el estado
+      state.vehicles.push(action.payload);
     },
   },
 });
