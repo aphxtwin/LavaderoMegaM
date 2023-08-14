@@ -19,8 +19,6 @@ import { addVehicle } from '@/app/redux/slices/vehicleSlice';
 function FormNuevoVehiculo() {
   const dispatch = useDispatch();
 
-  const [message, setMessage] = useState({ text: '', success: true });
-
   const validationSchema = Yup.object().shape({
     tipoDeVehiculo: Yup.string().required('El tipo de vehículo es obligatorio'),
     patente: Yup.string().required('La patente es obligatoria'),
@@ -37,9 +35,19 @@ function FormNuevoVehiculo() {
     observaciones: '',
   };
 
-  const handleSubmit = async (values, { resetForm }) => {
+  const handleSubmit = (values, { resetForm }) => {
     const formData = { ...values };
-    dispatch(addVehicle(formData));
+    const newVehicle = {
+      tipoDeVehiculo: formData.tipoDeVehiculo,
+      patente: formData.patente,
+      marca: formData.marca,
+      modelo: formData.modelo,
+      observaciones: formData.observaciones,
+    }
+
+    dispatch(addVehicle(newVehicle));
+
+    resetForm();
   };
 
   return (
@@ -115,19 +123,6 @@ function FormNuevoVehiculo() {
               onChange={handleChange}
             />
           </Box>
-          {message.text && (
-            <Box
-              sx={{
-                backgroundColor: message.success ? '#4CAF50' : '#E57373',
-                color: 'white',
-                padding: '10px',
-                borderRadius: '5px',
-                marginTop: '10px',
-              }}
-            >
-              {message.text}
-            </Box>
-          )}
           <Box sx={{ my: 2 }} textAlign="center">
             <Button type="submit" variant="contained" color="primary">
               Agregar vehículo

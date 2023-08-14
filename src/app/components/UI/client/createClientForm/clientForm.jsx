@@ -19,8 +19,10 @@ import IndividualForm from './individuoFields';
 import EmpresaForm from './companyFields';
 import AddCarDashboard from '../../vehicle/addCarDashboard/addCarDashboard';
 import ButtonAddCar from './buttonAddCar/buttonAddCar';
+import { useSelector } from 'react-redux';
 
 function ClientForm() {
+  const vehicleState = useSelector(state => state.vehicle);
   const [message, setMessage] = useState({ text: '', success: true });
   const [showCarDashboard, setshowCarDashboard] = useState(false);
   const validationSchema = Yup.object().shape({
@@ -65,12 +67,8 @@ function ClientForm() {
     const formData = { ...values };
     formData.cuit = formData.cuit.replace(/\D/g, '-');
     try {
-      const res = await fetch('/api/client', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      const requestData = {
+        clientData: {
           tipoDeCliente: formData.tipoDeCliente,
           nombreCompleto: formData.nombreCompleto,
           documento: formData.documento,
@@ -79,7 +77,15 @@ function ClientForm() {
           cuit: formData.cuit,
           condicionIva: formData.condicionIva,
           esCuentaCorriente: formData.esCuentaCorriente,
-        }),
+        },
+        vehicleData: vehicleState.vehicles,
+      };
+      const res = await fetch('/api/client', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
       });
 
       if (res.ok) {
