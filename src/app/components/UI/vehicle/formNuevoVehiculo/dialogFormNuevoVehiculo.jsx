@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 import DriveEtaIcon from '@mui/icons-material/DriveEta';
 import CloseIcon from '@mui/icons-material/Close';
 import FormNuevoVehiculo from './formNuevoVehiculo';
-import theme from '../../loginForm/theme'; // You can customize the theme as needed
+import theme from '../../loginForm/theme';
 
 function DialogFormNuevoVehiculo({ open, onClose }) {
   return (

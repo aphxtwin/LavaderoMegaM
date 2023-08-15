@@ -135,8 +135,6 @@ function FormNuevoVehiculo() {
 }
 
 export default FormNuevoVehiculo;
-
-
 // const handleSubmit = async (values, { resetForm }) => {
 //   const formData = { ...values };
 //   try {

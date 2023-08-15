@@ -6,17 +6,17 @@ import {
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useRouter } from 'next/navigation';
-import theme from './theme';
+import theme from '../theme';
 
 // eslint-disable-next-line react/prop-types
-function NewServiceContainer({ children }) {
+function OrdenDeServicioContainer({ children }) {
   const router = useRouter();
   const [activeStep] = useState(0);
   const steps = ['Cliente', 'Vehiculo', 'Pago'];
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ p: 2, backgroundColor: '#FFFFFF' }}>
+      <Box sx={{ p: 1, backgroundColor: '#FFFFFF' }}>
         <IconButton
           edge="start"
           color="secondary"
@@ -40,9 +40,14 @@ function NewServiceContainer({ children }) {
 }
           >
             {steps.map((step, index) => (
-              <Box key={step} sx={{ textAlign: 'center' }}>
-                <Typography color={index === activeStep ? 'secondary' : 'textPrimary'}>{step}</Typography>
-                {index === activeStep && <Box sx={{ height: '4px', width: '100%', backgroundColor: '#283D5B' }} />}
+              <Box key={step} sx={{ textAlign: 'start', width: '100%', marginRight: '1rem' }}>
+                <Typography sx={{ marginBottom: '2.5px' }} color={index === activeStep ? 'secondary' : 'textPrimary'}>{step}</Typography>
+                {index === activeStep && (
+                <Box sx={{
+                  height: '5px', width: '100%', backgroundColor: '#283D5B', borderRadius: '5px',
+                }}
+                />
+                )}
               </Box>
             ))}
           </Box>
@@ -53,4 +58,4 @@ function NewServiceContainer({ children }) {
   );
 }
 
-export default NewServiceContainer;
+export default OrdenDeServicioContainer;

@@ -18,6 +18,13 @@ const theme = createTheme({
         },
       },
     },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          borderRadius: '16px',
+        },
+      },
+    },
     MuiTextField: {
       styleOverrides: {
         root: {
