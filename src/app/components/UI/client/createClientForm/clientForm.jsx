@@ -19,9 +19,11 @@ import IndividualForm from './individuoFields';
 import EmpresaForm from './companyFields';
 import AddCarDashboard from '../../vehicle/addCarDashboard/addCarDashboard';
 import ButtonAddCar from './buttonAddCar/buttonAddCar';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { resetVehicles } from '@/app/redux/slices/vehicleSlice';
 
 function ClientForm() {
+  const dispatch = useDispatch();
   const vehicleState = useSelector(state => state.vehicle);
   const [message, setMessage] = useState({ text: '', success: true });
   const [showCarDashboard, setshowCarDashboard] = useState(false);
@@ -90,6 +92,7 @@ function ClientForm() {
 
       if (res.ok) {
         setMessage({ text: 'El cliente se ha guardado exitosamente', success: true });
+        dispatch(resetVehicles());
         resetForm();
       } else {
         setMessage({ text: 'Ya existe un cliente con esta información', success: false });
@@ -97,7 +100,9 @@ function ClientForm() {
     } catch (error) {
       setMessage({ text: 'Error al enviar el formulario', success: false });
     }
+    
   };
+
   const formatCuit = (input) => {
     const value = input.replace(/\D/g, '');
 

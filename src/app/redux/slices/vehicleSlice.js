@@ -11,8 +11,11 @@ const vehicleSlice = createSlice({
     addVehicle: (state, action) => {
       state.vehicles.push(action.payload);
     },
+    resetVehicles: (state) => {
+      state.vehicles = [];
+    },
   },
 });
 
-export const { addVehicle } = vehicleSlice.actions;
+export const { addVehicle, resetVehicles } = vehicleSlice.actions;
 export default vehicleSlice.reducer;
