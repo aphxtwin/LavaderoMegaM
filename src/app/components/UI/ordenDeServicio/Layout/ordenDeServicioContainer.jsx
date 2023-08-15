@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import {
-  Box, Typography, IconButton, ThemeProvider,
+  Box, Typography, IconButton, ThemeProvider, Paper
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useRouter } from 'next/navigation';
@@ -31,13 +31,13 @@ function OrdenDeServicioContainer({ children }) {
             Nuevo Servicio
           </Typography>
           <Box sx={
-            {
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginTop: '1.5rem',
+              {
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginTop: '1.5rem',
+              }
             }
-}
           >
             {steps.map((step, index) => (
               <Box key={step} sx={{ textAlign: 'start', width: '100%', marginRight: '1rem' }}>
