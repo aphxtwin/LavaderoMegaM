@@ -15,8 +15,8 @@ function LoginFormLayout({ children }) {
     height: '75vh',
   };
   const paperStyle = {
-    marginLeft: '7%',
     padding: '0 1.5rem 0 1.5rem',
+		marginLeft:'2.5rem',
   };
 
   return (
