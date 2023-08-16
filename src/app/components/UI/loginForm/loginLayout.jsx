@@ -16,7 +16,7 @@ function LoginFormLayout({ children }) {
   };
   const paperStyle = {
     padding: '0 1.5rem 0 1.5rem',
-		marginLeft:'2.5rem',
+    marginLeft: '2.5rem',
   };
 
   return (
