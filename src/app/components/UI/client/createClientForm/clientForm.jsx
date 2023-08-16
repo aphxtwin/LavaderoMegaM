@@ -15,16 +15,16 @@ import {
   FormControlLabel,
 } from '@mui/material';
 import { CondicionIva, TipoDeCliente } from '@prisma/client';
+import { useSelector, useDispatch } from 'react-redux';
 import IndividualForm from './individuoFields';
 import EmpresaForm from './companyFields';
 import AddCarDashboard from '../../vehicle/addCarDashboard/addCarDashboard';
 import ButtonAddCar from './buttonAddCar/buttonAddCar';
-import { useSelector, useDispatch } from 'react-redux';
-import { resetVehicles } from '@/app/redux/slices/vehicleSlice';
+import { resetVehicles } from '../../../../redux/slices/vehicleSlice';
 
 function ClientForm() {
   const dispatch = useDispatch();
-  const vehicleState = useSelector(state => state.vehicle);
+  const vehicleState = useSelector((state) => state.vehicle);
   const [message, setMessage] = useState({ text: '', success: true });
   const [showCarDashboard, setshowCarDashboard] = useState(false);
   const validationSchema = Yup.object().shape({
@@ -100,7 +100,6 @@ function ClientForm() {
     } catch (error) {
       setMessage({ text: 'Error al enviar el formulario', success: false });
     }
-    
   };
 
   const formatCuit = (input) => {

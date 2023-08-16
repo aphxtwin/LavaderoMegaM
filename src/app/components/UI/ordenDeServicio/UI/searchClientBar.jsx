@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Box, InputAdornment, TextField, Select, MenuItem, IconButton, Paper,
+  InputAdornment, TextField, Select, MenuItem, IconButton, Paper,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
@@ -25,7 +25,7 @@ function SearchClientBar() {
       <IconButton onClick={handleSearch}>
         <SearchIcon />
       </IconButton>
-      <Select sx={{ backgroundColor: 'rgba(91, 91, 91, 0.1)'}} value={searchType} onChange={(e) => setSearchType(e.target.value)}>
+      <Select sx={{ backgroundColor: 'rgba(91, 91, 91, 0.1)' }} value={searchType} onChange={(e) => setSearchType(e.target.value)}>
         <MenuItem value="DNI">DNI</MenuItem>
         <MenuItem value="CUIT">CUIT</MenuItem>
         <MenuItem value="Name">Nombre</MenuItem>

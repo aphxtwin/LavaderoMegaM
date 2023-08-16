@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import {
-  Box, Typography, IconButton, ThemeProvider, Paper
+  Box, Typography, IconButton, ThemeProvider,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useRouter } from 'next/navigation';

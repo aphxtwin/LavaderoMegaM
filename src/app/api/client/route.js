@@ -5,15 +5,15 @@ async function createCliente(data) {
   const prisma = new PrismaClient();
   const currentDate = new Date().toISOString();
 
-  const formattedVehicles = data.vehicleData.map(vehicle => ({
-    tipoVehiculo: vehicle.tipoDeVehiculo,
-    marca: vehicle.marca,
-    modelo: vehicle.modelo,
-    patente: vehicle.patente,
-    observaciones: vehicle.observaciones,
-    createdAt: currentDate,
-    updatedAt: currentDate,
-  }));
+  // const formattedVehicles = data.vehicleData.map((vehicle) => ({
+  //   tipoVehiculo: vehicle.tipoDeVehiculo,
+  //   marca: vehicle.marca,
+  //   modelo: vehicle.modelo,
+  //   patente: vehicle.patente,
+  //   observaciones: vehicle.observaciones,
+  //   createdAt: currentDate,
+  //   updatedAt: currentDate,
+  // }));
 
   const createdCliente = await prisma.cliente.create({
     data: {
@@ -30,14 +30,14 @@ async function createCliente(data) {
     },
   });
 
-  for (const vehicle of formattedVehicles) {
-    await prisma.vehiculo.create({
-      data: {
-        ...vehicle,
-        clienteId: createdCliente.clienteId,
-      },
-    });
-  }
+  // for (const vehicle of formattedVehicles) {
+  //   await prisma.vehiculo.create({
+  //     data: {
+  //       ...vehicle,
+  //       clienteId: createdCliente.clienteId,
+  //     },
+  //   });
+  // }
 
   return createdCliente;
 }
@@ -53,7 +53,6 @@ export async function POST(req) {
 
   try {
     const requestData = await req.json();
-    const { clientData, vehicleData } = requestData;
     const createdCliente = await createCliente(requestData);
 
     return new NextResponse(
@@ -61,9 +60,9 @@ export async function POST(req) {
       {
         status: 201,
         headers: { 'Content-Type': 'application/json' },
-    });
+      },
+    );
   } catch (error) {
-    console.log(error)
     return new NextResponse(error.message, {
       status: 500,
       headers: { 'Content-Type': 'application/json' },

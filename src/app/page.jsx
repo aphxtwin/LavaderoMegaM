@@ -1,22 +1,10 @@
-'use client';
-
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useRouter } from 'next/navigation';
+import React from 'react';
 import { Grid } from '@mui/material';
+import LoginRedirectLogic from './components/UI/loginForm/loginRedirectLogic';
 
 const LoginForm = React.lazy(() => import('./components/UI/loginForm/loginForm'));
 
 export default function Home() {
-  const router = useRouter();
-  const user = useSelector((state) => state.user.currentUser);
-
-  useEffect(() => {
-    if (user) {
-      router.push('/dashboard');
-    }
-  }, [router, user]);
-
   return (
     <Grid
       container
@@ -27,7 +15,10 @@ export default function Home() {
       disableequaloverflow="true"
       spacing={3}
     >
-      <LoginForm />
+      <LoginRedirectLogic>
+        <LoginForm />
+      </LoginRedirectLogic>
     </Grid>
+
   );
 }

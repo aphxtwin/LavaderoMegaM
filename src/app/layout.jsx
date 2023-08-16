@@ -11,7 +11,6 @@ const roboto = Roboto({
   display: 'swap',
 });
 
-
 export const metadata = {
   title: 'Mega MultiServicios',
   description: '',

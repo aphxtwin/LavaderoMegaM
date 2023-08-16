@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Formik, Form,
 } from 'formik';
@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { TipoVehiculo, Marca } from '@prisma/client';
 import { useDispatch } from 'react-redux';
-import { addVehicle } from '@/app/redux/slices/vehicleSlice';
+import { addVehicle } from '../../../../redux/slices/vehicleSlice';
 
 function FormNuevoVehiculo() {
   const dispatch = useDispatch();
@@ -43,8 +43,7 @@ function FormNuevoVehiculo() {
       marca: formData.marca,
       modelo: formData.modelo,
       observaciones: formData.observaciones,
-    }
-
+    };
     dispatch(addVehicle(newVehicle));
 
     resetForm();
