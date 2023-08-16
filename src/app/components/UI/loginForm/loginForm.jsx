@@ -11,7 +11,6 @@ import {
 } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { logIn } from '../../../redux/slices/authSlice';
-import LoginFormLayout from './loginLayout';
 import { authenticateUser } from './authApi';
 
 const validationSchema = Yup.object().shape({
@@ -48,7 +47,7 @@ function LoginForm() {
     },
   });
   return (
-    <LoginFormLayout>
+    <>
       <form onSubmit={formik.handleSubmit}>
         <Grid>
           <Grid item sx={{ marginBottom: '1rem' }}>
@@ -102,7 +101,7 @@ function LoginForm() {
           </Grid>
         </Grid>
       </form>
-    </LoginFormLayout>
+    </>
 
   );
 }
