@@ -12,23 +12,28 @@ import PropTypes from 'prop-types';
 import theme from './theme';
 
 function LoginFormLayout({ children }) {
-  const formStyle = {
-    height: '75vh',
-  };
   const paperStyle = {
+    display: 'flex',
     padding: '0 1.5rem 0 1.5rem',
-    marginLeft: '2.5rem',
+    flexDirection: 'column',
+    gap: '1.5rem',
   };
-
+  const containerStyle= {
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center',
+    height:'100vh',
+  }
   return (
     <ThemeProvider theme={theme}>
+      <Box sx={containerStyle} >
       <Paper elevation={10} sx={paperStyle}>
         <Grid
           container
           direction="column"
           justifyContent="center"
           alignItems="stretch"
-          sx={formStyle}
+          sx={{height:'75vh'}}
         >
 
           <Box
@@ -73,6 +78,7 @@ function LoginFormLayout({ children }) {
           </Box>
         </Grid>
       </Paper>
+      </Box>
     </ThemeProvider>
   );
 }
