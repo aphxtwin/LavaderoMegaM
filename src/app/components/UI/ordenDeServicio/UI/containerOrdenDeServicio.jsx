@@ -1,26 +1,19 @@
-'use client';
-
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Box, Typography, IconButton, ThemeProvider,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useRouter } from 'next/navigation';
 import theme from '../theme';
 
 // eslint-disable-next-line react/prop-types
-function OrdenDeServicioContainer({ children }) {
-  const router = useRouter();
-  const [activeStep] = useState(0);
-  const steps = ['Cliente', 'Vehiculo', 'Pago'];
-
+function OrdenDeServicioContainer({ children, onArrowClick }) {
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ p: 1, backgroundColor: '#FFFFFF' }}>
         <IconButton
           edge="start"
           color="secondary"
-          onClick={() => router.back()}
+          onClick={onArrowClick}
           aria-label="back"
           sx={{ marginBottom: '0.5rem' }}
         >
@@ -39,19 +32,8 @@ function OrdenDeServicioContainer({ children }) {
               }
             }
           >
-            {steps.map((step, index) => (
-              <Box key={step} sx={{ textAlign: 'start', width: '100%', marginRight: '1rem' }}>
-                <Typography sx={{ marginBottom: '2.5px' }} color={index === activeStep ? 'secondary' : 'textPrimary'}>{step}</Typography>
-                {index === activeStep && (
-                <Box sx={{
-                  height: '5px', width: '100%', backgroundColor: '#283D5B', borderRadius: '5px',
-                }}
-                />
-                )}
-              </Box>
-            ))}
+            {children}
           </Box>
-          {children}
         </Box>
       </Box>
     </ThemeProvider>

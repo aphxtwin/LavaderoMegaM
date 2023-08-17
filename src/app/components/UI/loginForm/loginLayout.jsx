@@ -1,3 +1,4 @@
+import 'server-only';
 import React from 'react';
 import {
   Grid,
@@ -76,6 +77,6 @@ function LoginFormLayout({ children }) {
   );
 }
 LoginFormLayout.propTypes = {
-  children: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
 };
 export default LoginFormLayout;

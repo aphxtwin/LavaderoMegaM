@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import {
   InputAdornment, TextField, Select, MenuItem, IconButton, Paper,
