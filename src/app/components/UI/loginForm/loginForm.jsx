@@ -12,6 +12,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { logIn } from '../../../redux/slices/authSlice';
+import handleLogIn from './actions';
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required('Usuario requerido'),
@@ -42,24 +43,13 @@ function LoginForm() {
     onSubmit: async (values, { setErrors }) => {
       setIsSubmitting(true);
       setLoading(true);
-      const trimmedUsername = values.username.trim();
-      const res = await fetch('/api/auth', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: trimmedUsername,
-          password: values.password,
-        }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        dispatch(logIn(data.user));
-      } else {
-        setErrors({ username: data, password: data });
+      const data = await handleLogIn({ values });
+      if (data.error) {
+        setErrors({ username: data.error, password: data.error });
         setLoading(false);
         setIsSubmitting(false);
+      } else if (data.user) {
+        dispatch(logIn(data.user));
       }
     },
   });

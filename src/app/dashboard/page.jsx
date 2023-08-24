@@ -9,19 +9,17 @@ import ServicesInProgressTable from '../components/UI/servicesInProgressTable/se
 import AddButton from '../components/UI/addButton/addButton';
 import ClientDialog from '../components/UI/client/createClientForm/dialogCreateClient';
 import Loading from './loading';
+import loadUser from './actions';
 // eslint-disable-next-line react/prop-types
 export default function Dashboard() {
   const dispatch = useDispatch();
   const [showClientForm, setShowClientForm] = useState(false);
+
   useEffect(() => {
-    const loadUser = async () => {
-      const res = await fetch('/api/auth/currentUser');
-      const user = await res.json();
-      if (res.ok) {
-        dispatch(logIn(user));
-      }
-    };
-    loadUser();
+    const user = async () => loadUser();
+    if (user) {
+      dispatch(logIn(user));
+    }
   }, [dispatch]);
   const toggleClientForm = () => {
     setShowClientForm(!showClientForm);

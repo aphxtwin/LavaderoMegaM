@@ -18,66 +18,66 @@ function LoginFormLayout({ children }) {
     flexDirection: 'column',
     gap: '1.5rem',
   };
-  const containerStyle= {
-    display:'flex',
-    justifyContent:'center',
-    alignItems:'center',
-    height:'100vh',
-  }
+  const containerStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh',
+  };
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={containerStyle} >
-      <Paper elevation={10} sx={paperStyle}>
-        <Grid
-          container
-          direction="column"
-          justifyContent="center"
-          alignItems="stretch"
-          sx={{height:'75vh'}}
-        >
-
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '1.5rem',
-            }}
+      <Box sx={containerStyle}>
+        <Paper elevation={10} sx={paperStyle}>
+          <Grid
+            container
+            direction="column"
+            justifyContent="center"
+            alignItems="stretch"
+            sx={{ height: '75vh' }}
           >
-            <Grid item>
-              <Typography
-                variant="h4"
-                align="center"
-                sx={{
-                  fontSize: { xs: '1.5rem', sm: '1.8rem', md: '2rem' },
-                }}
-              >
-                <Image
-                  src="./images/logo-dodle.svg"
-                  width={200}
-                  height={100}
-                  alt="Logo"
-                  priority
-                />
-              </Typography>
-              <Typography
-                variant="subtitle1"
-                mt={2}
-                align="center"
-                sx={{
-                  fontSize: { xs: '1rem', sm: '1.2rem', md: '1.5rem' },
-                  color: '#082755',
-                  fontWeight: 'semi-bold',
-                }}
-              >
-                Ingrese sus datos para continuar
-              </Typography>
-            </Grid>
-            <Box>
-              { children }
+
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1.5rem',
+              }}
+            >
+              <Grid item>
+                <Typography
+                  variant="h4"
+                  align="center"
+                  sx={{
+                    fontSize: { xs: '1.5rem', sm: '1.8rem', md: '2rem' },
+                  }}
+                >
+                  <Image
+                    src="./images/logo-dodle.svg"
+                    width={200}
+                    height={100}
+                    alt="Logo"
+                    priority
+                  />
+                </Typography>
+                <Typography
+                  variant="subtitle1"
+                  mt={2}
+                  align="center"
+                  sx={{
+                    fontSize: { xs: '1rem', sm: '1.2rem', md: '1.5rem' },
+                    color: '#082755',
+                    fontWeight: 'semi-bold',
+                  }}
+                >
+                  Ingrese sus datos para continuar
+                </Typography>
+              </Grid>
+              <Box>
+                { children }
+              </Box>
             </Box>
-          </Box>
-        </Grid>
-      </Paper>
+          </Grid>
+        </Paper>
       </Box>
     </ThemeProvider>
   );

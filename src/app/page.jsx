@@ -5,7 +5,7 @@ import LoginForm from './components/UI/loginForm/loginForm';
 export default function Home() {
   return (
     <LoginFormLayout>
-        <LoginForm />
+      <LoginForm />
     </LoginFormLayout>
 
   );

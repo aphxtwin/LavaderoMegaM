@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,13 +13,26 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Image from 'next/image';
-import useLogout from '../../../hooks/useLogout';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/navigation';
+import handleLogout from './actions';
+import { logOut } from '@/app/redux/slices/authSlice';
 
 const pages = ['Vista General', 'Servicios', 'Caja', 'Clientes'];
 
 function ResponsiveNavbar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const logoutHandler = async () => {
+    const res = await handleLogout();
+    if (res) {
+      dispatch(logOut());
+      router.replace('/');
+    }
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -35,7 +48,6 @@ function ResponsiveNavbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  const handleLogout = useLogout();
   return (
     <AppBar position="static" sx={{ backgroundColor: '#2F3842' }}>
       <Container maxWidth="xl">
@@ -149,7 +161,7 @@ function ResponsiveNavbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem onClick={() => { handleCloseUserMenu(); handleLogout(); }}>
+              <MenuItem onClick={async () => { await logoutHandler(); }}>
                 <LogoutIcon />
                 <Typography sx={{ marginLeft: '2%', paddingRight: '0.5rem' }} textAlign="center">Salir</Typography>
               </MenuItem>
