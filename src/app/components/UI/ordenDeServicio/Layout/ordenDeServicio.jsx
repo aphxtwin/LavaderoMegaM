@@ -1,10 +1,8 @@
 import React from 'react';
 import StepperOrdenDeServicio from '../UI/stepperOrdenDeServicio';
 
-export default function OrdenDeServicio({ children }) {
+export default function OrdenDeServicio() {
   return (
-    <StepperOrdenDeServicio>
-      { children }
-    </StepperOrdenDeServicio>
+    <StepperOrdenDeServicio />
   );
 }

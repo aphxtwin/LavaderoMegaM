@@ -16,7 +16,7 @@ import Image from 'next/image';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import handleLogout from './actions';
-import { logOut } from '@/app/redux/slices/authSlice';
+import { logOut } from '../../../redux/slices/authSlice';
 
 const pages = ['Vista General', 'Servicios', 'Caja', 'Clientes'];
 
