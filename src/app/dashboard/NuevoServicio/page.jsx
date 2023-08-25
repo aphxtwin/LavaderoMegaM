@@ -1,8 +1,12 @@
+import 'server-only';
 import React from 'react';
-import OrdenDeServicio from '../../components/UI/ordenDeServicio/Layout/ordenDeServicio';
+import OrdenDeServicioContainer from '../../components/UI/ordenDeServicio/UI/containerOrdenDeServicio';
+import StepperOrdenDeServicio from '../../components/UI/ordenDeServicio/UI/stepperOrdenDeServicio';
 
 export default function NuevoServicio() {
   return (
-    <OrdenDeServicio />
+    <OrdenDeServicioContainer>
+      <StepperOrdenDeServicio />
+    </OrdenDeServicioContainer>
   );
 }

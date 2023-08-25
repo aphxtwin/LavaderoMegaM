@@ -13,7 +13,7 @@ function ArrowBack() {
       color="secondary"
       onClick={() => router.back()}
       aria-label="back"
-      sx={{ marginBottom: '0.5rem' }}
+      sx={{ marginBottom: '0.5rem', marginLeft: '0.1rem' }}
     >
       <ArrowBackIcon />
     </IconButton>

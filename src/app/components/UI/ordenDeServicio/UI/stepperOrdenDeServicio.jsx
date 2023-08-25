@@ -4,17 +4,14 @@ import React, { useState } from 'react';
 import {
   Box, Typography,
 } from '@mui/material';
-import { useRouter } from 'next/navigation';
-import LayoutOrdenDeServicio from './containerOrdenDeServicio';
 
 // eslint-disable-next-line react/prop-types
-function StepperOrdenDeServicio({ children }) {
-  const router = useRouter();
+function StepperOrdenDeServicio() {
   const [activeStep] = useState(0);
-  const steps = ['Cliente', 'Vehiculo', 'Pago'];
+  const steps = ['Cliente', 'Detalles del Servicio', 'Pago'];
 
   return (
-    <LayoutOrdenDeServicio onArrowClick={() => router.back()}>
+    <>
       {steps.map((step, index) => (
         <Box key={step} sx={{ textAlign: 'start', width: '100%', marginRight: '1rem' }}>
           <Typography sx={{ marginBottom: '2.5px' }} color={index === activeStep ? 'secondary' : 'textPrimary'}>{step}</Typography>
@@ -26,8 +23,8 @@ function StepperOrdenDeServicio({ children }) {
           )}
         </Box>
       ))}
-      {children}
-    </LayoutOrdenDeServicio>
+    </>
+
   );
 }
 

@@ -1,3 +1,5 @@
+'use client';
+
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 
 // eslint-disable-next-line import/no-mutable-exports

@@ -1,24 +1,17 @@
+import 'server-only';
 import React from 'react';
 import {
-  Box, Typography, IconButton, ThemeProvider,
+  Box, Typography, ThemeProvider,
 } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowBack from './arrowBack';
 import theme from '../theme';
 
 // eslint-disable-next-line react/prop-types
-function OrdenDeServicioContainer({ children, onArrowClick }) {
+function OrdenDeServicioContainer({ children }) {
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ p: 1, backgroundColor: '#FFFFFF' }}>
-        <IconButton
-          edge="start"
-          color="secondary"
-          onClick={onArrowClick}
-          aria-label="back"
-          sx={{ marginBottom: '0.5rem' }}
-        >
-          <ArrowBackIcon />
-        </IconButton>
+        <ArrowBack />
         <Box sx={{ padding: '0 1rem 0 1rem' }}>
           <Typography variant="h1" component="div" gutterBottom>
             Nuevo Servicio
