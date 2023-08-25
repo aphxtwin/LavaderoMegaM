@@ -54,7 +54,7 @@ function LoginForm() {
     },
   });
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form action={formik.handleSubmit}>
       <Grid>
         <Grid item sx={{ marginBottom: '1rem' }}>
           <TextField
