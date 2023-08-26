@@ -19,7 +19,7 @@ function SearchClientBar() {
       elevation={3}
       sx={{
         borderRadius: '25px',
-        padding: '5px',
+        padding: '4.5px',
         display: 'flex',
         alignItems: 'center',
       }}
@@ -34,7 +34,8 @@ function SearchClientBar() {
       </Select>
       <TextField
         variant="outlined"
-        placeholder="Busca al cliente"
+        type="search"
+        placeholder="Busca un cliente existente"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         sx={{ marginLeft: '10px' }}

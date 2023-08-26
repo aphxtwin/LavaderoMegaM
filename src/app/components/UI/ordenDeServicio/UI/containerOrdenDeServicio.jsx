@@ -21,7 +21,7 @@ function OrdenDeServicioContainer({ children }) {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                marginTop: '1.5rem',
+                marginTop: '1rem',
               }
             }
           >

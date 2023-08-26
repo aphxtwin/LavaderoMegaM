@@ -5,7 +5,6 @@ import {
   Box, Typography,
 } from '@mui/material';
 
-// eslint-disable-next-line react/prop-types
 function StepperOrdenDeServicio() {
   const [activeStep] = useState(0);
   const steps = ['Cliente', 'Detalles del Servicio', 'Pago'];
