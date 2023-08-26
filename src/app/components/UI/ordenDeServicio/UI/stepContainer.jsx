@@ -9,9 +9,7 @@ export default function StepContainer({ children }) {
       {children}
     </ThemeProvider>
   );
-};
+}
 StepContainer.propTypes = {
   children: PropTypes.node.isRequired,
 };
-
-
