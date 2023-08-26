@@ -11,6 +11,7 @@ import {
   Select,
   MenuItem,
   TextField,
+  Autocomplete,
 } from '@mui/material';
 import { TipoVehiculo, Marca } from '@prisma/client';
 import { useDispatch } from 'react-redux';
@@ -48,6 +49,8 @@ function FormNuevoVehiculo() {
 
     resetForm();
   };
+
+  const marcas = Object.values(Marca);
 
   return (
     <Formik
@@ -93,20 +96,21 @@ function FormNuevoVehiculo() {
               helperText={touched.patente && errors.patente}
             />
 
-            <FormControl fullWidth variant="outlined">
-              <InputLabel htmlFor="marca">Marca</InputLabel>
-              <Select
-                name="marca"
-                label="Marca"
-                value={values.marca}
-                onChange={handleChange}
-                labelId="marca"
-              >
-                {Object.values(Marca).map((marca) => (
-                  <MenuItem key={marca} value={marca}>{marca}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+            <Autocomplete
+              options={marcas}
+              value={values.marca}
+              onChange={(event, newValue) => {
+                handleChange({
+                  target: {
+                    name: 'marca',
+                    value: newValue,
+                  },
+                });
+              }}
+              getOptionLabel={(option) => option}
+              // eslint-disable-next-line react/jsx-props-no-spreading
+              renderInput={(params) => <TextField {...params} error={touched.modelo && Boolean(errors.marca)} label="Marca" variant="outlined" />}
+            />
             <TextField
               name="modelo"
               label="Modelo"
