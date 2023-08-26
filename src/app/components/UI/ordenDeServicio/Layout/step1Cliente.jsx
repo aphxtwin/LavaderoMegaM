@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Box,
+  Box, Grid, Typography,
 } from '@mui/material';
 import SearchClientBar from '../UI/searchClientBar';
 import NewClientCard from '../UI/newClientCard';
@@ -9,16 +9,33 @@ import StepContainer from '../UI/stepContainer';
 function StepOne() {
   return (
     <StepContainer>
-      <Box sx={{ marginTop: '5%' }}>
-        <SearchClientBar />
-      </Box>
-      <Box sx={{ width: '100%', height: '1px', marginTop: '2%' }} />
-      <Box sx={{
-        display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: '5%',
-      }}
-      >
-        <NewClientCard />
-      </Box>
+      <Grid container direction="column" alignItems="center" justifyContent="center">
+        <Grid item sx={{ marginTop: '3%' }} xs={12} md={10}>
+          <SearchClientBar />
+        </Grid>
+        <Box sx={{
+          width: '90%', height: '3px', backgroundColor: '#9F9F9F', position: 'relative', marginTop: '5%', marginBottom: '4%',
+        }}
+        >
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{
+              position: 'absolute', top: '-20px', left: '50%', transform: 'translateX(-50%)', backgroundColor: 'white', padding: '0 10px',
+            }}
+          >
+            O
+          </Typography>
+        </Box>
+        <Grid item xs={12} md={6}>
+          <Box sx={{
+            display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: '5%',
+          }}
+          >
+            <NewClientCard />
+          </Box>
+        </Grid>
+      </Grid>
     </StepContainer>
 
   );

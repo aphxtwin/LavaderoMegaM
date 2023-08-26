@@ -27,7 +27,7 @@ function SearchClientBar() {
       <IconButton onClick={handleSearch}>
         <SearchIcon />
       </IconButton>
-      <Select sx={{ backgroundColor: 'rgba(91, 91, 91, 0.1)' }} value={searchType} onChange={(e) => setSearchType(e.target.value)}>
+      <Select sx={{ backgroundColor: 'rgba(91, 91, 91, 0.1)', marginLeft: '1%' }} value={searchType} onChange={(e) => setSearchType(e.target.value)}>
         <MenuItem value="DNI">DNI</MenuItem>
         <MenuItem value="CUIT">CUIT</MenuItem>
         <MenuItem value="Name">Nombre</MenuItem>
@@ -37,8 +37,9 @@ function SearchClientBar() {
         type="search"
         placeholder="Busca un cliente existente"
         value={searchQuery}
+        fullWidth
         onChange={(e) => setSearchQuery(e.target.value)}
-        sx={{ marginLeft: '10px' }}
+        sx={{ marginLeft: '2px' }}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start" />
