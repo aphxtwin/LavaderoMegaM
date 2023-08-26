@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card,Box, CardContent, Typography, Button } from '@mui/material';
+import { Card, Box, CardContent, Typography } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 export default function NewClientCard() {

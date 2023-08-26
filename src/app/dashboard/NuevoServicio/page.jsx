@@ -7,7 +7,7 @@ import StepOne from '../../components/UI/ordenDeServicio/Layout/step1Cliente';
 
 export default function NuevoServicio() {
   return (
-    <Box sx={{height: '100vh'}}>
+    <Box sx={{ height: '100vh' }}>
       <OrdenDeServicioContainer>
         <StepperOrdenDeServicio />
       </OrdenDeServicioContainer>
