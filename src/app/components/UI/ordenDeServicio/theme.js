@@ -31,6 +31,7 @@ let theme = createTheme({
     text: {
       primary: '#2F3842',
     },
+
   },
   typography: {
     fontFamily: 'Roboto',
