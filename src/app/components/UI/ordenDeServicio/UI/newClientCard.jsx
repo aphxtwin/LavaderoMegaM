@@ -7,10 +7,10 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 export default function NewClientCard() {
   return (
     <Paper elevation={10}>
-      <Card variant="outlined" sx={{ padding: 2, maxWidth: '250px', backgroundColor: '#F2F2F2' }}>
+      <Card variant="outlined" sx={{ padding: 2, maxWidth: '250px' }}>
         <CardContent>
           <Box sx={{
-            display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '2px',
+            display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1px',
           }}
           >
             <PersonAddIcon sx={{ fontSize: 100 }} />

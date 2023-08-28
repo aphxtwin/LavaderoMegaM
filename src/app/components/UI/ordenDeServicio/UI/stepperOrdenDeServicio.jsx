@@ -7,7 +7,7 @@ import {
 
 function StepperOrdenDeServicio() {
   const [activeStep] = useState(0);
-  const steps = ['Cliente', 'Detalles del Servicio', 'Pago'];
+  const steps = ['Cliente', 'Vehiculo', 'Servicio', 'Pago'];
 
   return (
     <>

@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Box, Grid, Typography,
 } from '@mui/material';
-import SearchClientBar from '../UI/searchClientBar';
+import SearchClientBar from '../UI/searchClientBar/searchClientBar';
 import NewClientCard from '../UI/newClientCard';
 import StepContainer from '../UI/stepContainer';
 
