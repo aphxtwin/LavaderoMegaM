@@ -4,7 +4,7 @@ import 'server-only';
 // eslint-disable-next-line import/no-unresolved, import/extensions
 import { prisma } from '@/lib/prisma';
 
-const serverError = 'Hubo un problema con el servidor, chequea tu conexion a internet o contacta al proveedor.';
+const serverError = 'Error del servidor';
 
 function getWhereClause(searchType, searchQuery) {
   switch (searchType) {
@@ -32,12 +32,15 @@ export default async function handleSearchClient({ searchType, searchQuery }) {
     });
 
     if (!clients || clients.length === 0) {
-      return { error: 'No clients found.' };
+      return { error: 'No se encontraron resultados para tu busqueda' };
     }
     return { clients };
   } catch (error) {
     if (error.name === 'PrismaClientKnownRequestError') {
       return { error: 'Database error.' };
+    }
+    if (error.message && error.message.includes('Unable to fit integer value')) {
+      return { error: 'El valor proporcionado es demasiado grande para ser procesado.' };
     }
     return { error: serverError };
   }

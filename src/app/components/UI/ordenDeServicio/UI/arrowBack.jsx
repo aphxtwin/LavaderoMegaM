@@ -7,11 +7,14 @@ import { useRouter } from 'next/navigation';
 
 function ArrowBack() {
   const router = useRouter();
+  const handleBack = () => {
+    router.push('/dashboard');
+  };
   return (
     <IconButton
       edge="start"
       color="secondary"
-      onClick={() => router.back()}
+      onClick={handleBack}
       aria-label="back"
       sx={{ marginBottom: '0.5rem', marginLeft: '0.1rem' }}
     >
