@@ -14,7 +14,7 @@ function StepOne() {
           <SearchClientBar />
         </Grid>
         <Box sx={{
-          width: '90%', height: '3px', backgroundColor: '#DDDDDD', position: 'relative', marginTop: '5%', marginBottom: '4%',
+          width: '90%', height: '3px', backgroundColor: '#DDDDDD', position: 'relative', mt: 5, marginBottom: '4%',
         }}
         >
           <Typography
