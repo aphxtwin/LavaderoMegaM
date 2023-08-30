@@ -47,7 +47,7 @@ export default async function handleLogIn({ values }) {
     }
 
     const { hash, ...userWithoutHash } = user;
-    const token = jwt.sign(userWithoutHash, secretKey, { expiresIn: '10h' });
+    const token = jwt.sign(userWithoutHash, secretKey, { expiresIn: '10d' });
 
     cookies().set({
       name: 'user-token',

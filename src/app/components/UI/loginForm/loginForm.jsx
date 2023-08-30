@@ -102,7 +102,7 @@ function LoginForm() {
             fullWidth
             variant="contained"
           >
-            {loading ? <CircularProgress size={24} sx={{ color: 'white' }} /> : 'ingresar'}
+            {loading ? <CircularProgress size={30} sx={{ color: 'white' }} /> : 'ingresar'}
           </Button>
         </Grid>
       </Grid>

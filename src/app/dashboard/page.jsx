@@ -15,24 +15,21 @@ export default function Dashboard() {
     setShowClientForm(!showClientForm);
   };
   return (
-    <>
+    <Suspense fallback={<Loading />}>
       <ResponsiveNavbar />
-      <Suspense fallback={<Loading />}>
-        <Container maxWidth="xl">
-          <ServicesInProgressTable />
-          {
-          showClientForm
-          && (
-            <ClientDialog
-              showClientForm={showClientForm}
-              toggleClientForm={toggleClientForm}
-            />
-          )
-        }
-          <AddButton addServicio="dashboard/NuevoServicio" onAddClient={toggleClientForm} />
-        </Container>
-      </Suspense>
-    </>
-
+      <Container maxWidth="xl">
+        <ServicesInProgressTable />
+        {
+        showClientForm
+        && (
+          <ClientDialog
+            showClientForm={showClientForm}
+            toggleClientForm={toggleClientForm}
+          />
+        )
+      }
+        <AddButton addServicio="dashboard/NuevoServicio" onAddClient={toggleClientForm} />
+      </Container>
+    </Suspense>
   );
 }
