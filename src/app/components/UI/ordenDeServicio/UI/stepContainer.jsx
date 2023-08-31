@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 export default function StepContainer({ children }) {
   return (
-    <Box sx={{ height: '100vh', backgroundColor: 'white' }}>
+    <Box sx={{ height: '100vh', backgroundColor: '#f8fafc' }}>
       {children}
     </Box>
   );

@@ -1,7 +1,7 @@
 import 'server-only';
 import React from 'react';
 import {
-  Grid, Button, Container, Box,
+  Grid, Container, Box,
 } from '@mui/material';
 import NewClientCard from '../UI/newClientCard';
 import SearchClientBar from '../UI/searchClientBar/searchClientBar';
@@ -12,10 +12,10 @@ function StepOne() {
   return (
     <StepContainer>
       <Container sx={{
-        height: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center',
+        display: 'flex', flexDirection: 'column', alignItems: 'center',
       }}
       >
-        <Grid container direction="column" spacing={4}>
+        <Grid container direction="column" spacing={4} mt={1}>
           <Grid item>
             <SearchClientBar />
           </Grid>

@@ -7,27 +7,35 @@ import {
   Select,
   MenuItem,
   List,
+  ListItem,
   TextField,
   InputAdornment,
   Grid,
   Box,
+  Container,
   Paper,
   ThemeProvider,
   useMediaQuery,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { experimental_useFormStatus as useFormStatus } from 'react-dom';
+import PropTypes from 'prop-types';
+import SkeletonSearch from './skeletonSearch';
 import theme from './theme';
 
 export default function SearchElements({ handleSearchClient }) {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const [searchType, setSearchType] = useState('DNI');
+  const [searchType, setSearchType] = useState('Nombre');
+  const [selectedClient, setSelectedClient] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [error, setError] = useState(null);
   const { pending } = useFormStatus();
 
   const resetState = () => {
+    setError(null);
+    setSelectedClient(null);
     setSearchResults([]);
     setError(null);
   };
@@ -37,12 +45,19 @@ export default function SearchElements({ handleSearchClient }) {
   }, [searchQuery]);
 
   const handleSearch = async () => {
-    setError(null);
+    resetState();
     const data = await handleSearchClient({ searchType, searchQuery });
     if (data.error) {
       setError(data.error);
     } else {
       setSearchResults(data.clients || []);
+    }
+  };
+  const toggleSelectClient = (clientId) => {
+    if (selectedClient === clientId) {
+      setSelectedClient(null); // Unselect the client if already selected
+    } else {
+      setSelectedClient(clientId); // Select the client if not already selected
     }
   };
 
@@ -56,20 +71,20 @@ export default function SearchElements({ handleSearchClient }) {
           width: '100%',
           maxWidth: '600px',
           m: 'auto',
-          p: isMobile? 1 : 2,
+          p: isMobile ? 1 : 2,
         }}
       >
         <Box>
           <Grid container alignItems="center">
             <Grid item>
               <Select
-                sx={{ backgroundColor: 'rgba(91, 91, 91, 0.1)', fontSize:{xs:10, sm:12, md:17} }}
+                sx={{ backgroundColor: 'rgba(91, 91, 91, 0.1)', fontSize: { xs: 10, sm: 12, md: 17 } }}
                 value={searchType}
                 onChange={(e) => setSearchType(e.target.value)}
               >
+                <MenuItem value="Nombre">Nombre</MenuItem>
                 <MenuItem value="DNI">DNI</MenuItem>
                 <MenuItem value="CUIT">CUIT</MenuItem>
-                <MenuItem value="Nombre">Nombre</MenuItem>
               </Select>
             </Grid>
             <Grid item xs>
@@ -79,6 +94,7 @@ export default function SearchElements({ handleSearchClient }) {
                 placeholder="Busca un cliente existente"
                 value={searchQuery}
                 fullWidth
+                disabled={pending}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 InputProps={{
                   startAdornment: (
@@ -91,29 +107,60 @@ export default function SearchElements({ handleSearchClient }) {
                 }}
               />
             </Grid>
-            {error && <Grid item xs={12}><Box color="gray">{error}</Box></Grid>}
-            {searchResults.length > 0 && (
-            <Grid item xs={12}>
-              <List>
-                {searchResults.map((client) => (
-                  <Box key={client.clienteId}>
-                    {client.nombreCompleto}
-                    {' '}
-                    /
-                    {' '}
-                    {client.documento}
-                    {' '}
-                    /
-                    {' '}
-                    {client.cuit}
-                  </Box>
-                ))}
-              </List>
-            </Grid>
+            {error && <Grid item xs={12}><Box p={3} color="gray">{error}</Box></Grid>}
+            {pending ? (
+              <Grid item xs={12}>
+                <Container sx={{
+                  display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                }}
+                >
+                  <SkeletonSearch />
+                  <SkeletonSearch />
+                </Container>
+
+              </Grid>
+            ) : (
+              searchResults.length > 0 && (
+              <Grid item xs={12}>
+                <Container>
+                  <List>
+                    {searchResults.map((client) => (
+                      <ListItem
+                        key={client.clienteId}
+                        onClick={() => toggleSelectClient(client.clienteId)}
+                        sx={{
+                          backgroundColor: selectedClient === client.clienteId ? 'rgba(0, 150, 250, 0.1)' : 'transparent',
+                          paddingY: selectedClient === client.clienteId ? 2 : 1,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          borderRadius: '8px',
+                          my: 1,
+                        }}
+                      >
+                        {client.nombreCompleto}
+                        {' '}
+                        {client.documento}
+                        {' '}
+                        {client.cuit}
+                        {selectedClient === client.clienteId && (
+                        <CheckCircleIcon color="primary" />
+                        )}
+                      </ListItem>
+                    ))}
+                  </List>
+                </Container>
+
+              </Grid>
+              )
             )}
+
           </Grid>
         </Box>
       </Paper>
     </ThemeProvider>
   );
 }
+SearchElements.propTypes = {
+  handleSearchClient: PropTypes.func.isRequired,
+};

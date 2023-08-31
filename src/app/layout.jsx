@@ -21,9 +21,6 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  RootLayout.propTypes = {
-    children: PropTypes.node.isRequired,
-  };
   return (
     <html lang="en">
       <body className={roboto.className}>
@@ -34,3 +31,6 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+RootLayout.propTypes = {
+  children: PropTypes.node.isRequired,
+};

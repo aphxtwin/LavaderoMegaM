@@ -1,8 +1,8 @@
 'use client';
 
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
-  Card, Box, CardContent, Typography, Paper, CardActionArea, ThemeProvider, Button, Slide
+  Card, Box, CardContent, Typography, Paper, CardActionArea, ThemeProvider,
 } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import ClientDialog from '../../client/createClientForm/dialogCreateClient';
@@ -15,7 +15,10 @@ export default function NewClientCard() {
     showClient
       ? (
         <ThemeProvider theme={theme}>
-          <ClientDialog showClientForm={showClient} toggleClientForm={() => setShowClient(!showClient)} />
+          <ClientDialog
+            showClientForm={showClient}
+            toggleClientForm={() => setShowClient(!showClient)}
+          />
         </ThemeProvider>
       )
       : (
