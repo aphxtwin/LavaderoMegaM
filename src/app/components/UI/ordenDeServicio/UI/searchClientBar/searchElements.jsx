@@ -7,16 +7,20 @@ import {
   Select,
   MenuItem,
   List,
-  TextField, 
-  InputAdornment, 
-  Box, 
+  TextField,
+  InputAdornment,
+  Grid,
+  Box,
+  Paper,
   ThemeProvider,
+  useMediaQuery,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { experimental_useFormStatus as useFormStatus } from 'react-dom';
 import theme from './theme';
 
 export default function SearchElements({ handleSearchClient }) {
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [searchType, setSearchType] = useState('DNI');
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
@@ -44,11 +48,20 @@ export default function SearchElements({ handleSearchClient }) {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', pl: 1 }}>
-        <Box sx={{ display: 'flex', flexDirection: 'row', flexGrow:1 }}>
-          <IconButton type="submit" onClick={handleSearch} disabled={pending}>
-            {pending ? <CircularProgress size={30} sx={{ color: 'black' }} /> : <SearchIcon />}
-          </IconButton>
+      <Paper
+        elevation={2}
+        sx={{
+          borderRadius: '25px',
+          overflow: 'hidden',
+          width: isMobile ? '95%' : '70%',
+          maxWidth: '600px',
+          p: isMobile? 0 : 1,
+          px:2,
+        }}
+      >
+      <Box>
+      <Grid container  alignItems="center">
+        <Grid item>
           <Select
             sx={{ backgroundColor: 'rgba(91, 91, 91, 0.1)' }}
             value={searchType}
@@ -58,6 +71,8 @@ export default function SearchElements({ handleSearchClient }) {
             <MenuItem value="CUIT">CUIT</MenuItem>
             <MenuItem value="Nombre">Nombre</MenuItem>
           </Select>
+        </Grid>
+        <Grid item xs>
           <TextField
             variant="outlined"
             type="search"
@@ -65,33 +80,32 @@ export default function SearchElements({ handleSearchClient }) {
             value={searchQuery}
             fullWidth
             onChange={(e) => setSearchQuery(e.target.value)}
-            sx={{ pr: 3 }}
             InputProps={{
-              startAdornment: <InputAdornment position="start" />,
+              startAdornment: (
+                <InputAdornment position="start">
+                  <IconButton aria-label="Search client" type="submit" onClick={handleSearch} disabled={pending}>
+                    {pending ? <CircularProgress size={30} sx={{ color: 'black' }} /> : <SearchIcon />}
+                  </IconButton>
+                </InputAdornment>
+              ),
             }}
           />
-        </Box>
-        {error && <Box mt={3} color="gray">{error}</Box>}
+        </Grid>
+        {error && <Grid item xs={12}><Box color="gray">{error}</Box></Grid>}
         {searchResults.length > 0 && (
-        <Box mt={3}>
+        <Grid item xs={12}>
           <List>
             {searchResults.map((client) => (
               <Box key={client.clienteId}>
-                {client.nombreCompleto}
-                {' '}
-                /
-                {' '}
-                {client.documento}
-                {' '}
-                /
-                {' '}
-                {client.cuit}
+                {client.nombreCompleto} / {client.documento} / {client.cuit}
               </Box>
             ))}
           </List>
-        </Box>
-        )}
+        </Grid>
+      )}
+      </Grid>
       </Box>
+      </Paper>
     </ThemeProvider>
   );
 }

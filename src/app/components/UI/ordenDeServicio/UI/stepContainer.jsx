@@ -1,10 +1,10 @@
 import React from 'react';
-import {  Box } from '@mui/material';
+import { Box } from '@mui/material';
 import PropTypes from 'prop-types';
 
 export default function StepContainer({ children }) {
   return (
-    <Box sx={{ backgroundColor: 'white', borderTop: '2px solid #DDDDDD' }}>
+    <Box sx={{ height: '100vh', backgroundColor: 'white', }}>
       {children}
     </Box>
   );

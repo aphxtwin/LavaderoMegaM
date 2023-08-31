@@ -47,6 +47,7 @@ export default async function handleLogIn({ values }) {
     }
 
     const { hash, ...userWithoutHash } = user;
+    // Expira en 10 dias!!
     const token = jwt.sign(userWithoutHash, secretKey, { expiresIn: '10d' });
 
     cookies().set({
