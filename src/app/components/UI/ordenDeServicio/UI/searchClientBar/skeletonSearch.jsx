@@ -8,10 +8,9 @@ function SkeletonSearch() {
       display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderRadius: '8px',
     }}
     >
-      <Skeleton variant="text" width="60%" />
-      <Skeleton variant="circle" width={40} height={40} />
-      <CheckCircleIcon style={{ visibility: 'hidden' }} />
-      {' '}
+      <Skeleton variant="text" width="30%" />
+      <Skeleton variant="text" ml={0.5} width="30%" />
+      <Skeleton variant="circle" width={40} height={30} />
     </ListItem>
   );
 }
