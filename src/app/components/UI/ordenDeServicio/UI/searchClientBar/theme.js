@@ -1,9 +1,9 @@
 'use client';
 
-import { createTheme, responsiveFontSizes } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 
 // eslint-disable-next-line import/no-mutable-exports
-let theme = createTheme({
+const theme = createTheme({
   components: {
     MuiOutlinedInput: {
       styleOverrides: {
@@ -23,15 +23,9 @@ let theme = createTheme({
 
   },
   typography: {
-    h3: {
-      fontSize: '1.2rem',
-      '@media (min-width:600px)': {
-        fontSize: '1.5rem',
-      },
-    },
+    sm:'body1',
+    xs:'body2',
   },
 });
-
-theme = responsiveFontSizes(theme);
 
 export default theme;

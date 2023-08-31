@@ -13,7 +13,7 @@ function StepperOrdenDeServicio() {
   return (
     <>
       {steps.map((step, index) => (
-        <Box key={step} sx={{ textAlign: 'start', width: '100%', mb: 1, mx:1, }}>
+        <Box key={step} sx={{ textAlign: 'start', width: '100%', mb: 1, mx:1, mb: 3 }}>
           <Typography // Using variant prop to provide semantic meaning
             sx={{
               fontSize: {

@@ -1,8 +1,9 @@
 import 'server-only';
 import React from 'react';
 import {
-  Grid, Box, Typography, Button, Container
+  Grid, Button, Container, Box,
 } from '@mui/material';
+import NewClientCard from '../UI/newClientCard';
 import SearchClientBar from '../UI/searchClientBar/searchClientBar';
 import DividerWithCircle from '../UI/dividerWithCircle';
 import StepContainer from '../UI/stepContainer';
@@ -10,19 +11,27 @@ import StepContainer from '../UI/stepContainer';
 function StepOne() {
   return (
     <StepContainer>
-      <Grid container direction="column" spacing={4}>
-        <Grid item>
-          <SearchClientBar />
+      <Container sx={{
+        height: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center',
+      }}
+      >
+        <Grid container direction="column" spacing={4}>
+          <Grid item>
+            <SearchClientBar />
+          </Grid>
+          <Grid item>
+            <DividerWithCircle />
+          </Grid>
+          <Grid item>
+            <Box sx={{
+              m: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}
+            >
+              <NewClientCard />
+            </Box>
+          </Grid>
         </Grid>
-        <Grid item>
-          <DividerWithCircle />
-        </Grid>
-        <Grid item>
-          <Button variant="contained" color="primary">
-            New client card
-          </Button>
-        </Grid>
-      </Grid>
+      </Container>
     </StepContainer>
   );
 }

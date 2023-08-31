@@ -18,7 +18,7 @@ function ClientDialog({ showClientForm, toggleClientForm }) {
   // Dialog that wraps the Client form. For reusability puposes
   return (
     <ThemeProvider theme={theme}>
-      <Dialog open={showClientForm} onClose={toggleClientForm} fullWidth maxWidth="sm">
+      <Dialog open={showClientForm} onClose={toggleClientForm} fullWidth maxWidth="md">
         <DialogTitle>
           <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
             <PersonAddIcon sx={{ width: '40px', height: '40px' }} />
