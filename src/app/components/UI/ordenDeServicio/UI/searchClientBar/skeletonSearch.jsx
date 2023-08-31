@@ -1,6 +1,5 @@
 import React from 'react';
 import { Skeleton, ListItem } from '@mui/material';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 function SkeletonSearch() {
   return (
