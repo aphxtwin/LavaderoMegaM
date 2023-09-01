@@ -15,17 +15,20 @@ import {
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import CloseIcon from '@mui/icons-material/Close';
 import DialogFormNuevoVehiculo from '../formNuevoVehiculo/dialogFormNuevoVehiculo';
 
 function AddCarDashboard({ showCarDashboard, toggleCarDashboard }) {
   const [showDialogFormNuevoVehiculo, setShowDialogFormNuevoVehiculo] = useState(false);
-
-  const handleDialogFormOpen = () => {
-    setShowDialogFormNuevoVehiculo(true);
+  const vehicles = useSelector(state => state.vehicle.vehicles);
+  const handleDialogForm = () => {
+    setShowDialogFormNuevoVehiculo(!showDialogFormNuevoVehiculo);
   };
-  const handleDialogFormClose = () => {
-    setShowDialogFormNuevoVehiculo(false);
+  const styleCell = {
+    borderBottom: '1px solid rgba(159, 159, 159, 1)', 
+    borderTop: '1px solid rgba(159, 159, 159, 1)', 
+    padding: '10px' 
   };
   return (
     <Dialog
@@ -48,7 +51,7 @@ function AddCarDashboard({ showCarDashboard, toggleCarDashboard }) {
             Agrega un nuevo vehículo
           </Typography>
           <Button
-            onClick={handleDialogFormOpen}
+            onClick={handleDialogForm}
             sx={{
               background: '#2F3842',
               borderRadius: '3px',
@@ -70,18 +73,28 @@ function AddCarDashboard({ showCarDashboard, toggleCarDashboard }) {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell sx={{ borderBottom: '1px solid rgba(159, 159, 159, 1)', borderTop: '1px solid rgba(159, 159, 159, 1)', padding: '10px' }}>Patente</TableCell>
-              <TableCell sx={{ borderBottom: '1px solid rgba(159, 159, 159, 1)', borderTop: '1px solid rgba(159, 159, 159, 1)', padding: '10px' }}>Tipo de Vehículo</TableCell>
-              <TableCell sx={{ borderBottom: '1px solid rgba(159, 159, 159, 1)', borderTop: '1px solid rgba(159, 159, 159, 1)', padding: '10px' }}>Marca</TableCell>
-              <TableCell sx={{ borderBottom: '1px solid rgba(159, 159, 159, 1)', borderTop: '1px solid rgba(159, 159, 159, 1)', padding: '10px' }}>Modelo</TableCell>
-              <TableCell sx={{ borderBottom: '1px solid rgba(159, 159, 159, 1)', borderTop: '1px solid rgba(159, 159, 159, 1)', padding: '10px' }}>Observaciones</TableCell>
+              <TableCell sx={styleCell}>Patente</TableCell>
+              <TableCell sx={styleCell}>Tipo de Vehículo</TableCell>
+              <TableCell sx={styleCell}>Marca</TableCell>
+              <TableCell sx={styleCell}>Modelo</TableCell>
+              <TableCell sx={styleCell}>Observaciones</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody />
+          <TableBody>
+            {vehicles.map(vehicle => (
+                <TableRow key={vehicle.patente}>
+                    <TableCell sx={styleCell}>{vehicle.patente}</TableCell>
+                    <TableCell sx={styleCell}>{vehicle.tipo}</TableCell>
+                    <TableCell sx={styleCell}>{vehicle.marca}</TableCell>
+                    <TableCell sx={styleCell}>{vehicle.modelo}</TableCell>
+                    <TableCell sx={styleCell}>{vehicle.observaciones}</TableCell>
+                </TableRow>
+            ))}
+          </TableBody>
         </Table>
         <DialogFormNuevoVehiculo
           open={showDialogFormNuevoVehiculo}
-          onClose={handleDialogFormClose}
+          onClose={handleDialogForm}
         />
       </DialogContent>
     </Dialog>

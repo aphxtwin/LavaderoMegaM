@@ -13,6 +13,7 @@ import {
   MenuItem,
   Switch,
   FormControlLabel,
+  Container,
 } from '@mui/material';
 import { CondicionIva, TipoDeCliente } from '@prisma/client';
 import { useSelector, useDispatch } from 'react-redux';
@@ -166,24 +167,22 @@ function ClientForm() {
             showCarDashboard={showCarDashboard}
             toggleCarDashboard={toggleCarDashboard}
           />
-          <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-            <Box sx={{ my: 2 }}>
+          <Container maxWidth={'md'}>
+            <Box sx={{display:'flex', m:'auto', justifyContent: 'space-between', fontSize: { xs: 10, sm: 12, md: 17 }}}>
               <ButtonAddCar onClick={toggleCarDashboard} />
-            </Box>
-            <Box sx={{ my: 2, marginLeft: '1rem' }}>
               <FormControlLabel
-                label="¿Abrir una Cuenta Corriente?"
-                control={(
-                  <Switch
-                    checked={values.esCuentaCorriente}
-                    onChange={handleChange}
-                    name="esCuentaCorriente"
-                    color="primary"
-                  />
-                  )}
-              />
+                  label="¿Abrir una Cuenta Corriente?"
+                  control={(
+                    <Switch
+                      checked={values.esCuentaCorriente}
+                      onChange={handleChange}
+                      name="esCuentaCorriente"
+                      color="primary"
+                    />
+                    )}
+                />
             </Box>
-          </Box>
+          </Container>
 
           {message.text && (
             <Box

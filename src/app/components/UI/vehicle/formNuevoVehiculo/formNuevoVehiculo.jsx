@@ -17,7 +17,7 @@ import { TipoVehiculo, Marca } from '@prisma/client';
 import { useDispatch } from 'react-redux';
 import { addVehicle } from '../../../../redux/slices/vehicleSlice';
 
-function FormNuevoVehiculo() {
+function FormNuevoVehiculo({ onSuccess }) {
   const dispatch = useDispatch();
 
   const validationSchema = Yup.object().shape({
@@ -37,17 +37,23 @@ function FormNuevoVehiculo() {
   };
 
   const handleSubmit = (values, { resetForm }) => {
-    const formData = { ...values };
-    const newVehicle = {
-      tipoDeVehiculo: formData.tipoDeVehiculo,
-      patente: formData.patente,
-      marca: formData.marca,
-      modelo: formData.modelo,
-      observaciones: formData.observaciones,
-    };
-    dispatch(addVehicle(newVehicle));
-
-    resetForm();
+    try {
+      const formData = { ...values };
+      const newVehicle = {
+        tipoDeVehiculo: formData.tipoDeVehiculo,
+        patente: formData.patente,
+        marca: formData.marca,
+        modelo: formData.modelo,
+        observaciones: formData.observaciones,
+      };
+      dispatch(addVehicle(newVehicle));
+      resetForm();
+      if(onSuccess){
+        onSuccess()
+      }
+    } catch (e) {
+      console.error('Error:', e);
+    }
   };
 
   const marcas = Object.values(Marca);

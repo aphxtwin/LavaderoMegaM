@@ -5,19 +5,19 @@ const theme = createTheme({
     fontFamily: 'Roboto slab',
     fontWeight: 'regular',
     button: {
-      color: 'rgba(64, 87, 121, 1)', // Gray color for the button text
-      fontSize: '0.6rem', // Default font size
-      '@media (max-width:600px)': {
-        fontSize: '0.8rem', // Smaller font size for screens less than or equal to 600px
+      color: 'rgba(64, 87, 121, 1)',
+      fontSize: '0.6rem',
+      '@media (min-width:600px)': {
+        fontSize: '0.8rem',
       },
     },
   },
   components: {
     MuiButton: {
       styleOverrides: {
-        root: {
-          width: '250px',
-          height: '180px',
+        outlined: {
+          width: '125px',
+          height: '120px',
           background: '#FFFFFF',
           border: '2px dashed #405779',
           borderRadius: '12px',
@@ -30,13 +30,12 @@ const theme = createTheme({
           '&:hover': {
             backgroundColor: '#f0f0f0',
           },
-          '@media (max-width:600px)': {
-            width: '130px', // Reduced size for small screens
-            height: '120px',
+          '@media (min-width:400px)': {
+            width: '130px',
           },
-          '@media (max-width:400px)': {
-            width: '125px', // Further reduced size for very small screens
-            height: '120px',
+          '@media (min-width:600px)': {
+            width: '250px',
+            height: '180px',
           },
         },
       },
