@@ -29,7 +29,7 @@ function FormNuevoVehiculo({ onSuccess }) {
   });
 
   const initialValues = {
-    tipoDeVehiculo: '',
+    tipoDeVehiculo: TipoVehiculo.AUTO,
     patente: '',
     marca: '',
     modelo: '',
@@ -46,10 +46,12 @@ function FormNuevoVehiculo({ onSuccess }) {
         modelo: formData.modelo,
         observaciones: formData.observaciones,
       };
+      console.log("Form Data:", formData);
+      console.log("New Vehicle:", newVehicle);
       dispatch(addVehicle(newVehicle));
       resetForm();
-      if(onSuccess){
-        onSuccess()
+      if (onSuccess) {
+        onSuccess();
       }
     } catch (e) {
       console.error('Error:', e);

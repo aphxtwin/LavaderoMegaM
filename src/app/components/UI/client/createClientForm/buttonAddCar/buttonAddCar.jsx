@@ -1,14 +1,28 @@
 import React from 'react';
 import {
-  Button, ThemeProvider, Typography,
+  Button, ThemeProvider, Typography, Badge
 } from '@mui/material';
 import Image from 'next/image';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import theme from './theme';
 
 function ButtonAddCar({ onClick }) {
+  const vehicles = useSelector(state => state.vehicle.vehicles);
+  const vehicleCount = vehicles.length;
+
   return (
     <ThemeProvider theme={theme}>
+      <Badge
+        badgeContent={vehicleCount}
+        overlap="circular"
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        
+        invisible={vehicleCount === 0} // hide when count is 0
+      >
       <Button
         variant='outlined'
         onClick={onClick}
@@ -18,6 +32,7 @@ function ButtonAddCar({ onClick }) {
           Añadir vehículo
         </Typography>
       </Button>
+      </Badge>
     </ThemeProvider>
   );
 }

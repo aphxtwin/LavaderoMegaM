@@ -84,7 +84,7 @@ function AddCarDashboard({ showCarDashboard, toggleCarDashboard }) {
             {vehicles.map(vehicle => (
                 <TableRow key={vehicle.patente}>
                     <TableCell sx={styleCell}>{vehicle.patente}</TableCell>
-                    <TableCell sx={styleCell}>{vehicle.tipo}</TableCell>
+                    <TableCell sx={styleCell}>{vehicle.tipoDeVehiculo}</TableCell>
                     <TableCell sx={styleCell}>{vehicle.marca}</TableCell>
                     <TableCell sx={styleCell}>{vehicle.modelo}</TableCell>
                     <TableCell sx={styleCell}>{vehicle.observaciones}</TableCell>
