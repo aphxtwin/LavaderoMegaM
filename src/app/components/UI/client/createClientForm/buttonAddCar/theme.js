@@ -1,7 +1,5 @@
 import { createTheme } from '@mui/material/styles';
 
-// I want primary color for badges this: sx={{backgroundColor:'#283D5B', color: 'white'}} add to this theme
-
 const theme = createTheme({
   typography: {
     fontFamily: 'Roboto slab',

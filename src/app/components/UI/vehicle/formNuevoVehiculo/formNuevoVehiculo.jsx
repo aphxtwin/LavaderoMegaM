@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Formik, Form,
 } from 'formik';
@@ -19,7 +19,6 @@ import { addVehicle } from '../../../../redux/slices/vehicleSlice';
 
 function FormNuevoVehiculo({ onSuccess }) {
   const dispatch = useDispatch();
-
   const validationSchema = Yup.object().shape({
     tipoDeVehiculo: Yup.string().required('El tipo de vehículo es obligatorio'),
     patente: Yup.string().required('La patente es obligatoria'),
@@ -29,16 +28,39 @@ function FormNuevoVehiculo({ onSuccess }) {
   });
 
   const initialValues = {
-    tipoDeVehiculo: TipoVehiculo.AUTO,
+    tipoDeVehiculo: '',
     patente: '',
     marca: '',
     modelo: '',
     observaciones: '',
   };
+  async function checkPlateExistence(patente) {
+    const response = await fetch('/api/vehicle/check-plate-existence', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        patente,
+      }),
+    });
+    if (!response.ok) {
+      // This will activate the closest `error.js` Error Boundary
+      throw new Error('Failed to fetch data');
+    }
+    return response.json();
+  }
 
-  const handleSubmit = (values, { resetForm }) => {
+  const handleSubmit = async (values, { resetForm, setErrors }) => {
     try {
       const formData = { ...values };
+      // Api fetch
+      const plateResponse = await checkPlateExistence(formData.patente);
+
+      if (plateResponse.exists) {
+        setErrors({ patente: 'Esta patente ya existe en el sistema.' });
+        return; // Return to prevent further actions.
+      }
       const newVehicle = {
         tipoDeVehiculo: formData.tipoDeVehiculo,
         patente: formData.patente,
@@ -46,8 +68,7 @@ function FormNuevoVehiculo({ onSuccess }) {
         modelo: formData.modelo,
         observaciones: formData.observaciones,
       };
-      console.log("Form Data:", formData);
-      console.log("New Vehicle:", newVehicle);
+
       dispatch(addVehicle(newVehicle));
       resetForm();
       if (onSuccess) {
@@ -57,7 +78,6 @@ function FormNuevoVehiculo({ onSuccess }) {
       console.error('Error:', e);
     }
   };
-
   const marcas = Object.values(Marca);
 
   return (
@@ -103,7 +123,6 @@ function FormNuevoVehiculo({ onSuccess }) {
               error={touched.patente && Boolean(errors.patente)}
               helperText={touched.patente && errors.patente}
             />
-
             <Autocomplete
               options={marcas}
               value={values.marca}
@@ -111,14 +130,21 @@ function FormNuevoVehiculo({ onSuccess }) {
                 handleChange({
                   target: {
                     name: 'marca',
-                    value: newValue,
+                    value: newValue || '', // use the newValue provided by the onChange function
                   },
                 });
               }}
               getOptionLabel={(option) => option}
-              // eslint-disable-next-line react/jsx-props-no-spreading
-              renderInput={(params) => <TextField {...params} error={touched.modelo && Boolean(errors.marca)} label="Marca" variant="outlined" />}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  error={touched.marca && Boolean(errors.marca)}
+                  label="Marca"
+                  variant="outlined"
+                />
+              )}
             />
+
             <TextField
               name="modelo"
               label="Modelo"

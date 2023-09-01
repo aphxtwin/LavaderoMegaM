@@ -21,14 +21,14 @@ import DialogFormNuevoVehiculo from '../formNuevoVehiculo/dialogFormNuevoVehicul
 
 function AddCarDashboard({ showCarDashboard, toggleCarDashboard }) {
   const [showDialogFormNuevoVehiculo, setShowDialogFormNuevoVehiculo] = useState(false);
-  const vehicles = useSelector(state => state.vehicle.vehicles);
+  const vehicles = useSelector((state) => state.vehicle.vehicles);
   const handleDialogForm = () => {
     setShowDialogFormNuevoVehiculo(!showDialogFormNuevoVehiculo);
   };
   const styleCell = {
-    borderBottom: '1px solid rgba(159, 159, 159, 1)', 
-    borderTop: '1px solid rgba(159, 159, 159, 1)', 
-    padding: '10px' 
+    borderBottom: '1px solid rgba(159, 159, 159, 1)',
+    borderTop: '1px solid rgba(159, 159, 159, 1)',
+    padding: '10px',
   };
   return (
     <Dialog
@@ -81,14 +81,14 @@ function AddCarDashboard({ showCarDashboard, toggleCarDashboard }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {vehicles.map(vehicle => (
-                <TableRow key={vehicle.patente}>
-                    <TableCell sx={styleCell}>{vehicle.patente}</TableCell>
-                    <TableCell sx={styleCell}>{vehicle.tipoDeVehiculo}</TableCell>
-                    <TableCell sx={styleCell}>{vehicle.marca}</TableCell>
-                    <TableCell sx={styleCell}>{vehicle.modelo}</TableCell>
-                    <TableCell sx={styleCell}>{vehicle.observaciones}</TableCell>
-                </TableRow>
+            {vehicles.map((vehicle) => (
+              <TableRow key={vehicle.patente}>
+                <TableCell sx={styleCell}>{vehicle.patente}</TableCell>
+                <TableCell sx={styleCell}>{vehicle.tipoDeVehiculo}</TableCell>
+                <TableCell sx={styleCell}>{vehicle.marca}</TableCell>
+                <TableCell sx={styleCell}>{vehicle.modelo}</TableCell>
+                <TableCell sx={styleCell}>{vehicle.observaciones}</TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>

@@ -37,6 +37,7 @@ function ButtonAddCar({ onClick }) {
   );
 }
 ButtonAddCar.propTypes = {
-  onClick: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
+
 export default ButtonAddCar;
