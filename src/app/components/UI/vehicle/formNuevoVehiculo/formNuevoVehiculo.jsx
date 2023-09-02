@@ -16,7 +16,16 @@ import {
 import { TipoVehiculo, Marca } from '@prisma/client';
 import { useDispatch } from 'react-redux';
 import { addVehicle } from '../../../../redux/slices/vehicleSlice';
+import PatenteTextField from './patenteTextField';
 
+/*
+  Form Nuevo vehiculo doesn't create a row in vehiculo table, but rather
+  it stores the client data in redux state to be sent after
+  altogether with the data of the client(since the client is the center figure of the process)
+  PatenteTextField is a component that makes a fetch checking dynamically the
+  existence or not of the plate; If exists asks:'nuevo cliente or transferencia de dominio'.
+  if it doesn't exist just dispatch the vehicle or vehicles normally
+*/
 function FormNuevoVehiculo({ onSuccess }) {
   const dispatch = useDispatch();
   const validationSchema = Yup.object().shape({
@@ -34,33 +43,18 @@ function FormNuevoVehiculo({ onSuccess }) {
     modelo: '',
     observaciones: '',
   };
-  async function checkPlateExistence(patente) {
-    const response = await fetch('/api/vehicle/check-plate-existence', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        patente,
-      }),
-    });
-    if (!response.ok) {
-      // This will activate the closest `error.js` Error Boundary
-      throw new Error('Failed to fetch data');
-    }
-    return response.json();
-  }
 
-  const handleSubmit = async (values, { resetForm, setErrors }) => {
+  const handlePlateExistenceCheck = (exists, setFieldErrorFn) => {
+    if (exists) {
+      // Show error or dialog as per your requirements
+      setFieldErrorFn('patente','esta patente ya existe en el sistema');
+    }
+  };
+
+  const handleSubmit = async (values, { resetForm }) => {
     try {
       const formData = { ...values };
-      // Api fetch
-      const plateResponse = await checkPlateExistence(formData.patente);
 
-      if (plateResponse.exists) {
-        setErrors({ patente: 'Esta patente ya existe en el sistema.' });
-        return; // Return to prevent further actions.
-      }
       const newVehicle = {
         tipoDeVehiculo: formData.tipoDeVehiculo,
         patente: formData.patente,
@@ -87,13 +81,21 @@ function FormNuevoVehiculo({ onSuccess }) {
       validationSchema={validationSchema}
     >
       {({
-        handleChange, values, errors, touched,
+        handleChange, values, errors, touched, handleBlur, setFieldError,
       }) => (
         <Form>
           <Box sx={{
             my: 2, display: 'flex', flexDirection: 'column', gap: '2rem',
           }}
           >
+            <PatenteTextField
+              patenteValue={values.patente}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              touched={touched}
+              errors={errors}
+              onPlateExistenceChecked={(exists) => handlePlateExistenceCheck(exists, setFieldError)}
+            />
             <FormControl fullWidth variant="outlined">
               <InputLabel htmlFor="vehicle-type">Tipo de Vehículo</InputLabel>
               <Select
@@ -108,21 +110,6 @@ function FormNuevoVehiculo({ onSuccess }) {
                 ))}
               </Select>
             </FormControl>
-            <TextField
-              name="patente"
-              label="Patente"
-              value={values.patente}
-              inputProps={{
-                maxLength: 7,
-                style: { textTransform: 'uppercase' },
-              }}
-              onChange={(e) => {
-                e.target.value = e.target.value.toUpperCase().slice(0, 7);
-                handleChange(e);
-              }}
-              error={touched.patente && Boolean(errors.patente)}
-              helperText={touched.patente && errors.patente}
-            />
             <Autocomplete
               options={marcas}
               value={values.marca}
@@ -172,30 +159,3 @@ function FormNuevoVehiculo({ onSuccess }) {
 }
 
 export default FormNuevoVehiculo;
-// const handleSubmit = async (values, { resetForm }) => {
-//   const formData = { ...values };
-//   try {
-//     const res = await fetch('/api/vehicle', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify({
-//         tipoDeVehiculo: formData.tipoDeVehiculo,
-//         patente: formData.patente,
-//         marca: formData.marca,
-//         modelo: formData.modelo,
-//         observaciones: formData.observacion,
-//       }),
-//     });
-
-//     if (res.ok) {
-//       setMessage({ text: 'El vehículo se ha guardado exitosamente', success: true });
-//       resetForm();
-//     } else {
-//       setMessage({ text: 'Ya existe un vehículo con esta información', success: false });
-//     }
-//   } catch (error) {
-//     setMessage({ text: 'Error al enviar el formulario', success: false });
-//   }
-// };

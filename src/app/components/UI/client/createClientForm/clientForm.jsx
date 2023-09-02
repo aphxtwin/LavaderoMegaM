@@ -83,7 +83,7 @@ function ClientForm() {
         },
         vehicleData: vehicleState.vehicles,
       };
-      
+
       const res = await fetch('/api/client', {
         method: 'POST',
         headers: {
@@ -168,20 +168,24 @@ function ClientForm() {
             showCarDashboard={showCarDashboard}
             toggleCarDashboard={toggleCarDashboard}
           />
-          <Container maxWidth={'md'}>
-            <Box sx={{display:'flex', m:'auto', justifyContent: 'space-between', fontSize: { xs: 10, sm: 12, md: 17 }}}>
+          <Container maxWidth="md">
+            <Box sx={{
+              display: 'flex', m: 'auto', justifyContent: 'space-between',
+            }}
+            >
               <ButtonAddCar onClick={toggleCarDashboard} />
               <FormControlLabel
-                  label="¿Abrir una Cuenta Corriente?"
-                  control={(
-                    <Switch
-                      checked={values.esCuentaCorriente}
-                      onChange={handleChange}
-                      name="esCuentaCorriente"
-                      color="primary"
-                    />
-                    )}
-                />
+                label="Abrir una Cuenta Corriente?"
+                control={(
+                  <Switch
+                    checked={values.esCuentaCorriente}
+                    onChange={handleChange}
+                    name="esCuentaCorriente"
+                    color="primary"
+                  />
+                )}
+              />
+
             </Box>
           </Container>
 

@@ -11,8 +11,8 @@ import {
 import PropTypes from 'prop-types';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useDispatch } from 'react-redux';
-import { resetVehicles } from '../../../../redux/slices/vehicleSlice';
 import CloseIcon from '@mui/icons-material/Close';
+import { resetVehicles } from '../../../../redux/slices/vehicleSlice';
 import ClientForm from './clientForm';
 import theme from '../../loginForm/theme';
 
@@ -21,7 +21,6 @@ function ClientDialog({ showClientForm, toggleClientForm }) {
   const dispatch = useDispatch();
 
   const handleDialogClose = () => {
-    console.log('Closing dialog...');
     toggleClientForm();
     dispatch(resetVehicles());
   };

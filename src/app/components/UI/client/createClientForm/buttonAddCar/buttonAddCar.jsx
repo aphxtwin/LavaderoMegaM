@@ -27,7 +27,7 @@ function ButtonAddCar({ onClick }) {
         variant='outlined'
         onClick={onClick}
       >
-        <Image height={60} width={70} src="/images/addCarIcon.svg" alt="add car" />
+        <Image height={50} width={60} src="/images/addCarIcon.svg" alt="add car" />
         <Typography variant="button">
           Añadir vehículo
         </Typography>
