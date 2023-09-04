@@ -43,14 +43,14 @@ const theme = createTheme({
     MuiBadge: {
       styleOverrides: {
         badge: {
-          backgroundColor: '#283D5B', 
-          color: 'white'
+          backgroundColor: '#283D5B',
+          color: 'white',
         },
         colorPrimary: {
           backgroundColor: '#283D5B', // This targets the primary color variant of Badge
-          color: 'white'
-        }
-      }
+          color: 'white',
+        },
+      },
     },
   },
 });
