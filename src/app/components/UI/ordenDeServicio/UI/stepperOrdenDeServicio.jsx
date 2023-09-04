@@ -24,9 +24,9 @@ function StepperOrdenDeServicio() {
           <Typography
             sx={{
               fontSize: {
-                xs: theme.typography.pxToRem(11),
+                xs: theme.typography.pxToRem(12),
                 sm: theme.typography.pxToRem(16),
-                md: theme.typography.pxToRem(18),
+                md: theme.typography.pxToRem(21),
               },
             }}
             color={index === activeStep ? 'secondary' : 'textPrimary'}

@@ -12,7 +12,8 @@ import {
   MenuItem,
   Switch,
   FormControlLabel,
-  Container,
+  Grid,
+  // Container,
 } from '@mui/material';
 import BusinessIcon from '@mui/icons-material/Business';
 import PersonIcon from '@mui/icons-material/Person';
@@ -157,12 +158,9 @@ function ClientForm({ textButton = 'Agregar Nuevo Cliente' }) {
               showCarDashboard={showCarDashboard}
               toggleCarDashboard={toggleCarDashboard}
             />
-            <Container maxWidth="md">
-              <Box sx={{
-                display: 'flex', m: 'auto', justifyContent: 'space-between',
-              }}
-              >
-                <ButtonAddCar onClick={toggleCarDashboard} />
+            <Grid container>
+              <Grid item xs={6}><ButtonAddCar onClick={toggleCarDashboard} /></Grid>
+              <Grid item xs={6}>
                 <FormControlLabel
                   label="Abrir una Cuenta Corriente?"
                   control={(
@@ -174,8 +172,8 @@ function ClientForm({ textButton = 'Agregar Nuevo Cliente' }) {
                     />
                 )}
                 />
-              </Box>
-            </Container>
+              </Grid>
+            </Grid>
 
             {message.text && (
             <Box
