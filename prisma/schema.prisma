@@ -20,32 +20,42 @@ model User {
 }
 
 
+model ClienteVehiculo {
+  clienteId  Int
+  vehiculoId Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  cliente    Cliente  @relation(fields: [clienteId], references: [clienteId])
+  vehiculo   Vehiculo @relation(fields: [vehiculoId], references: [vehiculoId])
+
+  @@id([clienteId, vehiculoId])
+}
+
 model Vehiculo {
-  vehiculoId    Int          @id @default(autoincrement())
-  clienteId     Int
-  tipoVehiculo  TipoVehiculo
-  marca         Marca
-  modelo        String       @db.VarChar(25)
-  patente       String       @unique @db.VarChar(7)
-  observaciones String?      @db.VarChar(255)
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  cliente       Cliente      @relation(fields: [clienteId], references: [clienteId])
+  vehiculoId     Int               @id @default(autoincrement())
+  tipoVehiculo   TipoVehiculo
+  marca          Marca
+  modelo         String            @db.VarChar(25)
+  patente        String            @unique @db.VarChar(7)
+  observaciones  String?           @db.VarChar(255)
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  clientes       ClienteVehiculo[]
 }
 
 model Cliente {
-  clienteId         Int           @id @default(autoincrement())
-  nombreCompleto    String        @db.VarChar(255)
-  documento         Int?
-  email             String?       @unique @db.VarChar(255)
-  condicionIva      CondicionIva  @default(ConsumidorFinal)
-  cuit              String?       @unique @db.VarChar(13)
-  telefono          String        @db.VarChar(50)
-  esCuentaCorriente Boolean       @default(false)
-  createdAt         DateTime      @default(now())
-  updatedAt         DateTime      @updatedAt
-  tipoDeCliente     TipoDeCliente @default(INDIVIDUO)
-  vehiculos         Vehiculo[]
+  clienteId         Int               @id @default(autoincrement())
+  nombreCompleto    String            @db.VarChar(255)
+  documento         Int?              @unique
+  email             String?           @unique @db.VarChar(255)
+  condicionIva      CondicionIva      @default(ConsumidorFinal)
+  cuit              String?           @unique @db.VarChar(13)
+  telefono          String            @db.VarChar(50)
+  esCuentaCorriente Boolean           @default(false)
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  tipoDeCliente     TipoDeCliente     @default(INDIVIDUO)
+  vehiculos         ClienteVehiculo[]
 }
 
 enum CondicionIva {

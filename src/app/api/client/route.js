@@ -5,22 +5,13 @@ async function createCliente(data) {
   const prisma = new PrismaClient();
   const currentDate = new Date().toISOString();
 
-  // const formattedVehicles = data.vehicleData.map((vehicle) => ({
-  //   tipoVehiculo: vehicle.tipoDeVehiculo,
-  //   marca: vehicle.marca,
-  //   modelo: vehicle.modelo,
-  //   patente: vehicle.patente,
-  //   observaciones: vehicle.observaciones,
-  //   createdAt: currentDate,
-  //   updatedAt: currentDate,
-  // }));
-
   const createdCliente = await prisma.cliente.create({
     data: {
       tipoDeCliente: data.clientData.tipoDeCliente,
       nombreCompleto: data.clientData.nombreCompleto,
-      documento: parseInt(data.clientData.documento, 10),
-      email: data.clientData.email,
+      // if (documento)? it will be parsed as integer: If not => null.
+      documento: data.clientData.documento ? parseInt(data.clientData.documento, 10) : null,
+      email: data.clientData.email || null,
       condicionIva: data.clientData.condicionIva,
       cuit: data.clientData.cuit,
       telefono: data.clientData.telefono,
@@ -29,16 +20,35 @@ async function createCliente(data) {
       updatedAt: currentDate,
     },
   });
+  // Initialize an array to store all vehicle promises
+  const vehiclePromises = [];
 
-  // for (const vehicle of formattedVehicles) {
-  //   await prisma.vehiculo.create({
-  //     data: {
-  //       ...vehicle,
-  //       clienteId: createdCliente.clienteId,
-  //     },
-  //   });
-  // }
-
+  // eslint-disable-next-line no-restricted-syntax
+  for (const vehicle of data.vehicleData) {
+    const vehiclePromise = prisma.vehiculo.create({
+      data: {
+        tipoVehiculo: vehicle.tipoDeVehiculo,
+        marca: vehicle.marca,
+        modelo: vehicle.modelo,
+        patente: vehicle.patente,
+        observaciones: vehicle.observaciones || null,
+        createdAt: currentDate,
+        updatedAt: currentDate,
+        // For this new car, I want to create a link to say it belongs to this customer.
+        clientes: {
+          create: {
+            cliente: {
+              connect: {
+                clienteId: createdCliente.clienteId,
+              },
+            },
+          },
+        },
+      },
+    });
+    vehiclePromises.push(vehiclePromise);
+  }
+  await Promise.all(vehiclePromises);
   return createdCliente;
 }
 
@@ -63,6 +73,7 @@ export async function POST(req) {
       },
     );
   } catch (error) {
+    console.log(error);
     return new NextResponse(error.message, {
       status: 500,
       headers: { 'Content-Type': 'application/json' },

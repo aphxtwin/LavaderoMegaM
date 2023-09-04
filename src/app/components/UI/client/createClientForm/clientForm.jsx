@@ -83,7 +83,6 @@ function ClientForm() {
         },
         vehicleData: vehicleState.vehicles,
       };
-
       const res = await fetch('/api/client', {
         method: 'POST',
         headers: {

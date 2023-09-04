@@ -5,13 +5,14 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
-import Box from '@mui/material/Box'
+import Box from '@mui/material/Box';
 import WarningIcon from '@mui/icons-material/Warning';
 
 function HandleVehicleAlreadyExists({ open }) {
   const buttonStyle = {
-    color:'white'
-  }
+    color: 'white',
+  };
+
   return (
     <Dialog
       open={open}
@@ -19,14 +20,14 @@ function HandleVehicleAlreadyExists({ open }) {
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <WarningIcon style={{ marginRight: '10px' }} />
-        Esta patente ya existe en el sistema
-      </Box>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <WarningIcon style={{ marginRight: '10px' }} />
+          Esta patente ya existe en el sistema
+        </Box>
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          
+
           Este auto ya pertenece a
           {' '}
           .
