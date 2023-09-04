@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, InputAdornment } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
+import PropTypes from 'prop-types';
 import CheckIcon from '@mui/icons-material/Check';
 
 export default function PatenteTextField({
@@ -85,3 +86,15 @@ export default function PatenteTextField({
     />
   );
 }
+PatenteTextField.propTypes = {
+  patenteValue: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleBlur: PropTypes.func.isRequired,
+  touched: PropTypes.shape({
+    patente: PropTypes.bool,
+  }).isRequired,
+  errors: PropTypes.shape({
+    patente: PropTypes.string,
+  }).isRequired,
+  onPlateExistenceChecked: PropTypes.func.isRequired,
+};

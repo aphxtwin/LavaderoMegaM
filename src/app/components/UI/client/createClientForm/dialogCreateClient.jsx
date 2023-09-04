@@ -17,7 +17,9 @@ import { resetVehicles } from '../../../../redux/slices/vehicleSlice';
 import ClientForm from './clientForm';
 import theme from '../../loginForm/theme';
 
-function ClientDialog({ showClientForm, toggleClientForm, fullScreen = false, clientFormTextButton = 'Agregar Nuevo Cliente' }) {
+function ClientDialog({
+  showClientForm, toggleClientForm, fullScreen = false, clientFormTextButton = 'Agregar Nuevo Cliente',
+}) {
   // Dialog that wraps the Client form. For reusability puposes
   const dispatch = useDispatch();
 
@@ -25,6 +27,7 @@ function ClientDialog({ showClientForm, toggleClientForm, fullScreen = false, cl
     toggleClientForm();
     dispatch(resetVehicles());
   };
+  // eslint-disable-next-line react/jsx-props-no-spreading
   const Transition = React.forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
   const transitionComponent = fullScreen ? Transition : undefined;
 

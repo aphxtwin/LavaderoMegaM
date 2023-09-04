@@ -7,6 +7,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import WarningIcon from '@mui/icons-material/Warning';
+import PropTypes from 'prop-types';
 
 function HandleVehicleAlreadyExists({ open }) {
   const buttonStyle = {
@@ -43,5 +44,7 @@ function HandleVehicleAlreadyExists({ open }) {
     </Dialog>
   );
 }
-
+HandleVehicleAlreadyExists.propTypes = {
+  open: PropTypes.bool.isRequired,
+};
 export default HandleVehicleAlreadyExists;

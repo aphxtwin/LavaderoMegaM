@@ -15,9 +15,10 @@ import {
 } from '@mui/material';
 import { TipoVehiculo, Marca } from '@prisma/client';
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import { addVehicle } from '../../../../redux/slices/vehicleSlice';
 import PatenteTextField from './patenteTextField';
-import HandleVehicleAlreadyExists from './handleVehicleAlreadyExists/handleVehicleAlreadyExists'
+import HandleVehicleAlreadyExists from './handleVehicleAlreadyExists/handleVehicleAlreadyExists';
 /*
   Form Nuevo vehiculo doesn't create a row in vehiculo table, but rather
   it stores the client data in redux state to be sent after
@@ -73,8 +74,9 @@ function FormNuevoVehiculo({ onSuccess }) {
         onSuccess();
       }
     } catch (e) {
-      console.error('Error:', e);
+      return { error: e };
     }
+    return {};
   };
   const marcas = Object.values(Marca);
 
@@ -131,6 +133,7 @@ function FormNuevoVehiculo({ onSuccess }) {
               getOptionLabel={(option) => option}
               renderInput={(params) => (
                 <TextField
+                  // eslint-disable-next-line react/jsx-props-no-spreading
                   {...params}
                   error={touched.marca && Boolean(errors.marca)}
                   label="Marca"
@@ -164,5 +167,7 @@ function FormNuevoVehiculo({ onSuccess }) {
     </Formik>
   );
 }
-
+FormNuevoVehiculo.propTypes = {
+  onSuccess: PropTypes.func.isRequired,
+};
 export default FormNuevoVehiculo;
