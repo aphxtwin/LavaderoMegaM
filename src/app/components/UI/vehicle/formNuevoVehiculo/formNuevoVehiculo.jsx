@@ -17,7 +17,7 @@ import { TipoVehiculo, Marca } from '@prisma/client';
 import { useDispatch } from 'react-redux';
 import { addVehicle } from '../../../../redux/slices/vehicleSlice';
 import PatenteTextField from './patenteTextField';
-
+import HandleVehicleAlreadyExists from './handleVehicleAlreadyExists/handleVehicleAlreadyExists'
 /*
   Form Nuevo vehiculo doesn't create a row in vehiculo table, but rather
   it stores the client data in redux state to be sent after
@@ -28,6 +28,7 @@ import PatenteTextField from './patenteTextField';
 */
 function FormNuevoVehiculo({ onSuccess }) {
   const dispatch = useDispatch();
+  const [dialogOpen, setDialogOpen]= useState(false);
   const validationSchema = Yup.object().shape({
     tipoDeVehiculo: Yup.string().required('El tipo de vehículo es obligatorio'),
     patente: Yup.string().required('La patente es obligatoria'),
@@ -44,10 +45,10 @@ function FormNuevoVehiculo({ onSuccess }) {
     observaciones: '',
   };
 
-  const handlePlateExistenceCheck = (exists, setFieldErrorFn) => {
+  const handlePlateExistenceCheck = (exists) => {
     if (exists) {
       // Show error or dialog as per your requirements
-      setFieldErrorFn('patente','esta patente ya existe en el sistema');
+      setDialogOpen(true);
     }
   };
 
@@ -81,7 +82,7 @@ function FormNuevoVehiculo({ onSuccess }) {
       validationSchema={validationSchema}
     >
       {({
-        handleChange, values, errors, touched, handleBlur, setFieldError,
+        handleChange, values, errors, touched, handleBlur,
       }) => (
         <Form>
           <Box sx={{
@@ -94,7 +95,10 @@ function FormNuevoVehiculo({ onSuccess }) {
               handleBlur={handleBlur}
               touched={touched}
               errors={errors}
-              onPlateExistenceChecked={(exists) => handlePlateExistenceCheck(exists, setFieldError)}
+              onPlateExistenceChecked={handlePlateExistenceCheck}
+            />
+            <HandleVehicleAlreadyExists
+              open={dialogOpen}
             />
             <FormControl fullWidth variant="outlined">
               <InputLabel htmlFor="vehicle-type">Tipo de Vehículo</InputLabel>

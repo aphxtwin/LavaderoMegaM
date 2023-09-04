@@ -5,6 +5,7 @@ import {
   DialogContent,
   Typography,
   Box,
+  Slide,
   IconButton,
   ThemeProvider,
 } from '@mui/material';
@@ -16,7 +17,7 @@ import { resetVehicles } from '../../../../redux/slices/vehicleSlice';
 import ClientForm from './clientForm';
 import theme from '../../loginForm/theme';
 
-function ClientDialog({ showClientForm, toggleClientForm }) {
+function ClientDialog({ showClientForm, toggleClientForm, fullScreen = false }) {
   // Dialog that wraps the Client form. For reusability puposes
   const dispatch = useDispatch();
 
@@ -24,10 +25,12 @@ function ClientDialog({ showClientForm, toggleClientForm }) {
     toggleClientForm();
     dispatch(resetVehicles());
   };
+  const Transition = React.forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
+  const transitionComponent = fullScreen ? Transition : undefined;
 
   return (
     <ThemeProvider theme={theme}>
-      <Dialog open={showClientForm} onClose={handleDialogClose} fullWidth maxWidth="md">
+      <Dialog open={showClientForm} onClose={handleDialogClose} fullWidth maxWidth="md" fullScreen={fullScreen} TransitionComponent={transitionComponent}>
         <DialogTitle>
           <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
             <PersonAddIcon sx={{ width: '40px', height: '40px' }} />
@@ -52,5 +55,9 @@ function ClientDialog({ showClientForm, toggleClientForm }) {
 ClientDialog.propTypes = {
   showClientForm: PropTypes.bool.isRequired,
   toggleClientForm: PropTypes.func.isRequired,
+  fullScreen: PropTypes.bool,
+};
+ClientDialog.defaultProps = {
+  fullScreen: false,
 };
 export default ClientDialog;

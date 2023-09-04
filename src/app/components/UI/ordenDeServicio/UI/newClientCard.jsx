@@ -16,6 +16,7 @@ export default function NewClientCard() {
       ? (
         <ThemeProvider theme={theme}>
           <ClientDialog
+            fullScreen
             showClientForm={showClient}
             toggleClientForm={() => setShowClient(!showClient)}
           />
@@ -36,7 +37,7 @@ export default function NewClientCard() {
                 >
                   <PersonAddIcon sx={{ fontSize: 100 }} />
                   <Typography variant="h5" component="h2">
-                    Añadir Nuevo Cliente
+                    Nuevo Cliente
                   </Typography>
                 </Box>
               </CardContent>

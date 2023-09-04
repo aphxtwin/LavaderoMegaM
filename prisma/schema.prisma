@@ -19,6 +19,7 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
+
 model Vehiculo {
   vehiculoId    Int          @id @default(autoincrement())
   clienteId     Int
