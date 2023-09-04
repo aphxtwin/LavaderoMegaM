@@ -39,11 +39,11 @@ function AddCarDashboard({ showCarDashboard, toggleCarDashboard }) {
     >
       <DialogTitle sx={{ pb: 0 }}>
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-          <IconButton color="inherit" onClick={toggleCarDashboard}>
-            <ArrowBackIcon />
-          </IconButton>
           <IconButton sx={{ position: 'absolute', right: 8, top: 8 }} onClick={toggleCarDashboard} color="inherit">
             <CloseIcon />
+          </IconButton>
+          <IconButton color="inherit" onClick={toggleCarDashboard}>
+            <ArrowBackIcon />
           </IconButton>
         </Box>
         <Box display="flex" justifyContent="space-between" alignItems="center">

@@ -27,7 +27,6 @@ function HandleVehicleAlreadyExists({ open }) {
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-
           Este auto ya pertenece a
           {' '}
           .

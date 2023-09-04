@@ -17,7 +17,7 @@ import { resetVehicles } from '../../../../redux/slices/vehicleSlice';
 import ClientForm from './clientForm';
 import theme from '../../loginForm/theme';
 
-function ClientDialog({ showClientForm, toggleClientForm, fullScreen = false }) {
+function ClientDialog({ showClientForm, toggleClientForm, fullScreen = false, clientFormTextButton = 'Agregar Nuevo Cliente' }) {
   // Dialog that wraps the Client form. For reusability puposes
   const dispatch = useDispatch();
 
@@ -45,7 +45,7 @@ function ClientDialog({ showClientForm, toggleClientForm, fullScreen = false }) 
           </Box>
         </DialogTitle>
         <DialogContent>
-          <ClientForm />
+          <ClientForm textButton={clientFormTextButton} />
         </DialogContent>
       </Dialog>
     </ThemeProvider>
@@ -56,8 +56,10 @@ ClientDialog.propTypes = {
   showClientForm: PropTypes.bool.isRequired,
   toggleClientForm: PropTypes.func.isRequired,
   fullScreen: PropTypes.bool,
+  clientFormTextButton: PropTypes.string,
 };
 ClientDialog.defaultProps = {
   fullScreen: false,
+  clientFormTextButton: 'Agregar Nuevo Cliente',
 };
 export default ClientDialog;

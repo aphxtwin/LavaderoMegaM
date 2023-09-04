@@ -32,7 +32,7 @@ function DialogFormNuevoVehiculo({ open, onClose }) {
           </Box>
         </DialogTitle>
         <DialogContent>
-          <FormNuevoVehiculo onSuccess={onClose}/>
+          <FormNuevoVehiculo onSuccess={onClose} />
         </DialogContent>
       </Dialog>
     </ThemeProvider>

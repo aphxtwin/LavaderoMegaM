@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   Formik, Form,
 } from 'formik';
-import * as Yup from 'yup';
 import {
   Button,
   Box,
@@ -15,46 +14,23 @@ import {
   FormControlLabel,
   Container,
 } from '@mui/material';
+import BusinessIcon from '@mui/icons-material/Business';
+import PersonIcon from '@mui/icons-material/Person';
 import { CondicionIva, TipoDeCliente } from '@prisma/client';
 import { useSelector, useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
+import validationSchema from './validationSchema';
 import IndividualForm from './individuoFields';
 import EmpresaForm from './companyFields';
 import AddCarDashboard from '../../vehicle/addCarDashboard/addCarDashboard';
 import ButtonAddCar from './buttonAddCar/buttonAddCar';
 import { resetVehicles } from '../../../../redux/slices/vehicleSlice';
 
-function ClientForm() {
+function ClientForm({ textButton = 'Agregar Nuevo Cliente' }) {
   const dispatch = useDispatch();
   const vehicleState = useSelector((state) => state.vehicle);
   const [message, setMessage] = useState({ text: '', success: true });
   const [showCarDashboard, setshowCarDashboard] = useState(false);
-  const validationSchema = Yup.object().shape({
-    nombreCompleto: Yup.string().required('El nombre es obligatorio'),
-    documento: Yup.number()
-      .nullable()
-      .when('tipoDeCliente', (tipoDeCliente, field) => (
-        tipoDeCliente[0] === TipoDeCliente.INDIVIDUO // Comparing the first element of the array
-          ? field.required('El documento es obligatorio')
-          : field)),
-    email: Yup.string().email('Formato de correo inválido'),
-    condicionIva: Yup.string().required('La condición IVA es obligatoria'),
-    cuit: Yup.string()
-      .test(
-        'cuit-validation',
-        'El CUIT es obligatorio',
-        (value, { parent }) => {
-          const { condicionIva, tipoDeCliente } = parent;
-          return !(
-            (condicionIva === CondicionIva.ResponsableInscripto
-            || tipoDeCliente === TipoDeCliente.EMPRESA)
-            && !value
-          );
-        },
-      )
-      .matches(/^[0-9]{2}-[0-9]{8}-[0-9]{1}$/, 'El CUIT debe tener 11 dígitos y el formato XX-XXXXXXXX-X'),
-    telefono: Yup.string().required('El teléfono es obligatorio'),
-    esCuentaCorriente: Yup.boolean(),
-  });
 
   const initialValues = {
     nombreCompleto: '',
@@ -126,7 +102,10 @@ function ClientForm() {
         isSubmitting, handleChange, values, errors, touched, setFieldValue,
       }) => (
         <Form>
-          <Box sx={{ my: 2 }}>
+          <Box sx={{
+            mx: 'auto', my: 2, justifyContent: 'center', width: { md: '50%', xs: '100%' },
+          }}
+          >
             <FormControl fullWidth variant="outlined">
               <InputLabel htmlFor="client-type">Tipo de Cliente</InputLabel>
               <Select
@@ -141,54 +120,64 @@ function ClientForm() {
                 }}
                 labelId="tipo-de-cliente"
               >
-                <MenuItem value={TipoDeCliente.INDIVIDUO}>Individuo</MenuItem>
-                <MenuItem value={TipoDeCliente.EMPRESA}>Empresa</MenuItem>
+                <MenuItem value={TipoDeCliente.INDIVIDUO}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <PersonIcon />
+                    Individuo
+                  </Box>
+                </MenuItem>
+                <MenuItem value={TipoDeCliente.EMPRESA}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <BusinessIcon />
+                    Empresa
+                  </Box>
+                </MenuItem>
               </Select>
             </FormControl>
-          </Box>
-          {values.tipoDeCliente === TipoDeCliente.INDIVIDUO ? (
-            <IndividualForm
-              values={values}
-              handleChange={handleChange}
-              touched={touched}
-              errors={errors}
-              formatCuit={formatCuit}
-            />
-          ) : (
-            <EmpresaForm
-              values={values}
-              handleChange={handleChange}
-              touched={touched}
-              errors={errors}
-              formatCuit={formatCuit}
-            />
-          )}
-          <AddCarDashboard
-            showCarDashboard={showCarDashboard}
-            toggleCarDashboard={toggleCarDashboard}
-          />
-          <Container maxWidth="md">
-            <Box sx={{
-              display: 'flex', m: 'auto', justifyContent: 'space-between',
-            }}
-            >
-              <ButtonAddCar onClick={toggleCarDashboard} />
-              <FormControlLabel
-                label="Abrir una Cuenta Corriente?"
-                control={(
-                  <Switch
-                    checked={values.esCuentaCorriente}
-                    onChange={handleChange}
-                    name="esCuentaCorriente"
-                    color="primary"
-                  />
-                )}
+
+            {values.tipoDeCliente === TipoDeCliente.INDIVIDUO ? (
+              <IndividualForm
+                values={values}
+                handleChange={handleChange}
+                touched={touched}
+                errors={errors}
+                formatCuit={formatCuit}
               />
+            ) : (
+              <EmpresaForm
+                values={values}
+                handleChange={handleChange}
+                touched={touched}
+                errors={errors}
+                formatCuit={formatCuit}
+              />
+            )}
 
-            </Box>
-          </Container>
+            <AddCarDashboard
+              showCarDashboard={showCarDashboard}
+              toggleCarDashboard={toggleCarDashboard}
+            />
+            <Container maxWidth="md">
+              <Box sx={{
+                display: 'flex', m: 'auto', justifyContent: 'space-between',
+              }}
+              >
+                <ButtonAddCar onClick={toggleCarDashboard} />
+                <FormControlLabel
+                  label="Abrir una Cuenta Corriente?"
+                  control={(
+                    <Switch
+                      checked={values.esCuentaCorriente}
+                      onChange={handleChange}
+                      name="esCuentaCorriente"
+                      color="primary"
+                    />
+                )}
+                />
+              </Box>
+            </Container>
 
-          {message.text && (
+            {message.text && (
             <Box
               sx={{
                 backgroundColor: message.success ? '#4CAF50' : '#E57373',
@@ -200,22 +189,27 @@ function ClientForm() {
             >
               {message.text}
             </Box>
-          )}
-          <Box sx={{ my: 2 }} textAlign="center">
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? <CircularProgress size={24} color="inherit" /> : 'Agregar cliente'}
-            </Button>
+            )}
+            <Box sx={{ my: 2 }} textAlign="center">
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? <CircularProgress size={24} color="inherit" /> : textButton }
+              </Button>
+            </Box>
           </Box>
-
         </Form>
       )}
     </Formik>
   );
 }
-
+ClientForm.propTypes = {
+  textButton: PropTypes.string,
+};
+ClientForm.defaultProps = {
+  textButton: 'Agregar Nuevo Cliente',
+};
 export default ClientForm;

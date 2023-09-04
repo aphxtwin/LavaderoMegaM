@@ -28,7 +28,8 @@ import HandleVehicleAlreadyExists from './handleVehicleAlreadyExists/handleVehic
 */
 function FormNuevoVehiculo({ onSuccess }) {
   const dispatch = useDispatch();
-  const [dialogOpen, setDialogOpen]= useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [plateChecked, setPlateChecked] = useState(false);
   const validationSchema = Yup.object().shape({
     tipoDeVehiculo: Yup.string().required('El tipo de vehículo es obligatorio'),
     patente: Yup.string().required('La patente es obligatoria'),
@@ -49,6 +50,8 @@ function FormNuevoVehiculo({ onSuccess }) {
     if (exists) {
       // Show error or dialog as per your requirements
       setDialogOpen(true);
+    } else {
+      setPlateChecked(true);
     }
   };
 
@@ -152,7 +155,7 @@ function FormNuevoVehiculo({ onSuccess }) {
             />
           </Box>
           <Box sx={{ my: 2 }} textAlign="center">
-            <Button type="submit" variant="contained" color="primary">
+            <Button type="submit" variant="contained" disabled={!plateChecked} color="primary">
               Agregar vehículo
             </Button>
           </Box>
