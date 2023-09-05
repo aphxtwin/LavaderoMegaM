@@ -1,5 +1,6 @@
 import React from 'react';
 import Dialog from '@mui/material/Dialog';
+import Typography from '@mui/material/Typography';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
@@ -9,9 +10,16 @@ import Box from '@mui/material/Box';
 import WarningIcon from '@mui/icons-material/Warning';
 import PropTypes from 'prop-types';
 
-function HandleVehicleAlreadyExists({ open }) {
+function HandleVehicleAlreadyExists({ open, owners='' }) {
   const buttonStyle = {
     color: 'white',
+  };
+  const handleSharedVehicle = () => {
+    console.log('Vehiculo compartido');
+  };
+
+  const handleTransferVehicle = () => {
+    console.log('Vehiculo transferido');
   };
 
   return (
@@ -21,23 +29,25 @@ function HandleVehicleAlreadyExists({ open }) {
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <WarningIcon style={{ marginRight: '10px' }} />
+        <Box sx={{ display: 'flex', flexDirection:'column', alignItems: 'center' }}>
+          <WarningIcon size={30}/>
           Esta patente ya existe en el sistema
         </Box>
       </DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          Este auto ya pertenece a
+        <DialogContentText sx={{display:'flex', justifyContent:'center'}} id="alert-dialog-description">
+          Este auto ya pertenece al cliente: 
           {' '}
-          .
+          <Typography variant="body1" fontWeight={'bold'} fontFamily="Monospace" px={2}>
+            {owners} 
+          </Typography>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button sx={buttonStyle}>
-          Auto Compartido
+        <Button sx={buttonStyle} onClick={handleSharedVehicle}>
+          Vehiculo Compartido
         </Button>
-        <Button sx={buttonStyle} autoFocus>
+        <Button sx={buttonStyle} onClick={handleTransferVehicle} autoFocus>
           Nuevo Dominio
         </Button>
       </DialogActions>

@@ -16,7 +16,6 @@ export default function NewClientCard() {
       ? (
         <ThemeProvider theme={theme}>
           <ClientDialog
-            fullScreen
             clientFormTextButton="Agregar Cliente y continuar"
             showClientForm={showClient}
             toggleClientForm={() => setShowClient(!showClient)}

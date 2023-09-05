@@ -31,6 +31,7 @@ function FormNuevoVehiculo({ onSuccess }) {
   const dispatch = useDispatch();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [plateChecked, setPlateChecked] = useState(false);
+  const [owners, setOwners] = useState('');
   const validationSchema = Yup.object().shape({
     tipoDeVehiculo: Yup.string().required('El tipo de vehículo es obligatorio'),
     patente: Yup.string().required('La patente es obligatoria'),
@@ -47,16 +48,17 @@ function FormNuevoVehiculo({ onSuccess }) {
     observaciones: '',
   };
 
-  const handlePlateExistenceCheck = (exists) => {
+  const handlePlateExistenceCheck = (exists, vehicle, owner) => {
     if (exists) {
       // Show error or dialog as per your requirements
       setDialogOpen(true);
+      setOwners(owner);
     } else {
       setPlateChecked(true);
     }
   };
 
-  const handleSubmit = async (values, { resetForm }) => {
+  const handleSubmit = async (values, { resetForm, setErrors }) => {
     try {
       const formData = { ...values };
 
@@ -74,7 +76,7 @@ function FormNuevoVehiculo({ onSuccess }) {
         onSuccess();
       }
     } catch (e) {
-      return { error: e };
+      setErrors({ submit: "Hubo un problema al enviar el formulario." })
     }
     return {};
   };
@@ -104,8 +106,9 @@ function FormNuevoVehiculo({ onSuccess }) {
             />
             <HandleVehicleAlreadyExists
               open={dialogOpen}
+              owners={owners}
             />
-            <FormControl fullWidth variant="outlined">
+            <FormControl fullWidth required variant="outlined">
               <InputLabel htmlFor="vehicle-type">Tipo de Vehículo</InputLabel>
               <Select
                 name="tipoDeVehiculo"
@@ -135,8 +138,9 @@ function FormNuevoVehiculo({ onSuccess }) {
                 <TextField
                   // eslint-disable-next-line react/jsx-props-no-spreading
                   {...params}
-                  error={touched.marca && Boolean(errors.marca)}
+                  errors={touched.marca && Boolean(errors.marca)}
                   label="Marca"
+                  required
                   variant="outlined"
                 />
               )}
@@ -146,8 +150,9 @@ function FormNuevoVehiculo({ onSuccess }) {
               name="modelo"
               label="Modelo"
               value={values.modelo}
+              required
               onChange={handleChange}
-              error={touched.modelo && Boolean(errors.modelo)}
+              errors={touched.modelo && Boolean(errors.modelo)}
               helperText={touched.modelo && errors.modelo}
             />
             <TextField

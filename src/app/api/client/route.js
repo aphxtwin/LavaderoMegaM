@@ -13,7 +13,7 @@ async function createCliente(data) {
       documento: data.clientData.documento ? parseInt(data.clientData.documento, 10) : null,
       email: data.clientData.email || null,
       condicionIva: data.clientData.condicionIva,
-      cuit: data.clientData.cuit,
+      cuit: data.clientData.cuit || null,
       telefono: data.clientData.telefono,
       esCuentaCorriente: data.clientData.esCuentaCorriente,
       createdAt: currentDate,
@@ -73,6 +73,7 @@ export async function POST(req) {
       },
     );
   } catch (error) {
+    console.log(error);
     return new NextResponse(error.message, {
       status: 500,
       headers: { 'Content-Type': 'application/json' },

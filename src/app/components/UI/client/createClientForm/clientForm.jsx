@@ -104,7 +104,7 @@ function ClientForm({ textButton = 'Agregar Nuevo Cliente' }) {
       }) => (
         <Form>
           <Box sx={{
-            mx: 'auto', my: 2, justifyContent: 'center', width: { md: '50%', xs: '100%' },
+            my: 2, justifyContent: 'center',
           }}
           >
             <FormControl fullWidth variant="outlined">

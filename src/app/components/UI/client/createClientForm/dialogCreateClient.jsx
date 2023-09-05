@@ -18,7 +18,7 @@ import ClientForm from './clientForm';
 import theme from '../../loginForm/theme';
 
 function ClientDialog({
-  showClientForm, toggleClientForm, fullScreen = false, clientFormTextButton = 'Agregar Nuevo Cliente',
+  showClientForm, toggleClientForm, clientFormTextButton = 'Agregar Nuevo Cliente',
 }) {
   // Dialog that wraps the Client form. For reusability puposes
   const dispatch = useDispatch();
@@ -29,11 +29,11 @@ function ClientDialog({
   };
   // eslint-disable-next-line react/jsx-props-no-spreading
   const Transition = React.forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
-  const transitionComponent = fullScreen ? Transition : undefined;
+
 
   return (
     <ThemeProvider theme={theme}>
-      <Dialog open={showClientForm} onClose={handleDialogClose} fullWidth maxWidth="md" fullScreen={fullScreen} TransitionComponent={transitionComponent}>
+      <Dialog open={showClientForm} onClose={handleDialogClose} fullWidth maxWidth="md" fullScreen TransitionComponent={Transition}>
         <DialogTitle>
           <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
             <PersonAddIcon sx={{ width: '40px', height: '40px' }} />
@@ -48,7 +48,12 @@ function ClientDialog({
           </Box>
         </DialogTitle>
         <DialogContent>
-          <ClientForm textButton={clientFormTextButton} />
+          <Box sx={{
+            mx: 'auto', my: 2, justifyContent: 'center', width: { md: '50%', xs: '100%' },
+          }}
+          >
+            <ClientForm textButton={clientFormTextButton} />
+          </Box>
         </DialogContent>
       </Dialog>
     </ThemeProvider>
@@ -58,11 +63,9 @@ function ClientDialog({
 ClientDialog.propTypes = {
   showClientForm: PropTypes.bool.isRequired,
   toggleClientForm: PropTypes.func.isRequired,
-  fullScreen: PropTypes.bool,
   clientFormTextButton: PropTypes.string,
 };
 ClientDialog.defaultProps = {
-  fullScreen: false,
   clientFormTextButton: 'Agregar Nuevo Cliente',
 };
 export default ClientDialog;

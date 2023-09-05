@@ -14,10 +14,23 @@ async function searchVehicleByPatente(patente) {
       where: {
         patente: normalizedPatente,
       },
+      include: {
+        clientes: {
+          select: {
+            cliente: {
+              select: {
+                nombreCompleto: true, // Get the full name of the client
+                tipoDeCliente: true,
+              },
+            },
+          },
+        },
+      },
     });
 
     if (vehicle) {
-      return { exists: true, vehicle };
+      const clientNames = vehicle.clientes.map((c) => c.cliente.nombreCompleto);
+      return { exists: true, vehicle, owners: clientNames };
     }
 
     return { exists: false };
@@ -44,7 +57,6 @@ export async function POST(request) {
     }
 
     const result = await searchVehicleByPatente(patente); // Check if the vehicle exists
-
     return new NextResponse(JSON.stringify(result), { // Respond with the result
       status: 200,
       headers: { 'Content-Type': 'application/json' },

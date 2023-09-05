@@ -35,7 +35,11 @@ export default function PatenteTextField({
           throw new Error('Failed to fetch data');
         }
         const result = await response.json();
-        onPlateExistenceChecked(result.exists); // Informing parent about the result
+        onPlateExistenceChecked(
+          result.exists,
+          result.vehicle,
+          result.owners,
+        ); // Informing parent about the result
         if (result.exists === false) {
           setSuccess(true);
         }
@@ -67,6 +71,7 @@ export default function PatenteTextField({
     <TextField
       name="patente"
       placeholder="Patente"
+      required
       label="Patente"
       value={patenteValue}
       InputProps={{
