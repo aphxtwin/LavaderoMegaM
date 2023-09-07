@@ -24,7 +24,7 @@ function StepOne() {
           </Grid>
           <Grid item>
             <Box sx={{
-              m: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              m: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', height:'100%'
             }}
             >
               <NewClientCard />

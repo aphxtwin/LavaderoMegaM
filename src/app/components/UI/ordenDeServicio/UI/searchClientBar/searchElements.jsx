@@ -6,8 +6,6 @@ import {
   CircularProgress,
   Select,
   MenuItem,
-  List,
-  ListItem,
   TextField,
   InputAdornment,
   Grid,
@@ -18,10 +16,10 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { experimental_useFormStatus as useFormStatus } from 'react-dom';
 import PropTypes from 'prop-types';
 import SkeletonSearch from './skeletonSearch';
+import ClientListResults from './clientResultsList';
 import theme from './theme';
 
 export default function SearchElements({ handleSearchClient }) {
@@ -121,37 +119,13 @@ export default function SearchElements({ handleSearchClient }) {
               </Grid>
             ) : (
               searchResults.length > 0 && (
-              <Grid item xs={12}>
-                <Container>
-                  <List>
-                    {searchResults.map((client) => (
-                      <ListItem
-                        key={client.clienteId}
-                        onClick={() => toggleSelectClient(client.clienteId)}
-                        sx={{
-                          backgroundColor: selectedClient === client.clienteId ? 'rgba(0, 150, 250, 0.1)' : 'transparent',
-                          paddingY: selectedClient === client.clienteId ? 2 : 1,
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          borderRadius: '8px',
-                          my: 1,
-                        }}
-                      >
-                        {client.nombreCompleto}
-                        {' '}
-                        {client.documento}
-                        {' '}
-                        {client.cuit}
-                        {selectedClient === client.clienteId && (
-                        <CheckCircleIcon color="primary" />
-                        )}
-                      </ListItem>
-                    ))}
-                  </List>
-                </Container>
-
-              </Grid>
+                <Grid item xs={12}>
+                  <ClientListResults
+                    searchResults={searchResults}
+                    selectedClient={selectedClient}
+                    toggleSelectClient={toggleSelectClient}
+                  />
+                </Grid>
               )
             )}
 

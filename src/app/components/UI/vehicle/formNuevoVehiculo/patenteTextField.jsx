@@ -9,7 +9,7 @@ export default function PatenteTextField({
   handleChange,
   handleBlur,
   touched,
-  errors,
+  error,
   onPlateExistenceChecked, // This callback will inform the parent about the check's result
 }) {
   const [isChecking, setIsChecking] = useState(false);
@@ -70,7 +70,6 @@ export default function PatenteTextField({
   return (
     <TextField
       name="patente"
-      placeholder="Patente"
       required
       label="Patente"
       value={patenteValue}
@@ -85,8 +84,8 @@ export default function PatenteTextField({
         handleBlur(e);
         checkPlateExistence(e.target.value);
       }}
-      error={touched.patente && Boolean(errors.patente)}
-      helperText={success ? 'Esta patente no existe aun en el sistema' : touched.patente && errors.patente}
+      error={touched.patente && Boolean(error.patente)}
+      helperText={success ? 'Esta patente no existe aun en el sistema' : touched.patente && error.patente}
       FormHelperTextProps={success ? { style: { color: 'green' } } : {}}
     />
   );
@@ -98,7 +97,7 @@ PatenteTextField.propTypes = {
   touched: PropTypes.shape({
     patente: PropTypes.bool,
   }).isRequired,
-  errors: PropTypes.shape({
+  error: PropTypes.shape({
     patente: PropTypes.string,
   }).isRequired,
   onPlateExistenceChecked: PropTypes.func.isRequired,

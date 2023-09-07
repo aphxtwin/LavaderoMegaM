@@ -12,6 +12,7 @@ import {
   MenuItem,
   TextField,
   Autocomplete,
+  FormHelperText,
 } from '@mui/material';
 import { TipoDeVehiculo, Marca } from '@prisma/client';
 import { useDispatch } from 'react-redux';
@@ -108,7 +109,7 @@ function FormNuevoVehiculo({ onSuccess }) {
               handleChange={handleChange}
               handleBlur={handleBlur}
               touched={touched}
-              errors={errors}
+              error={errors}
               onPlateExistenceChecked={handlePlateExistenceCheck}
             />
             <HandleVehicleAlreadyExists
@@ -147,7 +148,7 @@ function FormNuevoVehiculo({ onSuccess }) {
                 <TextField
                   // eslint-disable-next-line react/jsx-props-no-spreading
                   {...params}
-                  errors={touched.marca && Boolean(errors.marca)}
+                  error={touched.marca && Boolean(errors.marca)}
                   label="Marca"
                   required
                   variant="outlined"
@@ -161,8 +162,7 @@ function FormNuevoVehiculo({ onSuccess }) {
               value={values.modelo}
               required
               onChange={handleChange}
-              errors={touched.modelo && Boolean(errors.modelo)}
-              helperText={touched.modelo && errors.modelo}
+              error={touched.modelo && errors.modelo}
             />
             <TextField
               name="observaciones"
