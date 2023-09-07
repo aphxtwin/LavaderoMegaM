@@ -4,7 +4,6 @@ import { PrismaClient } from '@prisma/client';
 async function createCliente(data) {
   const prisma = new PrismaClient();
   const currentDate = new Date().toISOString();
-
   const createdCliente = await prisma.cliente.create({
     data: {
       tipoDeCliente: data.clientData.tipoDeCliente,
@@ -21,33 +20,39 @@ async function createCliente(data) {
     },
   });
   // Initialize an array to store all vehicle promises
-  const vehiclePromises = [];
-
-  // eslint-disable-next-line no-restricted-syntax
-  for (const vehicle of data.vehicleData) {
-    const vehiclePromise = prisma.vehiculo.create({
-      data: {
-        tipoVehiculo: vehicle.tipoDeVehiculo,
-        marca: vehicle.marca,
-        modelo: vehicle.modelo,
-        patente: vehicle.patente,
-        observaciones: vehicle.observaciones || null,
-        createdAt: currentDate,
-        updatedAt: currentDate,
-        // For this new car, I want to create a link to say it belongs to this customer.
-        clientes: {
-          create: {
-            cliente: {
-              connect: {
-                clienteId: createdCliente.clienteId,
+  const vehiclePromises = data.vehicleData.map((vehicleObj) => {
+    const vehicle = vehicleObj.vehicleDetails; // Access the nested vehicleDetails object
+    const { action } = vehicleObj;
+    if (action === 'ADD') {
+      return prisma.vehiculo.create({
+        data: {
+          tipoDeVehiculo: vehicle.tipoDeVehiculo,
+          marca: vehicle.marca,
+          modelo: vehicle.modelo,
+          patente: vehicle.patente,
+          observaciones: vehicle.observaciones || null,
+          createdAt: currentDate,
+          updatedAt: currentDate,
+          clientes: {
+            create: {
+              cliente: {
+                connect: {
+                  clienteId: createdCliente.clienteId,
+                },
               },
             },
           },
         },
-      },
-    });
-    vehiclePromises.push(vehiclePromise);
-  }
+      });
+    }
+    if (action === 'sharedVehicleScenario') {
+      console.log(action);
+    }
+    if (action === 'ownershipTransferScenario') {
+      console.log(action);
+    }
+  });
+
   await Promise.all(vehiclePromises);
   return createdCliente;
 }

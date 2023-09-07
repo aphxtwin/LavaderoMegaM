@@ -10,7 +10,7 @@ async function createVehicle(data) {
       clienteId: 52,
       tipoDeCliente: data.tipoDeCliente,
       nombreCompleto: data.nombreCompleto,
-      tipoVehiculo: data.tipoDeVehiculo,
+      tipoDeVehiculo: data.tipoDeVehiculo,
       marca: data.marca,
       modelo: data.modelo,
       patente: data.patente,

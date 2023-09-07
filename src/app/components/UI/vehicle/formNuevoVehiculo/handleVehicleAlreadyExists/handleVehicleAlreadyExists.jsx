@@ -9,19 +9,33 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import WarningIcon from '@mui/icons-material/Warning';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { addVehicle } from '../../../../../redux/slices/vehicleSlice';
 
-function HandleVehicleAlreadyExists({ open, owners='' }) {
-  const buttonStyle = {
-    color: 'white',
-  };
+function HandleVehicleAlreadyExists({
+  open, onClose, owners = '', vehicleDetails,
+}) {
+  const dispatch = useDispatch();
   const handleSharedVehicle = () => {
-    console.log('Vehiculo compartido');
+    const payload = {
+      details: { vehicleDetails },
+      type: 'sharedVehicleScenario',
+    };
+    dispatch(addVehicle(payload));
+    onClose();
   };
 
   const handleTransferVehicle = () => {
-    console.log('Vehiculo transferido');
+    const payload = {
+      details: { vehicleDetails },
+      type: 'ownershipTransferScenario',
+    };
+    dispatch(addVehicle(payload));
+    onClose();
   };
-
+  const buttonStyle = {
+    color: 'white',
+  };
   return (
     <Dialog
       open={open}
@@ -29,17 +43,17 @@ function HandleVehicleAlreadyExists({ open, owners='' }) {
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">
-        <Box sx={{ display: 'flex', flexDirection:'column', alignItems: 'center' }}>
-          <WarningIcon size={30}/>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <WarningIcon size={30} />
           Esta patente ya existe en el sistema
         </Box>
       </DialogTitle>
       <DialogContent>
-        <DialogContentText sx={{display:'flex', justifyContent:'center'}} id="alert-dialog-description">
-          Este auto ya pertenece al cliente: 
+        <DialogContentText sx={{ display: 'flex', justifyContent: 'center' }} id="alert-dialog-description">
+          Este auto ya pertenece al cliente:
           {' '}
-          <Typography variant="body1" fontWeight={'bold'} fontFamily="Monospace" px={2}>
-            {owners} 
+          <Typography variant="body1" fontWeight="bold" fontFamily="Monospace" px={2}>
+            {owners}
           </Typography>
         </DialogContentText>
       </DialogContent>
@@ -56,5 +70,6 @@ function HandleVehicleAlreadyExists({ open, owners='' }) {
 }
 HandleVehicleAlreadyExists.propTypes = {
   open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 export default HandleVehicleAlreadyExists;

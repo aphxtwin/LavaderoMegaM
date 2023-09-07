@@ -13,7 +13,7 @@ import {
   TextField,
   Autocomplete,
 } from '@mui/material';
-import { TipoVehiculo, Marca } from '@prisma/client';
+import { TipoDeVehiculo, Marca } from '@prisma/client';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addVehicle } from '../../../../redux/slices/vehicleSlice';
@@ -32,6 +32,8 @@ function FormNuevoVehiculo({ onSuccess }) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [plateChecked, setPlateChecked] = useState(false);
   const [owners, setOwners] = useState('');
+  const [existentVehicle, setExistentVehicle] = useState(null);
+
   const validationSchema = Yup.object().shape({
     tipoDeVehiculo: Yup.string().required('El tipo de vehículo es obligatorio'),
     patente: Yup.string().required('La patente es obligatoria'),
@@ -50,8 +52,9 @@ function FormNuevoVehiculo({ onSuccess }) {
 
   const handlePlateExistenceCheck = (exists, vehicle, owner) => {
     if (exists) {
-      // Show error or dialog as per your requirements
+      // Open the dialog; Set the existent vehicle; Recognize the owner(for the modal)
       setDialogOpen(true);
+      setExistentVehicle(vehicle);
       setOwners(owner);
     } else {
       setPlateChecked(true);
@@ -62,7 +65,7 @@ function FormNuevoVehiculo({ onSuccess }) {
     try {
       const formData = { ...values };
 
-      const newVehicle = {
+      const vehicleDetails = {
         tipoDeVehiculo: formData.tipoDeVehiculo,
         patente: formData.patente,
         marca: formData.marca,
@@ -70,13 +73,17 @@ function FormNuevoVehiculo({ onSuccess }) {
         observaciones: formData.observaciones,
       };
 
-      dispatch(addVehicle(newVehicle));
+      const payload = {
+        details: { vehicleDetails },
+        type: 'ADD',
+      };
+      dispatch(addVehicle(payload));
       resetForm();
       if (onSuccess) {
         onSuccess();
       }
     } catch (e) {
-      setErrors({ submit: "Hubo un problema al enviar el formulario." })
+      setErrors({ submit: 'Hubo un problema al enviar el formulario.' });
     }
     return {};
   };
@@ -107,6 +114,8 @@ function FormNuevoVehiculo({ onSuccess }) {
             <HandleVehicleAlreadyExists
               open={dialogOpen}
               owners={owners}
+              vehicleDetails={existentVehicle}
+              onClose={() => setDialogOpen(false)}
             />
             <FormControl fullWidth required variant="outlined">
               <InputLabel htmlFor="vehicle-type">Tipo de Vehículo</InputLabel>
@@ -117,7 +126,7 @@ function FormNuevoVehiculo({ onSuccess }) {
                 onChange={handleChange}
                 labelId="vehicle-type"
               >
-                {Object.values(TipoVehiculo).map((type) => (
+                {Object.values(TipoDeVehiculo).map((type) => (
                   <MenuItem key={type} value={type}>{type}</MenuItem>
                 ))}
               </Select>

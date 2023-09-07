@@ -20,7 +20,6 @@ async function searchVehicleByPatente(patente) {
             cliente: {
               select: {
                 nombreCompleto: true, // Get the full name of the client
-                tipoDeCliente: true,
               },
             },
           },
