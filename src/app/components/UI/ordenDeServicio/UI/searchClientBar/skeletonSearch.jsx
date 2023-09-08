@@ -1,16 +1,12 @@
 import React from 'react';
-import { Skeleton, ListItem } from '@mui/material';
+import { Skeleton, Box } from '@mui/material';
 
 function SkeletonSearch() {
   return (
-    <ListItem sx={{
-      display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderRadius: '8px',
-    }}
-    >
-      <Skeleton variant="text" width="30%" />
+    <Box sx={{ width: '100%', my: 1 }}>
+      <Skeleton variant="text" width="90%" height={50} />
       <Skeleton variant="text" ml={0.5} width="30%" />
-      <Skeleton variant="circle" width={40} height={30} />
-    </ListItem>
+    </Box>
   );
 }
 

@@ -11,9 +11,10 @@ import WarningIcon from '@mui/icons-material/Warning';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { addVehicle } from '../../../../../redux/slices/vehicleSlice';
+import { toggleDialogFormNuevoVehiculo } from '../../../../../redux/slices/uiSlice';
 
 function HandleVehicleAlreadyExists({
-  open, onClose, owners = '', vehicleDetails,
+  open, owners = '', vehicleDetails,
 }) {
   const dispatch = useDispatch();
   const handleSharedVehicle = () => {
@@ -22,7 +23,7 @@ function HandleVehicleAlreadyExists({
       type: 'sharedVehicleScenario',
     };
     dispatch(addVehicle(payload));
-    onClose();
+    dispatch(toggleDialogFormNuevoVehiculo());
   };
 
   const handleTransferVehicle = () => {
@@ -31,7 +32,7 @@ function HandleVehicleAlreadyExists({
       type: 'ownershipTransferScenario',
     };
     dispatch(addVehicle(payload));
-    onClose();
+    dispatch(toggleDialogFormNuevoVehiculo());
   };
   const buttonStyle = {
     color: 'white',

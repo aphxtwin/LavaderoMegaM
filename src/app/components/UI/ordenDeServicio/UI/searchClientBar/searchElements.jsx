@@ -114,6 +114,7 @@ export default function SearchElements({ handleSearchClient }) {
                 >
                   <SkeletonSearch />
                   <SkeletonSearch />
+                  <SkeletonSearch />
                 </Container>
 
               </Grid>

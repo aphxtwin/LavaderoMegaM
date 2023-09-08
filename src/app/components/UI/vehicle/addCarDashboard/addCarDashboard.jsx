@@ -15,15 +15,17 @@ import {
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import CloseIcon from '@mui/icons-material/Close';
+import { useSelector, useDispatch } from 'react-redux';
+import { toggleDialogFormNuevoVehiculo } from '../../../../redux/slices/uiSlice';
 import DialogFormNuevoVehiculo from '../formNuevoVehiculo/dialogFormNuevoVehiculo';
 
 function AddCarDashboard({ showCarDashboard, toggleCarDashboard }) {
-  const [showDialogFormNuevoVehiculo, setShowDialogFormNuevoVehiculo] = useState(false);
+  const dispatch = useDispatch();
+  const showDialogFormNuevoVehiculo = useSelector((state) => state.ui.showDialogFormNuevoVehiculo);
   const vehicleDetails = useSelector((state) => state.vehicle.vehicles);
   const handleDialogForm = () => {
-    setShowDialogFormNuevoVehiculo(!showDialogFormNuevoVehiculo);
+    dispatch(toggleDialogFormNuevoVehiculo());
   };
   const styleCell = {
     borderBottom: '1px solid rgba(159, 159, 159, 1)',
