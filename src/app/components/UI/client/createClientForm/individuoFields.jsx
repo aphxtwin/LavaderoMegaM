@@ -57,6 +57,7 @@ function IndividualForm({
           label="Teléfono"
           variant="outlined"
           type="tel"
+          required
           InputProps={{
             inputMode: 'numeric',
             maxLength: 10,

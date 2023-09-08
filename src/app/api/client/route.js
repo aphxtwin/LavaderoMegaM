@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/lib/prisma';
 
 async function createCliente(data) {
-  const prisma = new PrismaClient();
   const currentDate = new Date().toISOString();
+
   const createdCliente = await prisma.cliente.create({
     data: {
       tipoDeCliente: data.clientData.tipoDeCliente,
@@ -17,12 +17,12 @@ async function createCliente(data) {
       esCuentaCorriente: data.clientData.esCuentaCorriente,
       createdAt: currentDate,
       updatedAt: currentDate,
-    },
+    }
   });
-  // Initialize an array to store all vehicle promises
-  const vehiclePromises = data.vehicleData.map((vehicleObj) => {
-    const vehicle = vehicleObj.vehicleDetails; // Access the nested vehicleDetails object
-    const { action } = vehicleObj;
+
+  const vehiclePromises = data.vehicleData.map(async (vehicleObj) => {
+    const { action, vehicleDetails: vehicle } = vehicleObj;
+
     if (action === 'ADD') {
       return prisma.vehiculo.create({
         data: {
@@ -45,15 +45,34 @@ async function createCliente(data) {
         },
       });
     }
+
     if (action === 'sharedVehicleScenario') {
-      console.log(action);
+      return prisma.clienteVehiculo.create({
+        data: {
+          clienteId: createdCliente.clienteId,
+          vehiculoId: vehicle.vehiculoId,
+        },
+      });
     }
+
     if (action === 'ownershipTransferScenario') {
-      console.log(action);
+      await prisma.clienteVehiculo.deleteMany({
+        where: { vehiculoId: vehicle.vehiculoId },
+      });
+
+      return prisma.clienteVehiculo.create({
+        data: {
+          clienteId: createdCliente.clienteId,
+          vehiculoId: vehicle.vehiculoId,
+        },
+      });
     }
+
+    return null;
   });
 
   await Promise.all(vehiclePromises);
+
   return createdCliente;
 }
 
@@ -69,7 +88,7 @@ export async function POST(req) {
   try {
     const requestData = await req.json();
     const createdCliente = await createCliente(requestData);
-
+    console.log(createdCliente)
     return new NextResponse(
       JSON.stringify(createdCliente),
       {
@@ -78,7 +97,7 @@ export async function POST(req) {
       },
     );
   } catch (error) {
-    console.log(error);
+    console.log(error)
     return new NextResponse(error.message, {
       status: 500,
       headers: { 'Content-Type': 'application/json' },

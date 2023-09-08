@@ -1,11 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
 import { Box, Typography } from '@mui/material';
-
+import { selectActiveStep } from '../../../../redux/slices/stepperSlice';
+ 
 function StepperOrdenDeServicio() {
-  const [activeStep] = useState(0);
+  const activeStep = useSelector(selectActiveStep);
   const steps = ['Cliente', 'Vehiculo', 'Servicio', 'Pago'];
   const theme = useTheme();
 

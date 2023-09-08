@@ -2,7 +2,7 @@ import 'server-only';
 import React from 'react';
 import OrdenDeServicioContainer from '../../components/UI/ordenDeServicio/UI/containerOrdenDeServicio';
 import StepperOrdenDeServicio from '../../components/UI/ordenDeServicio/UI/stepperOrdenDeServicio';
-import StepOne from '../../components/UI/ordenDeServicio/Layout/step1Cliente';
+import StepSwitcher from '../../components/UI/ordenDeServicio/Layout/stepSwitcher';
 
 export default function NuevoServicio() {
   return (
@@ -10,7 +10,7 @@ export default function NuevoServicio() {
       <OrdenDeServicioContainer>
         <StepperOrdenDeServicio />
       </OrdenDeServicioContainer>
-      <StepOne />
+      <StepSwitcher />
     </>
   );
 }

@@ -1,4 +1,5 @@
-import 'server-only';
+'use client';
+
 import React from 'react';
 import {
   Grid, Container, Box,
@@ -24,7 +25,7 @@ function StepOne() {
           </Grid>
           <Grid item>
             <Box sx={{
-              m: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', height:'100%'
+              m: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%',
             }}
             >
               <NewClientCard />

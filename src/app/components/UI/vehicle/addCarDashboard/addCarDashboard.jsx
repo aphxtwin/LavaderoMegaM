@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -10,13 +10,14 @@ import {
   TableHead,
   TableRow,
   TableCell,
-  TableBody,
   Button,
+  TableBody,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import PropTypes from 'prop-types';
 import CloseIcon from '@mui/icons-material/Close';
 import { useSelector, useDispatch } from 'react-redux';
+import AddCarButton from './addCarButton';
 import { toggleDialogFormNuevoVehiculo } from '../../../../redux/slices/uiSlice';
 import DialogFormNuevoVehiculo from '../formNuevoVehiculo/dialogFormNuevoVehiculo';
 
@@ -41,36 +42,22 @@ function AddCarDashboard({ showCarDashboard, toggleCarDashboard }) {
     >
       <DialogTitle sx={{ pb: 0 }}>
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-          <IconButton sx={{ position: 'absolute', right: 8, top: 8 }} onClick={toggleCarDashboard} color="inherit">
-            <CloseIcon />
-          </IconButton>
           <IconButton color="inherit" onClick={toggleCarDashboard}>
             <ArrowBackIcon />
           </IconButton>
+          <IconButton sx={{ position: 'absolute', right: 8, top: 8 }} onClick={toggleCarDashboard} color="inherit">
+            <CloseIcon />
+          </IconButton>
         </Box>
+
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Typography variant="h4" component="div" color="primary" sx={{ fontWeight: 'bold', fontSize: '2rem' }}>
             Agrega un nuevo vehículo
           </Typography>
-          <Button
-            onClick={handleDialogForm}
-            sx={{
-              background: '#2F3842',
-              borderRadius: '3px',
-              fontWeight: 500,
-              fontSize: '14px',
-              lineHeight: '16px',
-              display: 'flex',
-              alignItems: 'center',
-              textAlign: 'center',
-              color: '#FFFFFF',
-              padding: '10px 25px',
-            }}
-          >
-            Añadir+
-          </Button>
+          <AddCarButton title="Añadir+" onClick={handleDialogForm} />
         </Box>
       </DialogTitle>
+
       <DialogContent sx={{ pt: 0, marginBottom: '1rem' }}>
         <Table>
           <TableHead>
@@ -83,18 +70,15 @@ function AddCarDashboard({ showCarDashboard, toggleCarDashboard }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {vehicleDetails.map((item) => {
-              const vehicle = item.vehicleDetails;
-              return (
-                <TableRow key={vehicle.vehiculoId}>
-                  <TableCell sx={styleCell}>{vehicle.patente}</TableCell>
-                  <TableCell sx={styleCell}>{vehicle.tipoDeVehiculo}</TableCell>
-                  <TableCell sx={styleCell}>{vehicle.marca}</TableCell>
-                  <TableCell sx={styleCell}>{vehicle.modelo}</TableCell>
-                  <TableCell sx={styleCell}>{vehicle.observaciones}</TableCell>
-                </TableRow>
-              );
-            })}
+            {vehicleDetails.map((item) => (
+              <TableRow key={item.vehicleDetails.vehiculoId}>
+                <TableCell sx={styleCell}>{item.vehicleDetails.patente}</TableCell>
+                <TableCell sx={styleCell}>{item.vehicleDetails.tipoDeVehiculo}</TableCell>
+                <TableCell sx={styleCell}>{item.vehicleDetails.marca}</TableCell>
+                <TableCell sx={styleCell}>{item.vehicleDetails.modelo}</TableCell>
+                <TableCell sx={styleCell}>{item.vehicleDetails.observaciones}</TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
         <DialogFormNuevoVehiculo

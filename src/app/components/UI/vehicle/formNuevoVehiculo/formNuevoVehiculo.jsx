@@ -12,7 +12,6 @@ import {
   MenuItem,
   TextField,
   Autocomplete,
-  FormHelperText,
 } from '@mui/material';
 import { TipoDeVehiculo, Marca } from '@prisma/client';
 import { useDispatch } from 'react-redux';
@@ -37,7 +36,9 @@ function FormNuevoVehiculo({ onSuccess }) {
 
   const validationSchema = Yup.object().shape({
     tipoDeVehiculo: Yup.string().required('El tipo de vehículo es obligatorio'),
-    patente: Yup.string().required('La patente es obligatoria'),
+    patente: Yup.string()
+      .matches(/^(?:[a-zA-Z]{3}\d{3}|\d{3}[a-zA-Z]{3}|[a-zA-Z]{2}\d{3}[a-zA-Z]{2})$/,'Patente invalida :/')
+      .required('La patente es requerida'),
     marca: Yup.string().required('La marca es obligatoria'),
     modelo: Yup.string().required('El modelo es obligatorio'),
     observaciones: Yup.string(),

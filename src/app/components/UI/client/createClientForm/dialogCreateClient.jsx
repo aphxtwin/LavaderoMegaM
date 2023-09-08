@@ -30,7 +30,6 @@ function ClientDialog({
   // eslint-disable-next-line react/jsx-props-no-spreading
   const Transition = React.forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
 
-
   return (
     <ThemeProvider theme={theme}>
       <Dialog open={showClientForm} onClose={handleDialogClose} fullWidth maxWidth="md" fullScreen TransitionComponent={Transition}>

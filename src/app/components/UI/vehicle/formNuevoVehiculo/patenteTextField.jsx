@@ -3,6 +3,8 @@ import { TextField, InputAdornment } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import PropTypes from 'prop-types';
 import CheckIcon from '@mui/icons-material/Check';
+import { useSelector } from 'react-redux';
+import ErrorIcon from '@mui/icons-material/Error';
 
 export default function PatenteTextField({
   patenteValue,
@@ -14,11 +16,24 @@ export default function PatenteTextField({
 }) {
   const [isChecking, setIsChecking] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [internalError, setInternalError] = useState(false);
+  const vehiclesInRedux = useSelector((state) => state.vehicle.vehicles);
+
+  function checkInternal(patente) {
+    const existingVehicle = vehiclesInRedux.find((vehicle) => vehicle.vehicleDetails.patente === patente);
+    setInternalError(!!existingVehicle);
+    return !!existingVehicle;
+  }
+
   async function checkPlateExistence(patente) {
     setSuccess(false);
     const patenteLenght = patente.length;
     // avoids triggering by mistake the data fetching
     if (patenteLenght > 5) {
+      const isInternallyExisting = checkInternal(patente);
+      if (isInternallyExisting) {
+        return; // Exit early if it exists internally
+      }
       try {
         setIsChecking(true);
         const response = await fetch('/api/vehicle/check-plate-existence', {
@@ -42,6 +57,7 @@ export default function PatenteTextField({
         ); // Informing parent about the result
         if (result.exists === false) {
           setSuccess(true);
+          
         }
       } catch (e) {
         throw new Error(e);
@@ -51,13 +67,20 @@ export default function PatenteTextField({
     }
   }
   const renderStartAdornment = () => {
+    if (internalError){
+      return (
+        <InputAdornment position="start">
+          <ErrorIcon size={30} />
+        </InputAdornment>
+      )
+    };
     if (isChecking) {
       return (
         <InputAdornment position="start">
           <CircularProgress size={30} />
         </InputAdornment>
-      );
-    }
+      )
+    };
     if (success) {
       return (
         <InputAdornment position="start">
@@ -85,8 +108,9 @@ export default function PatenteTextField({
         checkPlateExistence(e.target.value);
       }}
       error={touched.patente && Boolean(error.patente)}
-      helperText={success ? 'Esta patente no existe aun en el sistema' : touched.patente && error.patente}
-      FormHelperTextProps={success ? { style: { color: 'green' } } : {}}
+      helperText={success ? 'Esta patente no existe aun en el sistema' : internalError ? 'Esta patente ya está pendiente para agregar' : touched.patente && error.patente}
+      FormHelperTextProps={success ? { style: { color: 'green' } } : internalError ? { style: { color: 'gray' } } : {}}
+
     />
   );
 }
