@@ -5,19 +5,24 @@ import {
   Card, Box, CardContent, Typography, Paper, CardActionArea, ThemeProvider,
 } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import { useDispatch } from 'react-redux';
 import ClientDialog from '../../client/createClientForm/dialogCreateClient';
 import theme from '../../loginForm/theme';
+import { incrementStep } from '../../../../redux/slices/stepperSlice';
 
 export default function NewClientCard() {
   const [showClient, setShowClient] = useState(false);
+  const dispatch = useDispatch();
+  const increment = () => dispatch(incrementStep());
 
   return (
     showClient
       ? (
         <ThemeProvider theme={theme}>
           <ClientDialog
-            clientFormTextButton="Agregar Cliente y continuar"
+            clientFormTextButton="Agregar Cliente y continuar ➕⏩"
             showClientForm={showClient}
+            onSubmitSuccess={increment}
             toggleClientForm={() => setShowClient(!showClient)}
           />
         </ThemeProvider>

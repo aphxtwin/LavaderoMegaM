@@ -17,7 +17,7 @@ async function createCliente(data) {
       esCuentaCorriente: data.clientData.esCuentaCorriente,
       createdAt: currentDate,
       updatedAt: currentDate,
-    }
+    },
   });
 
   const vehiclePromises = data.vehicleData.map(async (vehicleObj) => {
@@ -88,7 +88,6 @@ export async function POST(req) {
   try {
     const requestData = await req.json();
     const createdCliente = await createCliente(requestData);
-    console.log(createdCliente)
     return new NextResponse(
       JSON.stringify(createdCliente),
       {
@@ -97,8 +96,14 @@ export async function POST(req) {
       },
     );
   } catch (error) {
-    console.log(error)
-    return new NextResponse(error.message, {
+    if (error.code === 'P2002') {
+      // Unique constraint violation
+      return new NextResponse(JSON.stringify({ message: 'Ya existe un cliente con esos datos' }), {
+        status: 409,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+    return new NextResponse(JSON.stringify({ message: error.message }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });

@@ -4,11 +4,10 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectActiveStep } from '../../../../redux/slices/stepperSlice';
 import StepOne from './step1Cliente';
-import StepTwo from './step2Servicio';
+import StepTwo from './step2Vehiculo';
 
 function StepSwitcher() {
   const activeStep = useSelector(selectActiveStep);
-
   switch (activeStep) {
     case 0:
       return <StepOne />;

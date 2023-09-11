@@ -20,7 +20,8 @@ export default function PatenteTextField({
   const vehiclesInRedux = useSelector((state) => state.vehicle.vehicles);
 
   function checkInternal(patente) {
-    const existingVehicle = vehiclesInRedux.find((vehicle) => vehicle.vehicleDetails.patente === patente);
+    const normalizedPatente = patente.toLowerCase();
+    const existingVehicle = vehiclesInRedux.find((vehicle) => vehicle.vehicleDetails.patente.toLowerCase() === normalizedPatente);
     setInternalError(!!existingVehicle);
     return !!existingVehicle;
   }

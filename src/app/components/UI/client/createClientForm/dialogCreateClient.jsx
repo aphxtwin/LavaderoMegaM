@@ -18,7 +18,7 @@ import ClientForm from './clientForm';
 import theme from '../../loginForm/theme';
 
 function ClientDialog({
-  showClientForm, toggleClientForm, clientFormTextButton = 'Agregar Nuevo Cliente',
+  showClientForm, toggleClientForm, clientFormTextButton = 'Agregar Nuevo Cliente', onSubmitSuccess = () => {},
 }) {
   // Dialog that wraps the Client form. For reusability puposes
   const dispatch = useDispatch();
@@ -51,7 +51,7 @@ function ClientDialog({
             mx: 'auto', my: 2, justifyContent: 'center', width: { md: '50%', xs: '100%' },
           }}
           >
-            <ClientForm textButton={clientFormTextButton} />
+            <ClientForm onSubmitSuccess={onSubmitSuccess} textButton={clientFormTextButton} />
           </Box>
         </DialogContent>
       </Dialog>

@@ -7,13 +7,15 @@ export const stepperSlice = createSlice({
   },
   reducers: {
     setActiveStep: (state, action) => {
-      // eslint-disable-next-line no-param-reassign
       state.activeStep = action.payload;
+    },
+    incrementStep: (state) => {
+      state.activeStep += 1;
     },
   },
 });
 
-export const { setActiveStep } = stepperSlice.actions;
+export const { setActiveStep, incrementStep } = stepperSlice.actions;
 
 export const selectActiveStep = (state) => state.stepper.activeStep;
 

@@ -27,7 +27,7 @@ import AddCarDashboard from '../../vehicle/addCarDashboard/addCarDashboard';
 import ButtonAddCar from './buttonAddCar/buttonAddCar';
 import { resetVehicles } from '../../../../redux/slices/vehicleSlice';
 
-function ClientForm({ textButton = 'Agregar Nuevo Cliente' }) {
+function ClientForm({ textButton = 'Agregar Nuevo Cliente', onSubmitSuccess = () => {} }) {
   const dispatch = useDispatch();
   const vehicleState = useSelector((state) => state.vehicle);
   const [message, setMessage] = useState({ text: '', success: true });
@@ -60,7 +60,7 @@ function ClientForm({ textButton = 'Agregar Nuevo Cliente' }) {
         },
         vehicleData: vehicleState.vehicles,
       };
-      const res = await fetch('/api/client', {
+      const response = await fetch('/api/client', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -68,12 +68,18 @@ function ClientForm({ textButton = 'Agregar Nuevo Cliente' }) {
         body: JSON.stringify(requestData),
       });
 
-      if (res.ok) {
+      if (response.ok) {
+        console.log("Server responded with success");
         setMessage({ text: 'El cliente se ha guardado exitosamente', success: true });
         dispatch(resetVehicles());
         resetForm();
+        if (onSubmitSuccess) {
+          onSubmitSuccess();
+        }
       } else {
-        setMessage({ text: 'Ya existe un cliente con esta información', success: false });
+        const responseData = await response.json(); // Parse the error message from the response
+        console.log("Server responded with error:", responseData);
+        setMessage({ text: responseData.message || 'Error desconocido', success: false });
       }
     } catch (error) {
       setMessage({ text: 'Error al enviar el formulario', success: false });

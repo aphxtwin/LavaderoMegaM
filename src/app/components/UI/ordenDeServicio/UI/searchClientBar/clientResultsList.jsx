@@ -7,14 +7,14 @@ import {
 import BusinessIcon from '@mui/icons-material/Business';
 import PersonIcon from '@mui/icons-material/Person';
 import { useDispatch } from 'react-redux';
-import { setActiveStep } from '../../../../../redux/slices/stepperSlice';
+import { incrementStep } from '../../../../../redux/slices/stepperSlice';
 
 function ClientListResults({ searchResults, toggleSelectClient }) {
   const dispatch = useDispatch();
 
   const handleClick = (clientId) => {
     toggleSelectClient(clientId);
-    dispatch(setActiveStep(1));// Increment step by 1
+    dispatch(incrementStep());// Increment step by 1
   }
   return (
     <List>

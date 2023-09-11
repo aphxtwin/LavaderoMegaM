@@ -1,5 +1,4 @@
 /* eslint-disable import/prefer-default-export */
-// eslint-disable-next-line import/no-unresolved, import/extensions
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 
@@ -33,10 +32,9 @@ async function searchVehicleByPatente(patente) {
 
     return { exists: false };
   } catch (error) {
-    if (error instanceof PrismaClient.PrismaClientKnownRequestError) {
+    if (error.code === 'P2002') {
       return { error: 'Database error.' };
     }
-    console.log(error);
     return { error: serverError };
   }
 }
@@ -55,7 +53,7 @@ export async function POST(request) {
     }
 
     const result = await searchVehicleByPatente(patente); // Check if the vehicle exists
-    
+
     return new NextResponse(JSON.stringify(result), { // Respond with the result
       status: 200,
       headers: { 'Content-Type': 'application/json' },
