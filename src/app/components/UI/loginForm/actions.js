@@ -4,8 +4,7 @@ import 'server-only';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
-// eslint-disable-next-line import/no-unresolved, import/extensions
-import { prisma } from '@/lib/prisma';
+import prisma from '@/lib/prisma';
 
 // eslint-disable-next-line no-extend-native, func-names
 BigInt.prototype.toJSON = function () {
