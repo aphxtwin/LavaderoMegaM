@@ -63,8 +63,10 @@ ClientDialog.propTypes = {
   showClientForm: PropTypes.bool.isRequired,
   toggleClientForm: PropTypes.func.isRequired,
   clientFormTextButton: PropTypes.string,
+  onSubmitSuccess: PropTypes.func,
 };
 ClientDialog.defaultProps = {
   clientFormTextButton: 'Agregar Nuevo Cliente',
+  onSubmitSuccess: () => {},
 };
 export default ClientDialog;

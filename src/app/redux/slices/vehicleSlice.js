@@ -10,7 +10,7 @@ const vehicleSlice = createSlice({
   initialState,
   reducers: {
     addVehicle: (state, action) => {
-      /* 
+      /*
         handle the different scenarios when adding a new car
         it specifies the action type that will be useful when
         storing in the database
@@ -30,4 +30,3 @@ const vehicleSlice = createSlice({
 
 export const { addVehicle, resetVehicles } = vehicleSlice.actions;
 export default vehicleSlice.reducer;
-

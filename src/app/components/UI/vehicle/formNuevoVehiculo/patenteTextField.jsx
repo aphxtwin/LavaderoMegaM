@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState } from 'react';
 import { TextField, InputAdornment } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -21,7 +22,9 @@ export default function PatenteTextField({
 
   function checkInternal(patente) {
     const normalizedPatente = patente.toLowerCase();
-    const existingVehicle = vehiclesInRedux.find((vehicle) => vehicle.vehicleDetails.patente.toLowerCase() === normalizedPatente);
+    const existingVehicle = vehiclesInRedux.find(
+      (vehicle) => vehicle.vehicleDetails.patente.toLowerCase() === normalizedPatente,
+    );
     setInternalError(!!existingVehicle);
     return !!existingVehicle;
   }
@@ -58,7 +61,6 @@ export default function PatenteTextField({
         ); // Informing parent about the result
         if (result.exists === false) {
           setSuccess(true);
-          
         }
       } catch (e) {
         throw new Error(e);
@@ -68,20 +70,20 @@ export default function PatenteTextField({
     }
   }
   const renderStartAdornment = () => {
-    if (internalError){
+    if (internalError) {
       return (
         <InputAdornment position="start">
           <ErrorIcon size={30} />
         </InputAdornment>
-      )
-    };
+      );
+    }
     if (isChecking) {
       return (
         <InputAdornment position="start">
           <CircularProgress size={30} />
         </InputAdornment>
-      )
-    };
+      );
+    }
     if (success) {
       return (
         <InputAdornment position="start">

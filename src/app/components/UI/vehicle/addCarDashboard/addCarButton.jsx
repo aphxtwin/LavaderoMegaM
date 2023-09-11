@@ -1,6 +1,7 @@
 // AddButton.js
 import React from 'react';
 import { Button } from '@mui/material';
+import PropTypes from 'prop-types';
 
 function AddButton({ title, onClick }) {
   return (
@@ -23,5 +24,8 @@ function AddButton({ title, onClick }) {
     </Button>
   );
 }
-
+AddButton.propTypes = {
+  title: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired  
+};
 export default AddButton;

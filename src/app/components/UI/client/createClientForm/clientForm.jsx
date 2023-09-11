@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import {
   Formik, Form,
@@ -69,7 +70,6 @@ function ClientForm({ textButton = 'Agregar Nuevo Cliente', onSubmitSuccess = ()
       });
 
       if (response.ok) {
-        console.log("Server responded with success");
         setMessage({ text: 'El cliente se ha guardado exitosamente', success: true });
         dispatch(resetVehicles());
         resetForm();
@@ -78,7 +78,6 @@ function ClientForm({ textButton = 'Agregar Nuevo Cliente', onSubmitSuccess = ()
         }
       } else {
         const responseData = await response.json(); // Parse the error message from the response
-        console.log("Server responded with error:", responseData);
         setMessage({ text: responseData.message || 'Error desconocido', success: false });
       }
     } catch (error) {

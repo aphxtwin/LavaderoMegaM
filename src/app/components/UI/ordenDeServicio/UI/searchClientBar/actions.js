@@ -1,4 +1,5 @@
 'use server';
+
 import 'server-only';
 // eslint-disable-next-line import/no-unresolved, import/extensions
 import prisma from '@/lib/prisma';
@@ -35,7 +36,6 @@ export default async function handleSearchClient({ searchType, searchQuery }) {
     }
     return { clients };
   } catch (error) {
-    console.log(error)
     if (error.name === 'PrismaClientKnownRequestError') {
       return { error: 'Database error.' };
     }

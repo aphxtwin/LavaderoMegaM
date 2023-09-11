@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import prisma from '@/lib/prisma';
+import prisma from '../../../lib/prisma';
 
 async function createCliente(data) {
   const currentDate = new Date().toISOString();

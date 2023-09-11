@@ -1,4 +1,3 @@
-
 import React from 'react';
 import SearchElements from './searchElements';
 import handleSearchClient from './actions';

@@ -37,7 +37,7 @@ function FormNuevoVehiculo({ onSuccess }) {
   const validationSchema = Yup.object().shape({
     tipoDeVehiculo: Yup.string().required('El tipo de vehículo es obligatorio'),
     patente: Yup.string()
-      .matches(/^(?:[a-zA-Z]{3}\d{3}|\d{3}[a-zA-Z]{3}|[a-zA-Z]{2}\d{3}[a-zA-Z]{2})$/,'Patente invalida :/')
+      .matches(/^(?:[a-zA-Z]{3}\d{3}|\d{3}[a-zA-Z]{3}|[a-zA-Z]{2}\d{3}[a-zA-Z]{2})$/, 'Patente invalida :/')
       .required('La patente es requerida'),
     marca: Yup.string().required('La marca es obligatoria'),
     modelo: Yup.string().required('El modelo es obligatorio'),

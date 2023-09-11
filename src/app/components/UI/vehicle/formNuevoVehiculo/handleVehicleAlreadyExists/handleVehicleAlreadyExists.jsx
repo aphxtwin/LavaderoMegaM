@@ -71,6 +71,8 @@ function HandleVehicleAlreadyExists({
 }
 HandleVehicleAlreadyExists.propTypes = {
   open: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
+  owners: PropTypes.string.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  vehicleDetails: PropTypes.object.isRequired,
 };
 export default HandleVehicleAlreadyExists;
