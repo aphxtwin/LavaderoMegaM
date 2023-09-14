@@ -56,7 +56,7 @@ function LoginForm() {
   return (
     <form action={formik.handleSubmit}>
       <Grid>
-        <Grid item sx={{ marginBottom: '1rem' }}>
+        <Grid item sx={{ mb: 1 }}>
           <TextField
             color="primary"
             id="outlined-basic"
@@ -95,7 +95,7 @@ function LoginForm() {
             disabled={isSubmitting}
           />
         </Grid>
-        <Grid item sx={{ marginTop: '1rem' }}>
+        <Grid item sx={{ mt: 2 }}>
           <Button
             type="submit"
             size="large"

@@ -33,9 +33,9 @@ function AddButton({ addServicio = '', onAddClient }) {
         <Fab
           sx={
               {
-                backgroundColor: 'rgba(47, 56, 66, 1)',
+                backgroundColor: '#000000',
                 '&:hover': {
-                  backgroundColor: 'rgba(57, 66, 76, 1)',
+                  backgroundColor: '#333333',
                 },
                 width: '60px',
                 height: '60px',
@@ -58,7 +58,7 @@ function AddButton({ addServicio = '', onAddClient }) {
           '.MuiPaper-root': {
             color: 'white',
             padding: '0.4rem',
-            backgroundColor: 'rgba(47, 56, 66, 1)',
+            backgroundColor: '#000000',
           },
         }}
       >

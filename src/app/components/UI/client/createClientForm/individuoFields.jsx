@@ -15,7 +15,7 @@ function IndividualForm({
         <Field
           as={TextField}
           name="nombreCompleto"
-          label="Nombre Completo"
+          label="Nombre y apellido"
           variant="outlined"
           fullWidth
           margin="normal"

@@ -11,10 +11,10 @@ let theme = createTheme({
       main: '#FFFFFF',
     },
     secondary: {
-      main: '#2F3842',
+      main: '#000000',
     },
     text: {
-      primary: '#2F3842',
+      primary: '#000000',
     },
 
   },
@@ -23,7 +23,7 @@ let theme = createTheme({
     h1: {
       fontSize: '3rem',
       fontWeight: 'bold',
-      color: '#283D5B',
+      color: '#000000',
     },
     h2: {
       fontSize: '1rem',

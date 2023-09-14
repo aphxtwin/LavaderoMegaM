@@ -7,7 +7,7 @@ function AddButton({ title, onClick }) {
     <Button
       onClick={onClick}
       sx={{
-        background: '#2F3842',
+        background: '#000000',
         borderRadius: '3px',
         fontWeight: 500,
         fontSize: '14px',

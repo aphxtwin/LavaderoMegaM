@@ -51,7 +51,7 @@ function ResponsiveNavbar() {
     setAnchorElUser(null);
   };
   return (
-    <AppBar position="static" sx={{ backgroundColor: '#2F3842' }}>
+    <AppBar position="static" sx={{ backgroundColor: '#FFFFFF' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -70,9 +70,9 @@ function ResponsiveNavbar() {
             }}
           >
             <Image
-              src="/images/logo-dodlewhite.svg"
-              width={100}
-              height={50}
+              src="./images/Group 46.svg"
+              width={90}
+              height={40}
               alt="Logo"
             />
           </Typography>
@@ -84,7 +84,7 @@ function ResponsiveNavbar() {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
+              color="#000000"
             >
               <MenuIcon />
             </IconButton>
@@ -125,7 +125,7 @@ function ResponsiveNavbar() {
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'inherit',
+              color: '#000000',
               textDecoration: 'none',
             }}
           />
@@ -134,7 +134,7 @@ function ResponsiveNavbar() {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: 'black', display: 'block' }}
               >
                 {page}
               </Button>
@@ -144,7 +144,7 @@ function ResponsiveNavbar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Configuracion">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <AccountCircleIcon sx={{ color: 'white' }} fontSize="large" />
+                <AccountCircleIcon sx={{ color: 'black' }} fontSize="large" />
               </IconButton>
             </Tooltip>
             <Menu

@@ -5,7 +5,10 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#283D5B',
+      main: '#000000',
+    },
+    secondary:{
+      main: '#FFFFFF',
     },
   },
   components: {
@@ -13,9 +16,10 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           padding: '0.3rem 3rem 0.3rem 3rem',
-          backgroundColor: '#283D5B',
+          backgroundColor: '#000000',
+          color: '#FFFFFF', // Text color white for contrast
           '&:hover': {
-            backgroundColor: '#384E6B',
+            backgroundColor: '#333333',  // A shade of grey for hover
           },
         },
       },
@@ -24,23 +28,6 @@ const theme = createTheme({
       styleOverrides: {
         paper: {
           borderRadius: '16px',
-        },
-      },
-    },
-    MuiTextField: {
-      styleOverrides: {
-        root: {
-          '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-              borderColor: '#283D5B',
-            },
-            '&:hover fieldset': {
-              borderColor: '#283D5B',
-            },
-            '&.Mui-focused fieldset': {
-              borderColor: '#283D5B',
-            },
-          },
         },
       },
     },

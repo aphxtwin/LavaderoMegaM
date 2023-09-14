@@ -28,8 +28,8 @@ function AddCarDashboard({ showCarDashboard, toggleCarDashboard }) {
     dispatch(toggleDialogFormNuevoVehiculo());
   };
   const styleCell = {
-    borderBottom: '1px solid rgba(159, 159, 159, 1)',
-    borderTop: '1px solid rgba(159, 159, 159, 1)',
+    borderBottom: '1px solid #000000',
+    borderTop: '1px solid #000000',
     padding: '10px',
   };
   return (
@@ -57,7 +57,7 @@ function AddCarDashboard({ showCarDashboard, toggleCarDashboard }) {
         </Box>
       </DialogTitle>
 
-      <DialogContent sx={{ pt: 0, marginBottom: '1rem' }}>
+      <DialogContent sx={{ pt: 0, marginBottom: '1rem', color:'white' }}>
         <Table>
           <TableHead>
             <TableRow>

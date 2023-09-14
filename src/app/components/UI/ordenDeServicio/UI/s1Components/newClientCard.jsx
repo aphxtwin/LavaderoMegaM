@@ -6,9 +6,9 @@ import {
 } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useDispatch } from 'react-redux';
-import ClientDialog from '../../client/createClientForm/dialogCreateClient';
-import theme from '../../loginForm/theme';
-import { incrementStep } from '../../../../redux/slices/stepperSlice';
+import ClientDialog from '../../../client/createClientForm/dialogCreateClient';
+import theme from '../../../loginForm/theme';
+import { incrementStep } from '../../../../../redux/slices/stepperSlice';
 
 export default function NewClientCard() {
   const [showClient, setShowClient] = useState(false);

@@ -5,7 +5,7 @@ const theme = createTheme({
     fontFamily: 'Roboto slab',
     fontWeight: 'regular',
     button: {
-      color: 'rgba(64, 87, 121, 1)',
+      color: 'black',
       fontSize: '0.6rem',
       '@media (min-width:600px)': {
         fontSize: '0.8rem',
@@ -19,7 +19,7 @@ const theme = createTheme({
           width: '125px',
           height: '120px',
           background: '#FFFFFF',
-          border: '2px dashed #405779',
+          border: '2px dashed black',
           borderRadius: '12px',
           display: 'flex',
           flexDirection: 'column',
@@ -43,11 +43,11 @@ const theme = createTheme({
     MuiBadge: {
       styleOverrides: {
         badge: {
-          backgroundColor: '#283D5B',
+          backgroundColor: '#000000',
           color: 'white',
         },
         colorPrimary: {
-          backgroundColor: '#283D5B', // This targets the primary color variant of Badge
+          backgroundColor: '#000000', // This targets the primary color variant of Badge
           color: 'white',
         },
       },

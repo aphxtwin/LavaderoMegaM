@@ -12,7 +12,7 @@ const roboto = Roboto({
 });
 
 export const metadata = {
-  title: 'Mega MultiServicios',
+  title: 'CarWashSimple',
   description: '',
   robots: {
     index: false,

@@ -63,7 +63,7 @@ function HandleVehicleAlreadyExists({
           Vehiculo Compartido
         </Button>
         <Button sx={buttonStyle} onClick={handleTransferVehicle} autoFocus>
-          Nuevo Dominio
+          Nuevo Titular
         </Button>
       </DialogActions>
     </Dialog>

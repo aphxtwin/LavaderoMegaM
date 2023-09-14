@@ -8,8 +8,7 @@ import BusinessIcon from '@mui/icons-material/Business';
 import PersonIcon from '@mui/icons-material/Person';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { incrementStep } from '../../../../../redux/slices/stepperSlice';
-
+import { incrementStep } from '../../../../../../redux/slices/stepperSlice';
 function ClientListResults({ searchResults, toggleSelectClient }) {
   const dispatch = useDispatch();
 
@@ -34,7 +33,6 @@ function ClientListResults({ searchResults, toggleSelectClient }) {
             }}
           >
             <ButtonBase
-              fullWidth
               onClick={() => handleClick(client.clienteId)}
               sx={{
                 borderRadius: '8px',

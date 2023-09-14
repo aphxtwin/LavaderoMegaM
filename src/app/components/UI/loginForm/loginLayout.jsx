@@ -52,20 +52,20 @@ function LoginFormLayout({ children }) {
                   }}
                 >
                   <Image
-                    src="./images/logo-dodle.svg"
-                    width={200}
-                    height={100}
+                    src="./images/Group 46.svg"
+                    width={250}
+                    height={150}
                     alt="Logo"
                     priority
                   />
                 </Typography>
                 <Typography
                   variant="subtitle1"
-                  mt={2}
+                  mb={1}
                   align="center"
                   sx={{
                     fontSize: { xs: '1rem', sm: '1.2rem', md: '1.5rem' },
-                    color: '#082755',
+                    color: '#000000',
                     fontWeight: 'semi-bold',
                   }}
                 >

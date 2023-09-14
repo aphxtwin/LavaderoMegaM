@@ -18,12 +18,15 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import { experimental_useFormStatus as useFormStatus } from 'react-dom';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { setClientId } from '../../../../../../redux/slices/clientSlice';
 import SkeletonSearch from './skeletonSearch';
 import ClientListResults from './clientResultsList';
 import theme from './theme';
 
 export default function SearchElements({ handleSearchClient }) {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const dispatch = useDispatch();
   const [searchType, setSearchType] = useState('Nombre');
   const [selectedClient, setSelectedClient] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -52,11 +55,7 @@ export default function SearchElements({ handleSearchClient }) {
     }
   };
   const toggleSelectClient = (clientId) => {
-    if (selectedClient === clientId) {
-      setSelectedClient(null); // Unselect the client if already selected
-    } else {
-      setSelectedClient(clientId); // Select the client if not already selected
-    }
+    dispatch(setClientId(clientId));
   };
 
   return (

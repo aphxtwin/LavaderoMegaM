@@ -40,7 +40,7 @@ function StepperOrdenDeServicio() {
               sx={{
                 height: '5px',
                 width: '100%',
-                backgroundColor: '#283D5B',
+                backgroundColor: '#000000',
                 borderRadius: '5px',
               }}
             />

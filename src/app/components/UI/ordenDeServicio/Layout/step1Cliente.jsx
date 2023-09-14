@@ -4,9 +4,9 @@ import React from 'react';
 import {
   Grid, Container, Box,
 } from '@mui/material';
-import NewClientCard from '../UI/newClientCard';
-import SearchClientBar from '../UI/searchClientBar/searchClientBar';
-import DividerWithCircle from '../UI/dividerWithCircle';
+import NewClientCard from '../UI/s1Components/newClientCard';
+import SearchClientBar from '../UI/s1Components/searchClientBar/searchClientBar';
+import DividerWithCircle from '../UI/s1Components/dividerWithCircle';
 import StepContainer from '../UI/stepContainer';
 
 function StepOne() {
