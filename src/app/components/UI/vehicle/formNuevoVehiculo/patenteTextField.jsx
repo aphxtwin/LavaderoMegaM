@@ -13,6 +13,7 @@ export default function PatenteTextField({
   handleBlur,
   touched,
   error,
+  validationSchema,
   onPlateExistenceChecked, // This callback will inform the parent about the check's result
 }) {
   const [isChecking, setIsChecking] = useState(false);
@@ -29,11 +30,12 @@ export default function PatenteTextField({
     return !!existingVehicle;
   }
 
-  async function checkPlateExistence(patente) {
+  async function checkPlateExistence(patente, validationSchema) {
     setSuccess(false);
     const patenteLenght = patente.length;
+    const isValidPatente = validationSchema.fields.patente.isValidSync(patente);
     // avoids triggering by mistake the data fetching
-    if (patenteLenght > 5) {
+    if (patenteLenght >= 5 && isValidPatente) {
       const isInternallyExisting = checkInternal(patente);
       if (isInternallyExisting) {
         return; // Exit early if it exists internally
@@ -108,7 +110,7 @@ export default function PatenteTextField({
       disabled={isChecking}
       onBlur={(e) => {
         handleBlur(e);
-        checkPlateExistence(e.target.value);
+        checkPlateExistence(e.target.value, validationSchema);
       }}
       error={touched.patente && Boolean(error.patente)}
       helperText={success ? 'Esta patente no existe aun en el sistema' : internalError ? 'Esta patente ya está pendiente para agregar' : touched.patente && error.patente}

@@ -20,7 +20,7 @@ export default function NewClientCard() {
       ? (
         <ThemeProvider theme={theme}>
           <ClientDialog
-            clientFormTextButton="Agregar Cliente y continuar ➕⏩"
+            clientFormTextButton="Agregar Cliente y continuar⏩"
             showClientForm={showClient}
             onSubmitSuccess={increment}
             toggleClientForm={() => setShowClient(!showClient)}

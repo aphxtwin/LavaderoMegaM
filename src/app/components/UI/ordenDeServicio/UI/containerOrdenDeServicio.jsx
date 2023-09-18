@@ -12,7 +12,7 @@ function OrdenDeServicioContainer({ children }) {
     <ThemeProvider theme={theme}>
       <Box sx={{ p: 1, backgroundColor: '#FFFFFF' }}>
         <ArrowBack />
-        <Box sx={{ padding: '0 1rem 0 1rem' }}>
+        <Box px={1}>
           <Typography variant="h1" component="div" gutterBottom>
             Nuevo Servicio
           </Typography>
@@ -21,7 +21,6 @@ function OrdenDeServicioContainer({ children }) {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                borderBottom: '2px solid #DDDDDD',
               }
             }
           >

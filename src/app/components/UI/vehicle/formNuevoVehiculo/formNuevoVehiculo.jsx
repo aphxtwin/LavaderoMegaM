@@ -110,6 +110,7 @@ function FormNuevoVehiculo({ onSuccess }) {
               handleChange={handleChange}
               handleBlur={handleBlur}
               touched={touched}
+              validationSchema={validationSchema}
               error={errors}
               onPlateExistenceChecked={handlePlateExistenceCheck}
             />

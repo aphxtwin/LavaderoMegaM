@@ -20,7 +20,7 @@ function StepperOrdenDeServicio() {
             textAlign: 'start',
             width: '100%',
             mx: 1, // Add space before value
-            mb: 1,
+            p:2,
           }}
         >
           <Typography
@@ -38,9 +38,9 @@ function StepperOrdenDeServicio() {
           {index === activeStep && (
             <Box
               sx={{
-                height: '5px',
+                height: '7px',
                 width: '100%',
-                backgroundColor: '#000000',
+                backgroundColor: 'black',
                 borderRadius: '5px',
               }}
             />

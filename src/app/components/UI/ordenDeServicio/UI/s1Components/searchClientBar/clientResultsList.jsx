@@ -9,6 +9,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { incrementStep } from '../../../../../../redux/slices/stepperSlice';
+
 function ClientListResults({ searchResults, toggleSelectClient }) {
   const dispatch = useDispatch();
 
