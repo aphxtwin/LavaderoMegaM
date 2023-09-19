@@ -8,16 +8,18 @@ import VehicleCars from '../UI/s2Components/vehicleCars';
 function StepTwo() {
   return (
     <StepContainer>
-      <Box sx={{backgroundColor:'black', p:2,}}>
+      <Box sx={{backgroundColor:'white', p:2,}}>
         <Box sx={{ 
           m:'auto',
-          color:'black',
-          borderRadius:'10px', 
-          backgroundColor: 'white', 
+          width:'95%',
+          color:'black', 
+          backgroundColor: 'white',
+          borderTop:'4px solid #f1f5f9',
+          borderBottom:'4px solid #f1f5f9', 
           p:2,
           }}>
           <Typography
-            variant="h5"
+            variant="h4"
             py={1}
             sx={{display:'flex',m:'auto', justifyContent:'center'}}
             gutterBottom
