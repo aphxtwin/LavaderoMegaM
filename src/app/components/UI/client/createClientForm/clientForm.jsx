@@ -71,10 +71,12 @@ function ClientForm({ textButton = 'Agregar Nuevo Cliente', onSubmitSuccess = ()
 
       if (response.ok) {
         setMessage({ text: 'El cliente se ha guardado exitosamente', success: true });
+        const responseData = await response.json(); // Parse the JSON data from the response
+        const clientId = responseData.clienteId;
         dispatch(resetVehicles());
         resetForm();
         if (onSubmitSuccess) {
-          onSubmitSuccess();
+          onSubmitSuccess(clientId);
         }
       } else {
         const responseData = await response.json(); // Parse the error message from the response

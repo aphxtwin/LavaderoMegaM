@@ -8,13 +8,18 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useDispatch } from 'react-redux';
 import ClientDialog from '../../../client/createClientForm/dialogCreateClient';
 import theme from '../../../loginForm/theme';
-import { incrementStep } from '../../../../../redux/slices/stepperSlice';
+import { setActiveStep } from '../../../../../redux/slices/stepperSlice';
+import { setClientId } from '../../../../../redux/slices/clientSlice';
+
 
 export default function NewClientCard() {
   const [showClient, setShowClient] = useState(false);
   const dispatch = useDispatch();
-  const increment = () => dispatch(incrementStep());
 
+  const increment = (clientId) => {
+    dispatch(setActiveStep(1));
+    dispatch(setClientId(clientId));
+  }
   return (
     showClient
       ? (

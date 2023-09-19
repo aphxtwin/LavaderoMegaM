@@ -121,6 +121,7 @@ enum Marca {
   Seat
   Subaru
   Suzuki
+  Tesla
   Toyota
   Volkswagen
   Volvo

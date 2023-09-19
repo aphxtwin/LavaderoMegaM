@@ -13,7 +13,7 @@ function AddCarCard({ onClick }) {
             </Grid>
             <Grid item>
               <Typography variant="h6" align="center">
-                Añadir Nuevo Vehiculo
+                Nuevo Vehiculo
               </Typography>
             </Grid>
           </Grid>

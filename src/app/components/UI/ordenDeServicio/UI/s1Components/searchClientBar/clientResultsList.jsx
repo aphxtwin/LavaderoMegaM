@@ -15,7 +15,7 @@ function ClientListResults({ searchResults, toggleSelectClient }) {
 
   const handleClick = (clientId) => {
     toggleSelectClient(clientId);
-    dispatch(setActiveStep(1));// Increment step by 1
+    dispatch(setActiveStep(1)); // Increment step by 1
   };
   return (
     <List>

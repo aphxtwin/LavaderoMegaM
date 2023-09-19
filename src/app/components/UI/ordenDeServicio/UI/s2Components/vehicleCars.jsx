@@ -10,9 +10,12 @@ import SkeletonAddCar from './addCarCard/skeletonAddCar';
 const fetcher = url => fetch(url).then(r => r.json());
 export default function VehicleCars() {
   const clienteId = useSelector((state) => state.client.clientId);
-  const { data, error, isLoading } = useSWR(`/api/vehicle/client-vehicles?clienteId=${clienteId}`, fetcher);
+  const { data, error, isLoading } = useSWR(
+        clienteId ? `/api/vehicle/client-vehicles?clienteId=${clienteId}` : null, 
+        fetcher,
+    );
   console.log(data);
-  if (isLoading || !data) {
+  if (isLoading) {
     Array.from({ length: 3 }).map((_, idx) => (
       <Box mb={2} key={idx}>
         <SkeletonAddCar />
