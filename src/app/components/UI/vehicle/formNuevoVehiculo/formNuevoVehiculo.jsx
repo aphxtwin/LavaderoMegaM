@@ -14,11 +14,12 @@ import {
   Autocomplete,
 } from '@mui/material';
 import { TipoDeVehiculo, Marca } from '@prisma/client';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addVehicle } from '../../../../redux/slices/vehicleSlice';
 import PatenteTextField from './patenteTextField';
 import HandleVehicleAlreadyExists from './handleVehicleAlreadyExists/handleVehicleAlreadyExists';
+
 /*
   Form Nuevo vehiculo doesn't create a row in vehiculo table, but rather
   it stores the client data in redux state to be sent after
@@ -27,8 +28,10 @@ import HandleVehicleAlreadyExists from './handleVehicleAlreadyExists/handleVehic
   existence or not of the plate; If exists asks:'nuevo cliente or transferencia de dominio'.
   if it doesn't exist just dispatch the vehicle or vehicles normally
 */
-function FormNuevoVehiculo({ onSuccess }) {
+function FormNuevoVehiculo({ onSuccess, submitDirectly = false }) {
   const dispatch = useDispatch();
+  const clienteId = useSelector((state) => state.client.clientId);
+  const vehicles = useSelector((state) => state.vehicle);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [plateChecked, setPlateChecked] = useState(false);
   const [owners, setOwners] = useState('');
@@ -79,7 +82,32 @@ function FormNuevoVehiculo({ onSuccess }) {
         details: { vehicleDetails },
         type: 'ADD',
       };
+
       dispatch(addVehicle(payload));
+
+      if (submitDirectly === true) {
+        // submitDirectly means that it's not necesary dispatch the vehicle, just
+        // make the api call to create the new vehicle or whatever thing that the type of action
+        // says. p.s submitDirectly => is a boolean, which the default value is false.
+
+        try {
+          const res = await fetch('/api/vehicle', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ clienteId, vehicles }),
+          });
+          
+          if (!res.ok) {
+            throw Error(`HTTP error! Status: ${res.status}`);
+          }
+          const data = await res.json();
+          console.log(data);
+        } catch (err) {
+          console.log(err);
+        }
+      }
       resetForm();
       if (onSuccess) {
         onSuccess();

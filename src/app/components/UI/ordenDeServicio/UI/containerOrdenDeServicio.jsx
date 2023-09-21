@@ -10,7 +10,7 @@ import theme from '../theme';
 function OrdenDeServicioContainer({ children }) {
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ p: 1, backgroundColor: '#FFFFFF' }}>
+      <Box sx={{ p: 1, backgroundColor: '#FFFFFF',zIndex:1000 }}>
         <ArrowBack />
         <Box px={1}>
           <Typography variant="h1" component="div" gutterBottom>

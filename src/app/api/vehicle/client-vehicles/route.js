@@ -32,10 +32,8 @@ async function getVehiculosByCliente(clienteId) {
 
     // Extract vehiculos from the result
     const vehiculos = clienteWithVehiculos?.vehiculos.map((cv) => cv.vehiculo) || [];
-    console.log(vehiculos);
     return { success: true, vehiculos };
   } catch (error) {
-    console.log(error)
     return { success: false, error: serverError };
   }
 }

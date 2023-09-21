@@ -12,7 +12,6 @@ export const uiSlice = createSlice({
       // eslint-disable-next-line no-param-reassign
       state.showDialogFormNuevoVehiculo = !state.showDialogFormNuevoVehiculo;
     },
-    // Add other reducers if needed
   },
 });
 

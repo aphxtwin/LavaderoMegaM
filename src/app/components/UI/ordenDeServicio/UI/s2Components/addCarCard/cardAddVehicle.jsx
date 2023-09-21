@@ -5,7 +5,7 @@ import AddIcon from '@mui/icons-material/Add';
 function AddCarCard({ onClick }) {
   return (
     <Grid item xs={6} sm={6} md={2}>
-      <Card sx={{ backgroundColor: 'black', color: 'white', alignItems:'center', height:'100%',display:'flex' }}>
+      <Card sx={{ backgroundColor: 'black', color: 'white', alignItems:'center',height:'200px',display:'flex' }}>
         <CardActionArea onClick={onClick}>
           <CardContent>
             <Grid container direction="column" alignItems="center" justifyContent="center">

@@ -6,6 +6,7 @@ import StepContainer from '../UI/stepContainer';
 import VehicleCars from '../UI/s2Components/vehicleCars';
 
 function StepTwo() {
+
   return (
     <StepContainer>
       <Box sx={{backgroundColor:'white', p:2,}}>
