@@ -14,7 +14,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import FormNuevoVehiculo from './formNuevoVehiculo';
 import theme from '../../loginForm/theme';
 
-function DialogFormNuevoVehiculo({ open, onClose, submitDirectly }) {
+function DialogFormNuevoVehiculo({ open, onClose, submitDirectly, onCarCreated }) {
   return (
     <ThemeProvider theme={theme}>
       <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
@@ -32,7 +32,7 @@ function DialogFormNuevoVehiculo({ open, onClose, submitDirectly }) {
           </Box>
         </DialogTitle>
         <DialogContent>
-          <FormNuevoVehiculo submitDirectly={submitDirectly} onSuccess={onClose} />
+          <FormNuevoVehiculo submitDirectly={submitDirectly} onSuccess={onClose} onCarCreated={onCarCreated} />
         </DialogContent>
       </Dialog>
     </ThemeProvider>

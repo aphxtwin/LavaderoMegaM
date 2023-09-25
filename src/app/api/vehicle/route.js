@@ -1,39 +1,29 @@
 import { NextResponse } from 'next/server';
 import prisma from '../../../lib/prisma';
 
-async function createVehicles(clienteId, vehicles) {
+async function createVehicles(clienteId, vehicleDetails) {
   const currentDate = new Date().toISOString();
-
-  const vehiclePromises = vehicles.map(async (vehicleObj) => {
-    const { action, vehicleDetails: vehicle } = vehicleObj;
-    console.log(vehicleDetails)
-    if (action === 'ADD') {
-      return prisma.vehiculo.create({
-        data: {
-          tipoDeVehiculo: vehicle.tipoDeVehiculo,
-          marca: vehicle.marca,
-          modelo: vehicle.modelo,
-          patente: vehicle.patente,
-          observaciones: vehicle.observaciones || null,
-          createdAt: currentDate,
-          updatedAt: currentDate,
-          clientes: {
-            create: {
-              cliente: {
-                connect: {
-                  clienteId: clienteId,
-                },
-              },
+  return prisma.vehiculo.create({
+    data: {
+      tipoDeVehiculo: vehicleDetails.tipoDeVehiculo,
+      marca: vehicleDetails.marca,
+      modelo: vehicleDetails.modelo,
+      patente: vehicleDetails.patente,
+      observaciones: vehicleDetails.observaciones || null,
+      createdAt: currentDate,
+      updatedAt: currentDate,
+      clientes: {
+        create: {
+          cliente: {
+            connect: {
+              clienteId,
             },
           },
         },
-      });
-    }
+      },
+    },
   });
-
-  return Promise.all(vehiclePromises); // Added to wait for all promises to resolve.
 }
-
 
 // eslint-disable-next-line import/prefer-default-export
 export async function POST(req) {
@@ -46,9 +36,8 @@ export async function POST(req) {
 
   try {
     const body = await req.json();
-    const { clienteId, vehicles } = body;
-
-    if (!clienteId || !vehicles || !Array.isArray(vehicles)) {
+    const { clienteId, vehicleDetails } = body;
+    if (!clienteId || !vehicleDetails) {
       return new NextResponse(JSON.stringify({ error: 'Debes ingresar un clienteId e informacion del vehiculo a agregar' }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' },
@@ -56,7 +45,7 @@ export async function POST(req) {
     }
 
     // Create vehicles
-    const createdVehicles = await createVehicles(clienteId, vehicles);
+    const createdVehicles = await createVehicles(clienteId, vehicleDetails);
     return new NextResponse(JSON.stringify({ success: true, createdVehicles }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },

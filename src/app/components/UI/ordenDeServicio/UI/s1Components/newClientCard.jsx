@@ -11,7 +11,6 @@ import theme from '../../../loginForm/theme';
 import { setActiveStep } from '../../../../../redux/slices/stepperSlice';
 import { setClientId } from '../../../../../redux/slices/clientSlice';
 
-
 export default function NewClientCard() {
   const [showClient, setShowClient] = useState(false);
   const dispatch = useDispatch();
@@ -19,7 +18,7 @@ export default function NewClientCard() {
   const increment = (clientId) => {
     dispatch(setActiveStep(1));
     dispatch(setClientId(clientId));
-  }
+  };
   return (
     showClient
       ? (

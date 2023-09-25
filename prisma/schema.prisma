@@ -36,7 +36,7 @@ model Vehiculo {
   tipoDeVehiculo   TipoDeVehiculo
   marca          Marca
   modelo         String            @db.VarChar(25)
-  patente        String            @unique @db.VarChar(7)
+  patente        String            @unique @db.VarChar(10)
   observaciones  String?           @db.VarChar(255)
   createdAt      DateTime          @default(now())
   updatedAt      DateTime          @updatedAt

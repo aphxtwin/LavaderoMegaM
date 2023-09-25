@@ -3,11 +3,11 @@ import {
   Grid, Card, Typography, CardContent, Box, Dialog,
 } from '@mui/material';
 import useSWR from 'swr';
+import { useSelector, useDispatch } from 'react-redux';
 import AddCarCard from './addCarCard/cardAddVehicle';
 import SkeletonAddCar from './addCarCard/skeletonAddCar';
 import DialogFormNuevoVehiculo from '../../../vehicle/formNuevoVehiculo/dialogFormNuevoVehiculo';
 import ErrorRefetch from '../errorRefetch';
-import { useSelector, useDispatch } from 'react-redux';
 import { toggleDialogFormNuevoVehiculo } from '../../../../../redux/slices/uiSlice';
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
@@ -27,11 +27,11 @@ function VehicleCars() {
   const dispatch = useDispatch();
   const clienteId = useSelector((state) => state.client.clientId);
   const dialogOpen = useSelector((state) => state.ui.showDialogFormNuevoVehiculo);
-  
+
   const handleDialog = () => {
     dispatch(toggleDialogFormNuevoVehiculo());
-  }
-  
+  };
+
   const {
     data, error, isLoading, mutate,
   } = useSWR(
@@ -49,7 +49,7 @@ function VehicleCars() {
 
   return (
     <>
-      <DialogFormNuevoVehiculo open={dialogOpen} onClose={handleDialog} submitDirectly={true} />
+      <DialogFormNuevoVehiculo open={dialogOpen} onClose={handleDialog} submitDirectly onCarCreated={mutate} />
       <Box py={4} px={2}>
         <Grid container spacing={3}>
           <AddCarCard onClick={handleDialog} />
@@ -62,7 +62,7 @@ function VehicleCars() {
                   <>
                     {data.vehiculos.map((vehiculo) => (
                       <Grid item xs={6} sm={6} md={2} key={vehiculo.vehiculoId}>
-                        <Card sx={{ heigth: '200px', p:1 }}>
+                        <Card sx={{ heigth: '200px', p: 1 }}>
                           <CardContent>
                             <Typography variant="h6">
                               {vehiculo.marca}

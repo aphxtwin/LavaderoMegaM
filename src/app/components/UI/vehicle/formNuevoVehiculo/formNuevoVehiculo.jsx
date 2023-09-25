@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Formik, Form,
 } from 'formik';
@@ -12,6 +12,8 @@ import {
   MenuItem,
   TextField,
   Autocomplete,
+  Alert,
+  CircularProgress,
 } from '@mui/material';
 import { TipoDeVehiculo, Marca } from '@prisma/client';
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,14 +30,15 @@ import HandleVehicleAlreadyExists from './handleVehicleAlreadyExists/handleVehic
   existence or not of the plate; If exists asks:'nuevo cliente or transferencia de dominio'.
   if it doesn't exist just dispatch the vehicle or vehicles normally
 */
-function FormNuevoVehiculo({ onSuccess, submitDirectly = false }) {
+function FormNuevoVehiculo({ onSuccess, submitDirectly = false, onCarCreated }) {
   const dispatch = useDispatch();
   const clienteId = useSelector((state) => state.client.clientId);
-  const vehicles = useSelector((state) => state.vehicle);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [plateChecked, setPlateChecked] = useState(false);
   const [owners, setOwners] = useState('');
   const [existentVehicle, setExistentVehicle] = useState(null);
+  const [responseMessage, setResponseMessage] = useState({ type: '', message: '' });
+  const [loading, setLoading] = useState(false);
 
   const validationSchema = Yup.object().shape({
     tipoDeVehiculo: Yup.string().required('El tipo de vehículo es obligatorio'),
@@ -68,7 +71,7 @@ function FormNuevoVehiculo({ onSuccess, submitDirectly = false }) {
 
   const handleSubmit = async (values, { resetForm, setErrors }) => {
     try {
-      const formData = { ...values };
+      const formData = { ...values, patente: values.patente.toUpperCase() };
 
       const vehicleDetails = {
         tipoDeVehiculo: formData.tipoDeVehiculo,
@@ -84,27 +87,31 @@ function FormNuevoVehiculo({ onSuccess, submitDirectly = false }) {
       };
 
       dispatch(addVehicle(payload));
-
       if (submitDirectly === true) {
         // submitDirectly means that it's not necesary dispatch the vehicle, just
         // make the api call to create the new vehicle or whatever thing that the type of action
         // says. p.s submitDirectly => is a boolean, which the default value is false.
 
+        setLoading(true);
         try {
           const res = await fetch('/api/vehicle', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ clienteId, vehicles }),
+            body: JSON.stringify({ clienteId, vehicleDetails }),
           });
-          
           if (!res.ok) {
+            setResponseMessage({ type: 'error', message: `Error: ${res.status} - El vehiculo no se pudo crear` });
             throw Error(`HTTP error! Status: ${res.status}`);
           }
-          const data = await res.json();
-          console.log(data);
+          if (res.ok) {
+            // if response is ok, call onCarCreated to re-fetch the data && set a feedback message
+            setResponseMessage({ type: 'success', message: 'El vehiculo se creo con exito! 😊' });
+            if (onCarCreated) onCarCreated();
+          }
         } catch (err) {
+          setResponseMessage({ type: 'error', message: 'El vehiculo no pudo ser creado. Intenta mas tarde' });
           console.log(err);
         }
       }
@@ -115,6 +122,7 @@ function FormNuevoVehiculo({ onSuccess, submitDirectly = false }) {
     } catch (e) {
       setErrors({ submit: 'Hubo un problema al enviar el formulario.' });
     }
+    setLoading(false);
     return {};
   };
   const marcas = Object.values(Marca);
@@ -146,6 +154,8 @@ function FormNuevoVehiculo({ onSuccess, submitDirectly = false }) {
               open={dialogOpen}
               owners={owners}
               vehicleDetails={existentVehicle}
+              clienteId={clienteId}
+              submitDirectly={submitDirectly}
               onClose={() => setDialogOpen(false)}
             />
             <FormControl fullWidth required variant="outlined">
@@ -201,10 +211,19 @@ function FormNuevoVehiculo({ onSuccess, submitDirectly = false }) {
               onChange={handleChange}
             />
           </Box>
+          {responseMessage.message && (
+          <Alert severity={responseMessage.type === 'error' ? 'error' : 'success'}>
+            {responseMessage.message}
+          </Alert>
+          )}
           <Box sx={{ my: 2 }} textAlign="center">
-            <Button type="submit" variant="contained" disabled={!plateChecked} color="primary">
-              Agregar vehículo
-            </Button>
+            {loading ? ( 
+              <CircularProgress />
+            ) : (
+              <Button type="submit" variant="contained" disabled={!plateChecked || loading} color="primary">
+                Agregar vehículo
+              </Button>
+            )}
           </Box>
         </Form>
       )}
