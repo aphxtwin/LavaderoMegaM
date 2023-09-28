@@ -14,7 +14,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import FormNuevoVehiculo from './formNuevoVehiculo';
 import theme from '../../loginForm/theme';
 
-function DialogFormNuevoVehiculo({ open, onClose, submitDirectly, onCarCreated }) {
+function DialogFormNuevoVehiculo({
+  open, onClose, submitDirectly, onCarCreated,
+}) {
   return (
     <ThemeProvider theme={theme}>
       <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
@@ -32,7 +34,11 @@ function DialogFormNuevoVehiculo({ open, onClose, submitDirectly, onCarCreated }
           </Box>
         </DialogTitle>
         <DialogContent>
-          <FormNuevoVehiculo submitDirectly={submitDirectly} onSuccess={onClose} onCarCreated={onCarCreated} />
+          <FormNuevoVehiculo
+            submitDirectly={submitDirectly}
+            onSuccess={onClose}
+            onCarCreated={onCarCreated}
+          />
         </DialogContent>
       </Dialog>
     </ThemeProvider>
@@ -42,6 +48,16 @@ function DialogFormNuevoVehiculo({ open, onClose, submitDirectly, onCarCreated }
 DialogFormNuevoVehiculo.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  submitDirectly: PropTypes.bool,  // Assuming submitDirectly is a boolean
+  onCarCreated: PropTypes.func,  // Assuming onCarCreated is a function
 };
+
+DialogFormNuevoVehiculo.defaultProps = {
+  submitDirectly: false,  // Assuming false as a default value
+  onCarCreated: () => {},  // Default to a no-op function
+};
+
+export default DialogFormNuevoVehiculo;
+
 
 export default DialogFormNuevoVehiculo;

@@ -57,7 +57,7 @@ function AddCarDashboard({ showCarDashboard, toggleCarDashboard }) {
         </Box>
       </DialogTitle>
 
-      <DialogContent sx={{ pt: 0, marginBottom: '1rem', color:'white' }}>
+      <DialogContent sx={{ pt: 0, marginBottom: '1rem', color: 'white' }}>
         <Table>
           <TableHead>
             <TableRow>
