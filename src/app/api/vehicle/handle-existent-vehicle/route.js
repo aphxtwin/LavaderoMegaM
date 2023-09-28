@@ -38,16 +38,17 @@ export async function POST(req) {
 
   try {
     const body = await req.json();
-    const { clienteId, vehiculoId, action } = body;
-    console.log(body);
-    if (!clienteId || !vehiculoId || !action) {
+    const { clienteId, vehicleId, type } = body;
+
+    if (!clienteId || !vehicleId || !type) {
+      
       return new NextResponse(JSON.stringify({ error: 'Debes ingresar un clienteId, vehiculoId y una acción' }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' },
       });
     }
 
-    const result = await handleVehicleScenario(clienteId, vehiculoId, action);
+    const result = await handleVehicleScenario(clienteId, vehicleId, type);
     return new NextResponse(JSON.stringify({ success: true, result }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
