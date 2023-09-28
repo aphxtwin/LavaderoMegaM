@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  Grid, Card, Typography, CardContent, Box, Dialog,
+  Grid, Card, Typography, CardContent, Box,
 } from '@mui/material';
 import useSWR from 'swr';
 import { useSelector, useDispatch } from 'react-redux';
@@ -49,13 +49,18 @@ function VehicleCars() {
 
   return (
     <>
-      <DialogFormNuevoVehiculo open={dialogOpen} onClose={handleDialog} submitDirectly onCarCreated={mutate} />
+      <DialogFormNuevoVehiculo
+        open={dialogOpen}
+        onClose={handleDialog}
+        submitDirectly
+        onCarCreated={mutate}
+      />
       <Box py={4} px={2}>
         <Grid container spacing={3}>
           <AddCarCard onClick={handleDialog} />
           {
                 isLoading ? (
-                  Array.from({ length: 4 }).map((_, index) => (
+                  Array.from({ length: 4 }).map(() => (
                     <SkeletonAddCar />
                   ))
                 ) : (

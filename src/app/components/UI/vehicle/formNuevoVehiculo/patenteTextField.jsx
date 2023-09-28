@@ -13,6 +13,7 @@ export default function PatenteTextField({
   handleBlur,
   touched,
   error,
+  // eslint-disable-next-line react/prop-types
   validationSchema,
   onPlateExistenceChecked, // This callback will inform the parent about the check's result
 }) {
@@ -30,10 +31,10 @@ export default function PatenteTextField({
     return !!existingVehicle;
   }
 
-  async function checkPlateExistence(patente, validationSchema) {
+  async function checkPlateExistence(patente, schemaValidation) {
     setSuccess(false);
     const patenteLenght = patente.length;
-    const isValidPatente = validationSchema.fields.patente.isValidSync(patente);
+    const isValidPatente = schemaValidation.fields.patente.isValidSync(patente);
     // avoids triggering by mistake the data fetching
     if (patenteLenght >= 5 && isValidPatente) {
       const isInternallyExisting = checkInternal(patente);

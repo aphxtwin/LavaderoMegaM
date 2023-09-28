@@ -7,7 +7,7 @@ const theme = createTheme({
     primary: {
       main: '#000000',
     },
-    secondary:{
+    secondary: {
       main: '#FFFFFF',
     },
   },
@@ -19,7 +19,7 @@ const theme = createTheme({
           backgroundColor: '#000000',
           color: '#FFFFFF', // Text color white for contrast
           '&:hover': {
-            backgroundColor: '#333333',  // A shade of grey for hover
+            backgroundColor: '#333333', // A shade of grey for hover
           },
         },
       },

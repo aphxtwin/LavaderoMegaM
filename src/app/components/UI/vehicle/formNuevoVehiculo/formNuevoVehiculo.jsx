@@ -22,14 +22,6 @@ import { addVehicle } from '../../../../redux/slices/vehicleSlice';
 import PatenteTextField from './patenteTextField';
 import HandleVehicleAlreadyExists from './handleVehicleAlreadyExists/handleVehicleAlreadyExists';
 
-/*
-  Form Nuevo vehiculo doesn't create a row in vehiculo table, but rather
-  it stores the client data in redux state to be sent after
-  altogether with the data of the client(since the client is the center figure of the process)
-  PatenteTextField is a component that makes a fetch checking dynamically the
-  existence or not of the plate; If exists asks:'nuevo cliente or transferencia de dominio'.
-  if it doesn't exist just dispatch the vehicle or vehicles normally
-*/
 function FormNuevoVehiculo({ onSuccess, submitDirectly = false, onCarCreated }) {
   const dispatch = useDispatch();
   const clienteId = useSelector((state) => state.client.clientId);
@@ -112,7 +104,6 @@ function FormNuevoVehiculo({ onSuccess, submitDirectly = false, onCarCreated }) 
           }
         } catch (err) {
           setResponseMessage({ type: 'error', message: 'El vehiculo no pudo ser creado. Intenta mas tarde' });
-          console.log(err);
         }
       }
       resetForm();
@@ -217,7 +208,7 @@ function FormNuevoVehiculo({ onSuccess, submitDirectly = false, onCarCreated }) 
           </Alert>
           )}
           <Box sx={{ my: 2 }} textAlign="center">
-            {loading ? ( 
+            {loading ? (
               <CircularProgress />
             ) : (
               <Button type="submit" variant="contained" disabled={!plateChecked || loading} color="primary">
@@ -231,6 +222,13 @@ function FormNuevoVehiculo({ onSuccess, submitDirectly = false, onCarCreated }) 
   );
 }
 FormNuevoVehiculo.propTypes = {
-  onSuccess: PropTypes.func.isRequired,
+  onSuccess: PropTypes.func,
+  submitDirectly: PropTypes.bool,
+  onCarCreated: PropTypes.func,
+};
+FormNuevoVehiculo.defaultProps = {
+  submitDirectly: false,
+  onSuccess: () => {},
+  onCarCreated: () => {},
 };
 export default FormNuevoVehiculo;

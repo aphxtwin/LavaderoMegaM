@@ -41,7 +41,6 @@ export async function POST(req) {
     const { clienteId, vehicleId, type } = body;
 
     if (!clienteId || !vehicleId || !type) {
-      
       return new NextResponse(JSON.stringify({ error: 'Debes ingresar un clienteId, vehiculoId y una acción' }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' },
@@ -54,7 +53,6 @@ export async function POST(req) {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {
-    console.error(error);
     return new NextResponse(JSON.stringify({ error: error.message }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },

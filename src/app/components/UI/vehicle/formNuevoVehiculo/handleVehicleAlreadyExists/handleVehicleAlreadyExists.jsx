@@ -38,11 +38,8 @@ function HandleVehicleAlreadyExists({
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-
-        const result = await response.json();
-        console.log('API Response:', result);
       } catch (error) {
-        console.error('API Error:', error);
+        throw new Error('error desconocido', error);
       }
     }
     dispatch(addVehicle(payload));
@@ -88,7 +85,10 @@ function HandleVehicleAlreadyExists({
 HandleVehicleAlreadyExists.propTypes = {
   open: PropTypes.bool.isRequired,
   owners: PropTypes.string.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  vehicleDetails: PropTypes.object.isRequired,
+  vehicleDetails: PropTypes.shape({
+    vehiculoId: PropTypes.string.isRequired,
+  }).isRequired,
+  submitDirectly: PropTypes.bool.isRequired,
+  clienteId: PropTypes.string.isRequired,
 };
 export default HandleVehicleAlreadyExists;

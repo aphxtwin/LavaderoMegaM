@@ -40,9 +40,9 @@ async function getVehiculosByCliente(clienteId) {
 
 export async function GET(req) {
   try {
-    const {searchParams} = new URL(req.url);
+    const { searchParams } = new URL(req.url);
     const clienteId = searchParams.get('clienteId');
-    //Handle the case where clienteId is not provided
+    // Handle the case where clienteId is not provided
     if (!clienteId) {
       return new NextResponse(JSON.stringify({ error: 'Debes ingresar un clienteId.' }), {
         status: 400,
@@ -51,13 +51,11 @@ export async function GET(req) {
     }
 
     const result = await getVehiculosByCliente(Number(clienteId)); // Fetch vehicles by clienteId
-    console.log(result)
     return new NextResponse(JSON.stringify(result), { // Respond with the result
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (e) {
-    console.log(e);
     return new NextResponse(JSON.stringify({ error: e.message }), { // Handle errors
       status: 500,
       headers: { 'Content-Type': 'application/json' },

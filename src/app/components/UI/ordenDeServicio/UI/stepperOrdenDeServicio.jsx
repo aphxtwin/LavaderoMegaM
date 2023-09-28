@@ -20,7 +20,7 @@ function StepperOrdenDeServicio() {
             textAlign: 'start',
             width: '100%',
             mx: 1, // Add space before value
-            p:2,
+            p: 2,
           }}
         >
           <Typography
