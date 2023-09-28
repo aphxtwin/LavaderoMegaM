@@ -48,16 +48,13 @@ function DialogFormNuevoVehiculo({
 DialogFormNuevoVehiculo.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  submitDirectly: PropTypes.bool,  // Assuming submitDirectly is a boolean
-  onCarCreated: PropTypes.func,  // Assuming onCarCreated is a function
+  submitDirectly: PropTypes.bool,
+  onCarCreated: PropTypes.func,
 };
 
 DialogFormNuevoVehiculo.defaultProps = {
-  submitDirectly: false,  // Assuming false as a default value
-  onCarCreated: () => {},  // Default to a no-op function
+  submitDirectly: false,
+  onCarCreated: () => {},
 };
-
-export default DialogFormNuevoVehiculo;
-
 
 export default DialogFormNuevoVehiculo;
