@@ -22,7 +22,7 @@ import { addVehicle } from '../../../../redux/slices/vehicleSlice';
 import PatenteTextField from './patenteTextField';
 import HandleVehicleAlreadyExists from './handleVehicleAlreadyExists/handleVehicleAlreadyExists';
 
-function FormNuevoVehiculo({ onSuccess, submitDirectly = false, onCarCreated }) {
+function FormNuevoVehiculo({ onSuccess, submitDirectly = false }) {
   const dispatch = useDispatch();
   const clienteId = useSelector((state) => state.client.clientId);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -100,7 +100,6 @@ function FormNuevoVehiculo({ onSuccess, submitDirectly = false, onCarCreated }) 
           if (res.ok) {
             // if response is ok, call onCarCreated to re-fetch the data && set a feedback message
             setResponseMessage({ type: 'success', message: 'El vehiculo se creo con exito! 😊' });
-            if (onCarCreated) onCarCreated();
           }
         } catch (err) {
           setResponseMessage({ type: 'error', message: 'El vehiculo no pudo ser creado. Intenta mas tarde' });
@@ -224,11 +223,9 @@ function FormNuevoVehiculo({ onSuccess, submitDirectly = false, onCarCreated }) 
 FormNuevoVehiculo.propTypes = {
   onSuccess: PropTypes.func,
   submitDirectly: PropTypes.bool,
-  onCarCreated: PropTypes.func,
 };
 FormNuevoVehiculo.defaultProps = {
   submitDirectly: false,
   onSuccess: () => {},
-  onCarCreated: () => {},
 };
 export default FormNuevoVehiculo;

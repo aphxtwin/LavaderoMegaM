@@ -15,7 +15,7 @@ import FormNuevoVehiculo from './formNuevoVehiculo';
 import theme from '../../loginForm/theme';
 
 function DialogFormNuevoVehiculo({
-  open, onClose, submitDirectly, onCarCreated,
+  open, onClose, submitDirectly,
 }) {
   return (
     <ThemeProvider theme={theme}>
@@ -37,7 +37,6 @@ function DialogFormNuevoVehiculo({
           <FormNuevoVehiculo
             submitDirectly={submitDirectly}
             onSuccess={onClose}
-            onCarCreated={onCarCreated}
           />
         </DialogContent>
       </Dialog>
@@ -49,12 +48,6 @@ DialogFormNuevoVehiculo.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   submitDirectly: PropTypes.bool,
-  onCarCreated: PropTypes.func,
-};
-
-DialogFormNuevoVehiculo.defaultProps = {
-  submitDirectly: false,
-  onCarCreated: () => {},
 };
 
 export default DialogFormNuevoVehiculo;

@@ -53,7 +53,6 @@ function VehicleCars() {
         open={dialogOpen}
         onClose={handleDialog}
         submitDirectly
-        onCarCreated={mutate}
       />
       <Box py={4} px={2}>
         <Grid container spacing={3}>
