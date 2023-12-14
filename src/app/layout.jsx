@@ -1,13 +1,18 @@
 import './globals.css';
 import React from 'react';
-import { Inter } from 'next/font/google';
 import PropTypes from 'prop-types';
+import { Roboto } from 'next/font/google';
 import { ReduxProvider } from './redux/provider';
 
-const inter = Inter({ subsets: ['latin'] });
+const roboto = Roboto({
+  weight: ['400', '700'],
+  style: ['normal', 'italic'],
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 export const metadata = {
-  title: 'Mega MultiServicios',
+  title: 'CarWashSimple',
   description: '',
   robots: {
     index: false,
@@ -16,12 +21,9 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  RootLayout.propTypes = {
-    children: PropTypes.node.isRequired,
-  };
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={roboto.className}>
         <ReduxProvider>
           {children}
         </ReduxProvider>
@@ -29,3 +31,6 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+RootLayout.propTypes = {
+  children: PropTypes.node.isRequired,
+};
